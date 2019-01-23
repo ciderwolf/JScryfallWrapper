@@ -5,6 +5,8 @@ import com.scyrfall.api.field.RelatedCard;
 import com.scyrfall.api.object.Card;
 import com.scyrfall.api.field.Ruling;
 import com.scyrfall.api.object.Set;
+import com.scyrfall.api.object.ScryfallError;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,10 +21,35 @@ import java.util.UUID;
 public abstract class ScryfallObject {
 
     protected JSONObject data;
+    protected ScryfallError error;
+    private boolean isError;
     protected static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
     protected ScryfallObject(JSONObject data){
         this.data = data;
+        if(getString("object").equals("error")) {
+            this.error = new ScryfallError(data);
+            isError = true;
+        }
+        isError = false;
+    }
+
+    protected ScryfallObject() {}
+
+    /**
+     * @return true if the Scryfall API returned an error when retrieving this object. False if this object was retrieved
+     * successfully.
+     */
+    public boolean isError() {
+        return isError;
+    }
+
+    /**
+     * @return The error produced by this object when it was retrieved from the Scryfall API. If no error was produced,
+     * this field will be null.
+     */
+    public ScryfallError getError() {
+        return error;
     }
 
     /**
