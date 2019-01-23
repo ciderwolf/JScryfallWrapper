@@ -1,6 +1,6 @@
 package com.scyrfall.api.object;
 
-import com.scyrfall.api.Query;
+import com.scyrfall.api.query.Query;
 import com.scyrfall.api.ScryfallObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -82,7 +82,7 @@ public class List extends ScryfallObject {
      */
     public List getNextPage() {
         if(hasMore) {
-            return new List(Query.contentsOfURL(nextPageURL));
+            return new List(Query.dataFromURL(nextPageURL));
         }
         else {
             return null;
@@ -128,7 +128,7 @@ public class List extends ScryfallObject {
     }
 
     public static List fromURL(URL url) {
-        return new List(Query.contentsOfURL(url));
+        return new List(Query.dataFromURL(url));
     }
 
     @Override

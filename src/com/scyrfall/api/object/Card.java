@@ -1,6 +1,6 @@
 package com.scyrfall.api.object;
 
-import com.scyrfall.api.Query;
+import com.scyrfall.api.query.Query;
 import com.scyrfall.api.ScryfallObject;
 import com.scyrfall.api.field.CardFace;
 import com.scyrfall.api.field.Images;
@@ -685,11 +685,11 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @param size the <code>ImageSize</code> of the image to be retrieved
+     * @param size the <code>Size</code> of the image to be retrieved
      * @return an image of this card of the specified size. If this card has
      * multiple faces, an image of the front side is returned.
      */
-    public BufferedImage getImage(Images.ImageSize size) {
+    public BufferedImage getImage(Images.Size size) {
         if(hasMultipleFaces()) {
             return faces[0].getImages().getImage(size);
         } else {
@@ -697,7 +697,7 @@ public class Card extends ScryfallObject {
         }
     }
 
-    public String getImageURI(Images.ImageSize size) {
+    public String getImageURI(Images.Size size) {
         if(hasMultipleFaces()) {
             return faces[0].getImages().getURL(size).toString();
         } else {
@@ -739,7 +739,7 @@ public class Card extends ScryfallObject {
         return new Card(Query.dataFromPath("cards/mtgo/" + id));
     }
 
-    public static BufferedImage getImage(String name, SearchType search, Images.ImageSize size) {
+    public static BufferedImage getImage(String name, SearchType search, Images.Size size) {
         return Query.imageFromPath("cards/named?" + search.toParameterString() + "=" + name.replace(' ', '+') + "&format=image&size=" +
                 size.toParameterString());
     }

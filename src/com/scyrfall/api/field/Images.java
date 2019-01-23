@@ -1,6 +1,6 @@
 package com.scyrfall.api.field;
 
-import com.scyrfall.api.Query;
+import com.scyrfall.api.query.Query;
 import com.scyrfall.api.ScryfallObject;
 import org.json.JSONObject;
 
@@ -50,7 +50,7 @@ public class Images extends ScryfallObject {
         return smallURL;
     }
 
-    public URL getURL(ImageSize size) {
+    public URL getURL(Size size) {
         switch (size) {
             case PNG:
                 return getPngURL();
@@ -98,7 +98,7 @@ public class Images extends ScryfallObject {
         return Query.imageFromURL(getBorderCropURL());
     }
 
-    public BufferedImage getImage(ImageSize size) {
+    public BufferedImage getImage(Size size) {
         return Query.imageFromURL(getURL(size));
     }
 
@@ -116,7 +116,7 @@ public class Images extends ScryfallObject {
      * <tr><td>small</td><td>146 × 204</td><td>A small full card image. Designed for use as thumbnail or list icon.</td></tr>
      * </table>
      */
-    public enum ImageSize {
+    public enum Size {
         SMALL, NORMAL, LARGE, PNG, ART_CROP, BORDER_CROP;
 
         public String toParameterString() {

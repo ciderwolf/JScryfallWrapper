@@ -1,4 +1,4 @@
-package com.scyrfall.api;
+package com.scyrfall.api.query;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,24 +14,6 @@ import java.util.Scanner;
 
 public class JSONLoader {
 
-    public static JSONObject JSONObjectFromPath(String path) {
-        try {
-            return new JSONObject(loadStringFromFile(path));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return new JSONObject();
-        }
-    }
-
-    public static JSONArray JSONArrayFromPath(String path) {
-        try {
-            return new JSONArray(loadStringFromFile(path));
-        } catch(JSONException e) {
-            e.printStackTrace();
-            return new JSONArray();
-        }
-    }
-
     public static JSONObject JSONObjectFromURL(String uri) {
         try {
             return new JSONObject(loadStringFromURL(uri));
@@ -41,7 +23,7 @@ public class JSONLoader {
         }
     }
 
-    public static JSONObject JSONObjectFromURL(URL url) {
+    static JSONObject JSONObjectFromURL(URL url) {
         try {
             return new JSONObject(loadStringFromURL(url));
         } catch (JSONException e) {
@@ -50,7 +32,7 @@ public class JSONLoader {
         }
     }
 
-    public static JSONArray JSONArrayFromURL(String uri) {
+    static JSONArray JSONArrayFromURL(String uri) {
         try {
             return new JSONArray(getText(uri));
         } catch (IOException | JSONException e) {
@@ -86,7 +68,7 @@ public class JSONLoader {
         return new Scanner(is).useDelimiter("\\Z").next();
     }
 
-    public static String getText(String url) throws IOException {
+    static String getText(String url) throws IOException {
         URL website = new URL(url);
         URLConnection connection = website.openConnection();
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));

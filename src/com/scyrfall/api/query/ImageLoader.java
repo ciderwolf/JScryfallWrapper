@@ -1,7 +1,6 @@
-package com.scyrfall.api;
+package com.scyrfall.api.query;
 
 import com.scyrfall.api.object.Card;
-import org.json.JSONObject;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -14,10 +13,8 @@ public class ImageLoader {
         try {
             return ImageIO.read(url);
         } catch (IOException e) {
-            Card card = new Card(Query.contentsOfURL(apiUrl));
-//            String uriFromApi = card.getJSONObject("image_uris").getString("normal");
+            Card card = new Card(Query.dataFromURL(apiUrl));
             return loadImageFromURL(card.getImages().getNormalURL());
-//            e.printStackTrace();
         }
     }
 

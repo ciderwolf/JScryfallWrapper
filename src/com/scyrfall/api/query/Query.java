@@ -1,6 +1,6 @@
-package com.scyrfall.api;
+package com.scyrfall.api.query;
 
-import com.scyrfall.api.field.Images;
+import com.scyrfall.api.ScryfallObject;
 import com.scyrfall.api.field.Symbol;
 import com.scyrfall.api.object.Card;
 import com.scyrfall.api.object.List;
@@ -11,10 +11,7 @@ import org.json.JSONObject;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Query {
 
@@ -25,9 +22,6 @@ public class Query {
 
     /** The base uri for the Scryfall API */
     public static final String API_STUB = "https://api.scryfall.com/";
-
-    /** A URI for fetching information about the symbols which appear on magic cards */
-    public static final String SYMBOLS_URL = "https://api.scryfall.com/symbology";
 
     /**
      * @return a <code>Card</code> array of every card in the Scryfall. Includes each card
@@ -50,38 +44,26 @@ public class Query {
     }
 
     public static Symbol[] getSymbols() {
-        try {
-            ScryfallObject[] objects = List.fromURL(new URL(SYMBOLS_URL)).getContents();
-            Symbol[] output = new Symbol[objects.length];
-            for (int i = 0; i < output.length; i++) {
-                output[i] = ((Symbol) objects[i]);
-            }
-            return output;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
+        ScryfallObject[] objects = new List(dataFromPath("symbology")).getContents();
+        Symbol[] output = new Symbol[objects.length];
+        for (int i = 0; i < output.length; i++) {
+            output[i] = ((Symbol) objects[i]);
         }
+        return output;
     }
 
-    /**
-     * @param pathAppend path to be added to {@link #API_STUB}
-     * @return
-     */
-    public static JSONObject dataFromPath(String pathAppend) {
-        return JSONLoader.JSONObjectFromURL(API_STUB + pathAppend);
-    }
 
     /**
-     * @param url the URL from which dataFromPath should be retrieved
-     * @return a <code>JSONObject</code> formed from dataFromPath from the specified URL
+     * @param url the URL from which data should be retrieved
+     * @return a <code>JSONObject</code> formed from the specified URL
      */
-    public static JSONObject contentsOfURL(URL url) {
+    public static JSONObject dataFromURL(URL url) {
         return JSONLoader.JSONObjectFromURL(url);
     }
 
     /**
-     * @param url the URL from which dataFromPath should be retrieved
-     * @return a <code>JSONObject</code> formed from dataFromPath from the specified URL
+     * @param url the URL from which data should be retrieved
+     * @return a <code>BufferedImage</code> from the specified URL
      */
     public static BufferedImage imageFromURL(URL url) {
         try {
@@ -94,7 +76,15 @@ public class Query {
     }
 
     /**
-     * @param pathAppend path to be added to {@link #API_STUB}
+     * @param pathAppend path to the requested resource in Scryfall's API
+     * @return a <code>JSONObject</code> located at the specified path on Scryfall's API
+     */
+    public static JSONObject dataFromPath(String pathAppend) {
+        return JSONLoader.JSONObjectFromURL(API_STUB + pathAppend);
+    }
+
+    /**
+     * @param pathAppend path to the requested resource in Scryfall's API
      * @return an image located at the specified path
      */
     public static BufferedImage imageFromPath(String pathAppend) {
@@ -107,7 +97,7 @@ public class Query {
     }
 
     /**
-     * @param pathAppend path to be added to {@link #API_STUB}
+     * @param pathAppend path to the requested resource in Scryfall's API
      * @return an image located at the specified path
      */
     public static String textFromPath(String pathAppend) {
@@ -119,7 +109,4 @@ public class Query {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        System.out.println(Arrays.toString(getSets()));
-    }
 }
