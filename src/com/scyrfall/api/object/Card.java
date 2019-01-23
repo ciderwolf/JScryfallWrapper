@@ -705,8 +705,6 @@ public class Card extends ScryfallObject {
         }
     }
 
-
-
     /**
      * Searches using the <code>exact</code> parameter in the Scryfall API, so the
      * provided card name must match exactly to an existing card. However, this

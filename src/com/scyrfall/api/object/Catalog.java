@@ -19,7 +19,7 @@ public class Catalog extends ScryfallObject {
     private int totalValues;
     private String[] values;
 
-    public Catalog(JSONObject data) {
+    private Catalog(JSONObject data) {
         super(data);
 
         url = getURL("uri");

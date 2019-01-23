@@ -48,6 +48,10 @@ public class Set extends ScryfallObject {
         searchURL = getURL("search_uri");
     }
 
+    /**
+     * @param code The code of the set to be retrieved
+     * @return A <code>Set</code> with the specified code on Scryfall's API
+     */
     public static Set fromCode(String code) {
         return new Set(JSONLoader.JSONObjectFromURL(Query.API_STUB + "sets/" + code));
     }

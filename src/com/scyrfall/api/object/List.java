@@ -108,6 +108,15 @@ public class List extends ScryfallObject {
     }
 
     /**
+     * @param out the array
+     * @param <T> the type of the contents of the list
+     * @return an array of the specified type which contains the contents of the list
+     */
+    public <T extends ScryfallObject> T[] getContents(T[] out) {
+        return ScryfallObject.convertArray(getContents(), out);
+    }
+
+    /**
      * @return An array of Cards constructed from the dataFromPath on this page and on all subsequent pages.
      */
     public Card[] getCards() {

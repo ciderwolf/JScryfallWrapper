@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,14 +42,9 @@ public class JSONLoader {
         }
     }
 
-    private static String loadStringFromFile(String path) {
-        return loadStringFromInputStream(JSONLoader.class.getResourceAsStream(path));
-    }
-
     private static String loadStringFromURL(String uri) {
         try {
-            URL url = new URL(uri);
-            return loadStringFromInputStream(url.openStream());
+            return getText(uri);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,8 +66,14 @@ public class JSONLoader {
 
     static String getText(String url) throws IOException {
         URL website = new URL(url);
-        URLConnection connection = website.openConnection();
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        HttpsURLConnection connection = ((HttpsURLConnection) website.openConnection());
+        InputStreamReader reader;
+        if (connection.getResponseCode() < HttpsURLConnection.HTTP_BAD_REQUEST) {
+            reader = new InputStreamReader(connection.getInputStream());
+        } else {
+            reader = new InputStreamReader((connection).getErrorStream());
+        }
+        BufferedReader in = new BufferedReader(reader);
 
         StringBuilder response = new StringBuilder();
         String inputLine;
