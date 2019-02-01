@@ -1,11 +1,8 @@
 package com.scyrfall.api.query;
 
 import com.scyrfall.api.ScryfallObject;
-import com.scyrfall.api.field.Symbol;
-import com.scyrfall.api.object.Card;
 import com.scyrfall.api.object.List;
 import com.scyrfall.api.object.Set;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.imageio.ImageIO;
@@ -15,43 +12,15 @@ import java.net.URL;
 
 public class Query {
 
-    /** A URI for fetching an entry for each printed card.
-     * @see #getBulkCards()
-     */
-    private static final String BULK_API = "https://archive.scryfall.com/json/scryfall-default-cards.json";
 
     /** The base uri for the Scryfall API */
     public static final String API_STUB = "https://api.scryfall.com/";
-
-    /**
-     * @return a <code>Card</code> array of every card in the Scryfall. Includes each card
-     * once for each time it has been printed. Cards are in English, or the printed language
-     * if they are only available in that language.
-     */
-    public static Card[] getBulkCards() {
-        JSONArray data = JSONLoader.JSONArrayFromURL(BULK_API);
-        Card[] output = new Card[data.length()];
-        for(int i = 0; i < output.length; i++) {
-            output[i] = new Card(data.getJSONObject(i));
-        }
-        return output;
-    }
 
     public static Set[] getSets() {
         List data = new List(dataFromPath("sets"));
         ScryfallObject[] contents = data.getContents();
         return ScryfallObject.convertArray(contents, new Set[0]);
     }
-
-    public static Symbol[] getSymbols() {
-        ScryfallObject[] objects = new List(dataFromPath("symbology")).getContents();
-        Symbol[] output = new Symbol[objects.length];
-        for (int i = 0; i < output.length; i++) {
-            output[i] = ((Symbol) objects[i]);
-        }
-        return output;
-    }
-
 
     /**
      * @param url the URL from which data should be retrieved

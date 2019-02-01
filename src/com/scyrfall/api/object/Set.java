@@ -9,6 +9,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * A Set object represents a group of related Magic cards. All Card objects on Scryfall belong to exactly one set.
@@ -23,12 +24,15 @@ public class Set extends ScryfallObject {
     private String code, mtgoCode, name, blockCode, block, parentSetCode;
     private SetType setType;
     private Date released;
-    private int cardCount;
+    private int cardCount, tcgPlayerID;
     private boolean digital, foilOnly;
     private URL iconSvgURL, searchURL;
+    private UUID id;
+
 
     public Set(JSONObject data) {
         super(data);
+        id = getUUID("id");
         code = getString("code");
         mtgoCode = getString("mtgo_code");
         name = getString("name");
@@ -41,19 +45,12 @@ public class Set extends ScryfallObject {
         } catch (ParseException e) {
             released = null;
         }
+        tcgPlayerID = getInt("tcgplayer_id");
         cardCount = getInt("card_count");
         digital = getBoolean("digital");
         foilOnly = getBoolean("foil_only");
         iconSvgURL = getURL("icon_svg_uri");
         searchURL = getURL("search_uri");
-    }
-
-    /**
-     * @param code The code of the set to be retrieved
-     * @return A <code>Set</code> with the specified code on Scryfall's API
-     */
-    public static Set fromCode(String code) {
-        return new Set(JSONLoader.JSONObjectFromURL(Query.API_STUB + "sets/" + code));
     }
 
     /**
@@ -156,6 +153,44 @@ public class Set extends ScryfallObject {
      */
     public Card[] getCards() {
         return List.fromURL(searchURL).getCards();
+    }
+
+    /**
+     * @return This set’s ID on TCGplayer’s API, also known as the groupId.
+     */
+    public int getTcgPlayerID() {
+        return tcgPlayerID;
+    }
+
+    /**
+     * @return A unique ID for this set on Scryfall that will not change.
+     */
+    public UUID getId() {
+        return id;
+    }
+
+    /**
+     * @param code The code of the set to be retrieved
+     * @return A <code>Set</code> with the specified code on Scryfall's API
+     */
+    public static Set fromCode(String code) {
+        return new Set(JSONLoader.JSONObjectFromURL(Query.API_STUB + "sets/" + code));
+    }
+
+    /**
+     * @param id the TCGPlayer id of the Set to be retrieved
+     * @return Returns a Set with the given tcgPlayerID, also known as the groupId on TCGplayer’s API.
+     */
+    public static Set fromTCGplayerID(int id) {
+        return new Set(Query.dataFromPath("sets/tcgplayer/" + id));
+    }
+
+    /**
+     * @param id the Scryfall id of the Set to be retrieved
+     * @return Returns a Set with the given Scryfall id.
+     */
+    public static Set fromID(UUID id) {
+        return new Set(Query.dataFromPath("sets/" + id));
     }
 
     /**

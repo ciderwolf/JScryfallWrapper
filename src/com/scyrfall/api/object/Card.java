@@ -15,6 +15,10 @@ import java.net.URL;
 import java.text.ParseException;
 import java.util.*;
 
+//TODO: implement /cards/search and /cards/collection
+//TODO: allow for retrieval in all formats for all endpoints (json, text, image)
+//TODO: implement all optional parameters for endpoints
+
 /**
  * Card objects represent individual Magic: The Gathering cards that players could obtain and add to their collection
  * (with a few minor exceptions).
@@ -728,26 +732,110 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * Retrieves dataFromPath for a card with the given MTGO id. If no card has the given id,
-     * an error whill be thrown.
-     * @param id The MTGO id the of the card for which dataFromPath should be retrieved.
-     * @return A <code>Card</code> object containing the corresponding card's dataFromPath.
+     * @param name Name of the card to be retrieved
+     * @param type Method to be used for retrieving the card. Either FUZZY or EXACT.
+     * @return A card with the given name
+     */
+    public static Card named(String name, SearchType type) {
+        return new Card(Query.dataFromPath("cards/named?" + type.toParameterString() + "=" +
+                name.replace(' ', '+')));
+    }
+
+    /**
+     * Retrieves data for a card with the given MTGO id.
+     * @param id The MTGO id the of the card for which data should be retrieved.
+     * @return A <code>Card</code> object containing the corresponding card's data.
      */
     public static Card fromMtgoID(int id) {
         return new Card(Query.dataFromPath("cards/mtgo/" + id));
     }
 
+    /**
+     * @param id the MTG Arena id of the card to be retrieved
+     * @return the card with the given MTG Arena ID
+     */
+    public static Card fromArenaID(int id) {
+        return new Card(Query.dataFromPath("cards/arena/" + id));
+    }
+
+    /**
+     * @param id the Multiverse id of the card to be retrieved
+     * @return the card with the given Multiverse ID
+     */
+    public static Card fromMultiverseID(int id) {
+        return new Card(Query.dataFromPath("cards/multiverse/" + id));
+    }
+
+    /**
+     * @param id the Scryfall id of the card to be retrieved
+     * @return the card with the given Scryfall ID
+     */
+    public static Card fromID(UUID id) {
+        return new Card(Query.dataFromPath("cards/" + id));
+    }
+
+    /**
+     * @return a random Magic card
+     */
+    public static Card random() {
+        return new Card(Query.dataFromPath("cards/random"));
+    }
+
+    /**
+     * @param setCode the code for the set of the card to be retrieved
+     * @param collectorsNumber the collectors number of the card to be retrieved
+     * @return the card of the specified collectors number from the specified set
+     */
+    public static Card fromSet(String setCode, int collectorsNumber) {
+        return new Card(Query.dataFromPath("cards/" + setCode + "/" + collectorsNumber));
+    }
+
+    /**
+     * @param setCode the code for the set of the card to be retrieved
+     * @param collectorsNumber the collectors number of the card to be retrieved
+     * @param lang The 2-3 character language code.
+     * @return the card of the specified collectors number from the specified set
+     */
+    public static Card fromSet(String setCode, int collectorsNumber, String lang) {
+        return new Card(Query.dataFromPath("cards/" + setCode + "/" + collectorsNumber + "/" + lang));
+    }
+
+    /**
+     * This method is designed for creating assistive UI elements that allow users to free-type card names. The names
+     * are sorted with the nearest match first, highly favoring results that begin with your given string. Spaces,
+     * punctuation, and capitalization are ignored. If q is less than 2 characters long, or if no names match, the
+     * Catalog will contain 0 items (instead of returning any errors).
+     * @param substring The string to autocomplete.
+     * @return a Catalog object containing up to 20 full English card names that could be autocompletions of the
+     * given string parameter.
+     */
+    public static Catalog autoComplete(String substring) {
+        return new Catalog(Query.dataFromPath("cards/autocomplete?q=" + substring));
+    }
+
+    /**
+     * @param name Card name for the image to be retrieved
+     * @param search Method for retrieving the card. Either FUZZY or EXACT.
+     * @param size The format of the image to be retrieved.
+     * @return An image of the specified card in the specified format
+     */
     public static BufferedImage getImage(String name, SearchType search, Images.Size size) {
         return Query.imageFromPath("cards/named?" + search.toParameterString() + "=" + name.replace(' ', '+') + "&format=image&size=" +
                 size.toParameterString());
     }
 
+    /**
+     * @param name name of the card for which text should be retrieved
+     * @param search method for retrieving the card. Either FUZZY or EXACT.
+     * @return Scryfall's text representation of the named card.
+     */
     public static String getText(String name, SearchType search) {
         return Query.textFromPath("cards/named?" + search.toParameterString() + "=" + name.replace(' ', '+') + "&format=text");
     }
 
-
-
+    /**
+     * Different parameters for {@link #named(String, SearchType)}.
+     */
     public enum SearchType {
         EXACT, FUZZY;
 

@@ -1,6 +1,8 @@
 package com.scyrfall.api.field;
 
 import com.scyrfall.api.ScryfallObject;
+import com.scyrfall.api.object.List;
+import com.scyrfall.api.query.Query;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -111,6 +113,30 @@ public class Symbol extends ScryfallObject {
      */
     public Color[] getColors() {
         return colors;
+    }
+
+    /**
+     * @return an array of all card symbols.
+     */
+    public static Symbol[] getSymbols() {
+        ScryfallObject[] objects = new List(Query.dataFromPath("symbology")).getContents();
+        Symbol[] output = new Symbol[objects.length];
+        for (int i = 0; i < output.length; i++) {
+            output[i] = ((Symbol) objects[i]);
+        }
+        return output;
+    }
+
+    /**
+     * Parses the given mana cost parameter and returns Scryfall’s interpretation.
+     *
+     * The server understands most community shorthand for mana costs (such as 2WW for {2}{W}{W}). Symbols can also be
+     * out of order, lowercase, or have multiple colorless costs (such as 2{g}2 for {4}{G}).
+     * @param mana The mana string to parse.
+     * @return A Symbol object describing the parsed string.
+     */
+    public static Symbol parseManaString(String mana) {
+        return new Symbol(Query.dataFromPath("symbology/parse-mana?cost=" + mana));
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.scyrfall.api.field;
 
 import com.scyrfall.api.ScryfallObject;
+import com.scyrfall.api.object.Card;
+import com.scyrfall.api.query.Query;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -55,6 +57,48 @@ public class Ruling extends ScryfallObject {
      */
     public UUID getOracleID() {
         return oracleID;
+    }
+
+    /**
+     * Retrieves rulings for a card with the given MTGO id.
+     * @param id The MTGO id the of the card for which rulings should be retrieved.
+     * @return A <code>Card</code> object containing the corresponding card's rulings.
+     */
+    public static Ruling fromMtgoID(int id) {
+        return new Ruling(Query.dataFromPath("cards/mtgo/" + id + "/rulings"));
+    }
+
+    /**
+     * @param id the MTG Arena id of the card for which rulings should be retrieved
+     * @return rulings for the card with the given MTG Arena ID
+     */
+    public static Ruling fromArenaID(int id) {
+        return new Ruling(Query.dataFromPath("cards/arena/" + id + "/rulings"));
+    }
+
+    /**
+     * @param id the Multiverse id of the card for which ruling should be retrieved
+     * @return rulings for the card with the given Multiverse ID
+     */
+    public static Ruling fromMultiverseID(int id) {
+        return new Ruling(Query.dataFromPath("cards/multiverse/" + id + "/rulings"));
+    }
+
+    /**
+     * @param id the Scryfall id of the card for which rulings should be retrieved
+     * @return rulings for the card with the given Scryfall ID
+     */
+    public static Ruling fromID(UUID id) {
+        return new Ruling(Query.dataFromPath("cards/" + id + "/rulings"));
+    }
+
+    /**
+     * @param setCode the code for the set of the card for which rulings should be retrieved
+     * @param collectorsNumber the collectors number of the card for which rulings should be retrieved
+     * @return rulings for the card of the specified collectors number from the specified set
+     */
+    public static Ruling fromSetNumber(String setCode, int collectorsNumber) {
+        return new Ruling(Query.dataFromPath("cards/" + setCode + "/" + collectorsNumber + "/rulings"));
     }
 
     /**

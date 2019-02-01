@@ -2,6 +2,8 @@ package com.scyrfall.api;
 
 import com.scyrfall.api.field.CardFace;
 import com.scyrfall.api.field.RelatedCard;
+import com.scyrfall.api.field.Symbol;
+import com.scyrfall.api.object.BulkData;
 import com.scyrfall.api.object.Card;
 import com.scyrfall.api.field.Ruling;
 import com.scyrfall.api.object.Set;
@@ -74,6 +76,15 @@ public abstract class ScryfallObject {
                 break;
             case "ruling":
                 scryfallObject = new Ruling(data);
+                break;
+            case "symbol":
+                scryfallObject = new Symbol(data);
+                break;
+            case "bulk_data":
+                scryfallObject = new BulkData(data);
+                break;
+            case "error":
+                scryfallObject = new ScryfallError(data);
                 break;
             default:
                 scryfallObject = null;
