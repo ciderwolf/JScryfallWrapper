@@ -23,7 +23,7 @@ import java.util.UUID;
 public abstract class ScryfallObject {
 
     protected JSONObject data;
-    protected ScryfallError error;
+    private ScryfallError error;
     private boolean isError;
     protected static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
@@ -92,6 +92,13 @@ public abstract class ScryfallObject {
         return scryfallObject;
     }
 
+    /**
+     * Converts an array of <code>ScryfallObject</code>s to an array of the specified type
+     * @param list the list of objects to be converted
+     * @param out the list into which the objects will be inserted
+     * @param <T> the type of the ScryfallObjects to be converted
+     * @return the provided list as an array of the specified type
+     */
     public static <T extends ScryfallObject> T[] convertArray(ScryfallObject[] list, T[] out) {
         out = Arrays.copyOf(out, list.length);
         for(int i = 0; i < list.length; i++) {

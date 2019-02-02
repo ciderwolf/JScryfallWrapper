@@ -1,11 +1,8 @@
 package com.scyrfall.api.object;
 
+import com.scyrfall.api.field.*;
 import com.scyrfall.api.query.Query;
 import com.scyrfall.api.ScryfallObject;
-import com.scyrfall.api.field.CardFace;
-import com.scyrfall.api.field.Images;
-import com.scyrfall.api.field.RelatedCard;
-import com.scyrfall.api.field.Ruling;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -34,7 +31,7 @@ public class Card extends ScryfallObject {
     private double cmc;
     private Color[] colors, colorIdentity, colorIndicator;
     private boolean foil, nonfoil, oversized, digital;
-    private HashMap<String, Legality> legalities;
+    private Legalities legalities;
 
     private String artist, collectorNumber, flavorText, printedName, printedText, printedTypeLine, watermark;
     private String euroPrice, tixPrice, usdPrice;
@@ -166,6 +163,7 @@ public class Card extends ScryfallObject {
         }
 
         images = new Images(getJSONObject("image_uris"));
+        legalities = new Legalities(getJSONObject("legalities"));
 
         if(data.has("related_uris")) {
             JSONObject relatedURLs = getJSONObject("related_uris");
@@ -190,15 +188,6 @@ public class Card extends ScryfallObject {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-            }
-        }
-
-        if(data.has("legalities")) {
-            JSONObject legalities = getJSONObject("legalities");
-            this.legalities = new HashMap<>();
-            for (int i = 0; i < legalities.names().length(); i++) {
-                String name = legalities.names().getString(i);
-                legalities.put(name, legalities.getString(name));
             }
         }
     }
@@ -453,10 +442,9 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @see Legality
-     * @return HashMap describing the legality of this card across play formats.
+     * @return object describing the legality of this card across play formats.
      */
-    public HashMap<String, Legality> getLegalities() {
+    public Legalities getLegalities() {
         return legalities;
     }
 
@@ -966,21 +954,7 @@ public class Card extends ScryfallObject {
         }
     }
 
-    /**
-     * Different legalities a card can have in a given format.
-     * The options are: legal, notLegal, restricted, and banned.
-     */
-    enum Legality {
-        legal, notLegal, restricted, banned;
-        private static Legality fromString(String value) {
-            if(value.equals("not_legal")) {
-                return notLegal;
-            }
-            else {
-                return valueOf(value);
-            }
-        }
-    }
+
 
     /**
      * The possible Magic games where a given card can exist: paper, arena, and mtgo.
