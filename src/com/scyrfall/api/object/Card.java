@@ -21,7 +21,8 @@ import java.util.*;
  * (with a few minor exceptions).
  */
 public class Card extends ScryfallObject {
-    private int arenaID, mtgoID, mtgoFoilID, tcgplayerID, multiverseIDs[], edhrecRank;
+    private int arenaID, mtgoID, mtgoFoilID, tcgplayerID, edhrecRank;
+    private int[] multiverseIDs;
     private Layout layout;
     private String lang, handModifier, lifeModifier, loyalty, manaCost, name, oracleText, power, toughness, typeLine;
     private UUID id, oracleID, illustrationID;
@@ -32,9 +33,7 @@ public class Card extends ScryfallObject {
     private Color[] colors, colorIdentity, colorIndicator;
     private boolean foil, nonfoil, oversized, digital;
     private Legalities legalities;
-
     private String artist, collectorNumber, flavorText, printedName, printedText, printedTypeLine, watermark;
-    private String euroPrice, tixPrice, usdPrice;
     private BorderColor borderColor;
     private Frame frame;
     private FrameEffect frameEffect;
@@ -46,7 +45,8 @@ public class Card extends ScryfallObject {
     private URL scryfallSetURL, setSearchURL, setURL;
     private String set, setName;
     private Images images;
-
+    private String euroPrice, tixPrice, usdPrice;
+    private Prices prices;
 
     public Card(JSONObject data) {
         super(data);
@@ -164,6 +164,7 @@ public class Card extends ScryfallObject {
 
         images = new Images(getJSONObject("image_uris"));
         legalities = new Legalities(getJSONObject("legalities"));
+        prices = new Prices(getJSONObject("prices"));
 
         if(data.has("related_uris")) {
             JSONObject relatedURLs = getJSONObject("related_uris");
@@ -508,6 +509,7 @@ public class Card extends ScryfallObject {
     /**
      * @return The lowest EUR price from our affiliates, updated daily.
      */
+    @Deprecated
     public String getEuroPrice() {
         return euroPrice;
     }
@@ -515,6 +517,7 @@ public class Card extends ScryfallObject {
     /**
      * @return The lowest TIX price from our affiliates, updated daily.
      */
+    @Deprecated
     public String getTixPrice() {
         return tixPrice;
     }
@@ -522,6 +525,7 @@ public class Card extends ScryfallObject {
     /**
      * @return The lowest USD price from our affiliates, updated daily.
      */
+    @Deprecated
     public String getUsdPrice() {
         return usdPrice;
     }
@@ -1032,9 +1036,6 @@ public class Card extends ScryfallObject {
                 Objects.equals(printedText, card.printedText) &&
                 Objects.equals(printedTypeLine, card.printedTypeLine) &&
                 Objects.equals(watermark, card.watermark) &&
-                Objects.equals(euroPrice, card.euroPrice) &&
-                Objects.equals(tixPrice, card.tixPrice) &&
-                Objects.equals(usdPrice, card.usdPrice) &&
                 borderColor == card.borderColor &&
                 frame == card.frame &&
                 frameEffect == card.frameEffect &&
@@ -1048,7 +1049,11 @@ public class Card extends ScryfallObject {
                 Objects.equals(setURL, card.setURL) &&
                 Objects.equals(set, card.set) &&
                 Objects.equals(setName, card.setName) &&
-                Objects.equals(images, card.images);
+                Objects.equals(images, card.images) &&
+                Objects.equals(euroPrice, card.euroPrice) &&
+                Objects.equals(tixPrice, card.tixPrice) &&
+                Objects.equals(usdPrice, card.usdPrice) &&
+                Objects.equals(prices, card.prices);
     }
 
     @Override
@@ -1096,9 +1101,6 @@ public class Card extends ScryfallObject {
                 ", printedText='" + printedText + '\'' +
                 ", printedTypeLine='" + printedTypeLine + '\'' +
                 ", watermark='" + watermark + '\'' +
-                ", euroPrice='" + euroPrice + '\'' +
-                ", tixPrice='" + tixPrice + '\'' +
-                ", usdPrice='" + usdPrice + '\'' +
                 ", borderColor=" + borderColor +
                 ", frame=" + frame +
                 ", frameEffect=" + frameEffect +
@@ -1118,6 +1120,10 @@ public class Card extends ScryfallObject {
                 ", set='" + set + '\'' +
                 ", setName='" + setName + '\'' +
                 ", images=" + images +
+                ", euroPrice='" + euroPrice + '\'' +
+                ", tixPrice='" + tixPrice + '\'' +
+                ", usdPrice='" + usdPrice + '\'' +
+                ", prices=" + prices +
                 '}';
     }
 }
