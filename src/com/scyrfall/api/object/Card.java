@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import java.awt.image.BufferedImage;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.*;
 
@@ -733,6 +735,10 @@ public class Card extends ScryfallObject {
                 name.replace(' ', '+')));
     }
 
+    public static List search(String query) {
+        return new List(Query.dataFromPath("cards/search?q=" + URLEncoder.encode(query, StandardCharsets.UTF_8)));
+    }
+
     /**
      * Retrieves data for a card with the given MTGO id.
      * @param id The MTGO id the of the card for which data should be retrieved.
@@ -957,8 +963,6 @@ public class Card extends ScryfallObject {
             }
         }
     }
-
-
 
     /**
      * The possible Magic games where a given card can exist: paper, arena, and mtgo.
