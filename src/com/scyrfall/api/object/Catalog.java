@@ -88,7 +88,7 @@ public class Catalog extends ScryfallObject {
      * </td></tr><tr><td><p><code>watermarks</code></p></td><td><p>A list of all card watermarks in Scryfall’s database</p>
      * </td></tr></tbody></table>
      */
-    enum Name {
+    public enum Name {
         cardNames, artistNames, wordBank, creatureTypes, planeswalkerTypes, landTypes, artifactTypes, enchantmentTypes,
         spellTypes, powers, toughnesses, loyalties, watermarks;
 

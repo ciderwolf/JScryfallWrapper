@@ -48,7 +48,7 @@ public class RelatedCard extends ScryfallObject {
         return component;
     }
 
-    enum Component {
+    public enum Component {
         token, meldPart, meldResult, comboPiece;
 
         private static Component fromString(String value) {

@@ -105,7 +105,7 @@ public class Ruling extends ScryfallObject {
      * Possible sources for a ruling. The only values should be <code>wotc</code> and <code>scryfall</code>.
      * If a different value is provided in the constructor, {@link #source} will have the vaule <code>other</code>.
      */
-    enum RulingSource {
+    public enum RulingSource {
         wotc, scryfall, other;
 
         private static RulingSource fromString(String value) {

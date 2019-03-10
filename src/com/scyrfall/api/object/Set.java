@@ -218,7 +218,7 @@ public class Set extends ScryfallObject {
      * </td></tr></tbody></table>
      * Default value is <code>core</code>.
      */
-    enum SetType {
+    public enum SetType {
         core, expansion, masters, masterpiece, fromTheVault, spellbook, premiumDeck, duelDeck, draftInnovation,
         treasureChest, commander, planechase, archenemy, vanguard, funny, starter, box, promo, token, memorabilia;
 

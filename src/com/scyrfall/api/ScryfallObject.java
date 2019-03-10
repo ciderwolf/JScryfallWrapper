@@ -213,7 +213,7 @@ public abstract class ScryfallObject {
      * Values are <code>white</code>, <code>blue</code>, <code>black</code>, <code>red</code>, and
      * <code>green</code>.
      */
-    protected enum Color {
+    public enum Color {
         white, blue, black, red, green;
 
         public static Color fromString(String value) {

@@ -854,7 +854,7 @@ public class Card extends ScryfallObject {
      * <li><code>augment</code> - Cards with Augment
      * <li><code>host</code> - Host-type cards
      */
-    enum Layout {
+    public enum Layout {
         normal, split, flip, transform, meld, leveler, saga, planar, scheme, vanguard, token, doubleFacedToken, emblem,
         augment, host;
 
@@ -876,7 +876,7 @@ public class Card extends ScryfallObject {
      * Different border colors a card can have.
      * If the border color field is missing or malformed, the card's border color will be <code>BorderColor.black</code>
      */
-    enum BorderColor {
+    public enum BorderColor {
         black, borderless, gold, silver, white;
         private static BorderColor fromString(String value) {
             try {
@@ -900,7 +900,7 @@ public class Card extends ScryfallObject {
      * <li><code>future</code> - Corresponds to Scyrfall's <code>future</code> frame.
      * Used on cards from the future.
      */
-    enum Frame {
+    public enum Frame {
         original, old, modern, m15, future;
 
         private static Frame fromString(String value) {
@@ -936,7 +936,7 @@ public class Card extends ScryfallObject {
      * <li><code>moonEldraziDFC</code> - The moon and Eldrazi transform marks (from Eldritch Moon)
      * <li><code>none</code> - No frame effect
      */
-    enum FrameEffect {
+    public enum FrameEffect {
         legendary, miracle, nyxtouched, draft, devoid, tombstone, colorshift, sunMoonDFC, compassLandDFC, originPwdDFC,
         moonEldraziDFC, none;
 
@@ -963,7 +963,7 @@ public class Card extends ScryfallObject {
     /**
      * The possible Magic games where a given card can exist: paper, arena, and mtgo.
      */
-    enum Game {
+    public enum Game {
         paper, arena, mtgo;
     }
 
@@ -972,7 +972,7 @@ public class Card extends ScryfallObject {
      * If a card would have the <code>special</code> rarity, it is assigned to <code>rare</code>
      * If the rarity field is missing or malformed, the the card's rarity will be <code>Rarity.none</code>
      */
-    enum Rarity {
+    public enum Rarity {
         common, uncommon, rare, mythic, none;
 
         private static Rarity fromString(String value) {
