@@ -23,6 +23,12 @@ import java.util.*;
  * (with a few minor exceptions).
  */
 public class Card extends ScryfallObject {
+
+    private static final String[] SUPERTYPES = {"Legendary", "Basic", "Snow"};
+    private static final String[] TYPES = {"Creature", "Land", "Instant", "Sorcery", "Enchantment", "Artifact",
+            "Planeswalker", "Tribal"};
+    private static final String EM_DASH = "—";
+
     private int arenaID, mtgoID, mtgoFoilID, tcgplayerID, edhrecRank;
     private int[] multiverseIDs;
     private Layout layout;
@@ -318,6 +324,42 @@ public class Card extends ScryfallObject {
      */
     public String getTypeLine() {
         return typeLine;
+    }
+
+    /**
+     * @return an array of this card's types (eg. Creature, Instant, etc)
+     */
+    public String[] getTypes() {
+        ArrayList<String> types = new ArrayList<>();
+        for(String type : TYPES) {
+            if(typeLine.contains(type)) {
+                types.add(type);
+            }
+        }
+        return types.toArray(new String[0]);
+    }
+
+    /**
+     * @return an array of this card's supertypes (eg. Legendary, Basic, Snow)
+     */
+    public String[] getSupertypes() {
+        ArrayList<String> types = new ArrayList<>();
+        for(String type : SUPERTYPES) {
+            if(typeLine.contains(type)) {
+                types.add(type);
+            }
+        }
+        return types.toArray(new String[0]);
+    }
+
+    /**
+     * @return an array of this card's subtypes (eg. Human, Trap, Aura, etc)
+     */
+    public String[] getSubtypes() {
+        if(typeLine.contains(EM_DASH)) {
+            return typeLine.substring(typeLine.indexOf(EM_DASH)).split(" ");
+        }
+        return new String[0];
     }
 
     /**
