@@ -977,7 +977,7 @@ public class Card extends ScryfallObject {
      * <li><code>draft</code> - The draft-matters frame effect (from Conspiracy sets)
      * <li><code>devoid</code> - The Devoid frame effect (from Battle for Zendikar block)
      * <li><code>tombstone</code> - The Odyssey tombstone mark
-     * <li><code>colorshift</code> - A colorshifted frame (from Planar Chaos)
+     * <li><code>colorshifted</code> - A colorshifted frame (from Planar Chaos)
      * <li><code>sunMoonDFC</code> - The sun and moon transform marks (from Innistrad block)
      * <li><code>compassLandDFC</code> - The compass and land transform marks (from Ixalan block)
      * <li><code>originPwdDFC</code> - The Origins and planeswalker transform marks (from Magic Origins)
@@ -985,7 +985,7 @@ public class Card extends ScryfallObject {
      * <li><code>none</code> - No frame effect
      */
     public enum FrameEffect {
-        legendary, miracle, nyxtouched, draft, devoid, tombstone, colorshift, sunMoonDFC, compassLandDFC, originPwdDFC,
+        legendary, miracle, nyxtouched, draft, devoid, tombstone, colorshifted, sunMoonDFC, compassLandDFC, originPwdDFC,
         moonEldraziDFC, none;
 
         private static FrameEffect fromString(String value) {

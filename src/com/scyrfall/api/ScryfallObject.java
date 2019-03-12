@@ -32,8 +32,9 @@ public abstract class ScryfallObject {
         if(getString("object").equals("error")) {
             this.error = new ScryfallError(data);
             isError = true;
+        } else {
+            isError = false;
         }
-        isError = false;
     }
 
     protected ScryfallObject() {}
