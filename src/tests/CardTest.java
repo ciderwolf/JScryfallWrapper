@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
+import static tests.ScryfallTest.assertArrayEqualsIgnoreOrder;
 
 public class CardTest {
 
@@ -93,8 +94,8 @@ public class CardTest {
         assertEquals(card.getId(), id);
         assertEquals(card.getLang(), lang);
         assertEquals(card.getOracleID(), oracleID);
-        assertEquals(card.getCmc(), cmc, 0.4);
-        assertArrayEquals(colorIdentity, card.getColorIdentity());
+        assertEquals(card.getCmc(), cmc, ScryfallTest.DELTA);
+        assertArrayEqualsIgnoreOrder(colorIdentity, card.getColorIdentity());
         assertEquals(card.getName(), name);
         assertEquals(card.isNonfoil(), nonfoil);
         assertEquals(card.getLayout(), layout);
@@ -107,7 +108,7 @@ public class CardTest {
         assertEquals(card.getFrameEffect(), effect);
         assertEquals(card.getFrame(), frame);
         assertEquals(card.isFullArt(), fullArt);
-        assertArrayEquals(card.getGames(), games);
+        assertArrayEqualsIgnoreOrder(card.getGames(), games);
         assertEquals(card.isHighResImage(), hiRes);
         assertEquals(card.getRarity(), rarity);
         assertEquals(card.isReprint(), reprint);

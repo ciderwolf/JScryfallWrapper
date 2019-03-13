@@ -11,15 +11,14 @@ import java.util.Objects;
 
 public class Symbol extends ScryfallObject {
 
-    private String symbol, looseVariant, english, gathererAlternates;
-    private boolean transposeable, representsMana, appearsInManaCosts, funny;
+    private String cost, looseVariant, english, gathererAlternates;
+    private boolean transposeable, representsMana, appearsInManaCosts, funny, colorless, monoColored, multiColored;
     private double cmc;
     private Color[] colors;
 
     public Symbol(JSONObject data) {
         super(data);
-
-        symbol = getString("symbol");
+        cost = getString("cost");
         looseVariant = getString("loose_variant");
         english = getString("english");
         gathererAlternates = getString("gatherer_alternates");
@@ -27,7 +26,10 @@ public class Symbol extends ScryfallObject {
         transposeable = getBoolean("transposable");
         representsMana = getBoolean("represents_mana");
         appearsInManaCosts = getBoolean("appears_in_mana_costs");
-        funny = getBoolean("FUNNY");
+        funny = getBoolean("funny");
+        colorless = getBoolean("colorless");
+        monoColored = getBoolean("monocolored");
+        multiColored = getBoolean("multicolored");
 
         cmc = getDouble("cmc");
 
@@ -42,8 +44,8 @@ public class Symbol extends ScryfallObject {
      * @return The plaintext symbol. Often surrounded with curly braces {}. Note that not all symbols are ASCII text
      * (for example, {∞}).
      */
-    public String getSymbol() {
-        return symbol;
+    public String getCost() {
+        return cost;
     }
 
     /**
@@ -116,15 +118,31 @@ public class Symbol extends ScryfallObject {
     }
 
     /**
+     * @return True if the cost is colorless.
+     */
+    public boolean isColorless() {
+        return colorless;
+    }
+
+    /**
+     * @return True if the cost is monocolored.
+     */
+    public boolean isMonoColored() {
+        return monoColored;
+    }
+
+    /**
+     * @return True if the cost is multicolored.
+     */
+    public boolean isMultiColored() {
+        return multiColored;
+    }
+
+    /**
      * @return an array of all card symbols.
      */
     public static Symbol[] getSymbols() {
-        ScryfallObject[] objects = new List(Query.dataFromPath("symbology")).getContents();
-        Symbol[] output = new Symbol[objects.length];
-        for (int i = 0; i < output.length; i++) {
-            output[i] = ((Symbol) objects[i]);
-        }
-        return output;
+        return new List(Query.dataFromPath("symbology")).getContents(new Symbol[0]);
     }
 
     /**
@@ -149,7 +167,7 @@ public class Symbol extends ScryfallObject {
                 appearsInManaCosts == symbol1.appearsInManaCosts &&
                 funny == symbol1.funny &&
                 Double.compare(symbol1.cmc, cmc) == 0 &&
-                Objects.equals(symbol, symbol1.symbol) &&
+                Objects.equals(cost, symbol1.cost) &&
                 Objects.equals(looseVariant, symbol1.looseVariant) &&
                 Objects.equals(english, symbol1.english) &&
                 Objects.equals(gathererAlternates, symbol1.gathererAlternates) &&
@@ -159,14 +177,14 @@ public class Symbol extends ScryfallObject {
     @Override
     public String toString() {
         return "Symbol{" +
-                "symbol='" + symbol + '\'' +
+                "cost='" + cost + '\'' +
                 ", looseVariant='" + looseVariant + '\'' +
                 ", english='" + english + '\'' +
                 ", gathererAlternates='" + gathererAlternates + '\'' +
                 ", transposeable=" + transposeable +
                 ", representsMana=" + representsMana +
                 ", appearsInManaCosts=" + appearsInManaCosts +
-                ", FUNNY=" + funny +
+                ", funny=" + funny +
                 ", cmc=" + cmc +
                 ", colors=" + Arrays.toString(colors) +
                 '}';

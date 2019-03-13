@@ -76,7 +76,7 @@ public abstract class ScryfallObject {
             case "ruling":
                 scryfallObject = new Ruling(data);
                 break;
-            case "symbol":
+            case "card_symbol":
                 scryfallObject = new Symbol(data);
                 break;
             case "bulk_data":

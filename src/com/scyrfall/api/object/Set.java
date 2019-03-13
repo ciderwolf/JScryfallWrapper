@@ -26,7 +26,7 @@ public class Set extends ScryfallObject {
     private Date released;
     private int cardCount, tcgPlayerID;
     private boolean digital, foilOnly;
-    private URL iconSvgURL, searchURL;
+    private URL iconSvgURL, searchURL, scryfallURL, url;
     private UUID id;
 
 
@@ -51,6 +51,8 @@ public class Set extends ScryfallObject {
         foilOnly = getBoolean("foil_only");
         iconSvgURL = getURL("icon_svg_uri");
         searchURL = getURL("search_uri");
+        scryfallURL = getURL("scryfall_uri");
+        url = getURL("uri");
     }
 
     /**
@@ -148,6 +150,20 @@ public class Set extends ScryfallObject {
     }
 
     /**
+     * @return A link to this set’s permapage on Scryfall’s website.
+     */
+    public URL getScryfallURL() {
+        return scryfallURL;
+    }
+
+    /**
+     * @return A link to this set object on Scryfall’s API.
+     */
+    public URL getUrl() {
+        return url;
+    }
+
+    /**
      * @return An array of all cards in the set.
      * @see Card
      */
@@ -168,6 +184,7 @@ public class Set extends ScryfallObject {
     public UUID getId() {
         return id;
     }
+
 
     /**
      * @param code The code of the set to be retrieved

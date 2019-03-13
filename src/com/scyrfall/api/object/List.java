@@ -24,7 +24,6 @@ public class List extends ScryfallObject {
 
     public List(JSONObject data) {
         super(data);
-
         this.data = getJSONArray("data");
         hasMore = getBoolean("has_more");
         totalCards = getInt("total_cards");

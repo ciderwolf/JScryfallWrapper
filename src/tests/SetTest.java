@@ -32,6 +32,8 @@ public class SetTest {
         System.out.print("Test Token (Hour of Devastation Tokens): ");
         Set set = Set.fromID(UUID.fromString("cb890bc8-ec73-449e-9be0-46891f39eea1"));
         assertEquals(set.getParentSetCode(), "hou");
+        assertEquals(set.getBlockCode(), "akh");
+        assertEquals(set.getBlock(), "Amonkhet");
         baseSet(set, "thou", "Hour of Devastation Tokens", SetType.TOKEN, 14, false, false);
         System.out.println("success");
     }
@@ -41,7 +43,7 @@ public class SetTest {
         System.out.print("Test Promo (Magic Online Promos): ");
         Set set = Set.fromID(UUID.fromString("638940fb-6be9-4be3-b83f-68d3902fbbe5"));
         assertEquals(set.getMtgoCode(), "prm");
-        baseSet(set, "prm", "Magic Online Promos", SetType.PROMO, 1225, true, true);
+        baseSet(set, "prm", "Magic Online Promos", SetType.PROMO, 1229, true, true);
         System.out.println("success");
     }
 
@@ -56,6 +58,8 @@ public class SetTest {
         assertNotNull(set.getReleased());
         assertNotNull(set.getIconSvgURL());
         assertNotNull(set.getSearchURL());
+        assertNotNull(set.getUrl());
+        assertNotNull(set.getScryfallURL());
 
         assertEquals(set, Set.fromCode(set.getCode()));
     }
