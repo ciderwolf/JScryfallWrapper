@@ -3,16 +3,14 @@ package com.scyrfall.api;
 import com.scyrfall.api.field.CardFace;
 import com.scyrfall.api.field.RelatedCard;
 import com.scyrfall.api.field.Symbol;
-import com.scyrfall.api.object.BulkData;
-import com.scyrfall.api.object.Card;
+import com.scyrfall.api.object.*;
 import com.scyrfall.api.field.Ruling;
-import com.scyrfall.api.object.Set;
-import com.scyrfall.api.object.ScryfallError;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -87,10 +85,20 @@ public abstract class ScryfallObject {
             case "error":
                 scryfallObject = new ScryfallError(data);
                 break;
+            case "catalog":
+                scryfallObject = new Catalog(data);
+                break;
+            case "list":
+                scryfallObject = new List(data);
+                break;
             default:
                 scryfallObject = null;
         }
         return scryfallObject;
+    }
+
+    public static <T extends ScryfallObject> T getObject(JSONObject data, Class<T> c) {
+        return c.cast(getObject(data));
     }
 
     /**
@@ -211,11 +219,11 @@ public abstract class ScryfallObject {
 
     /**
      * Represents the different colors which appear on a magic card.
-     * Values are <code>white</code>, <code>blue</code>, <code>black</code>, <code>red</code>, and
-     * <code>green</code>.
+     * Values are <code>WHITE</code>, <code>BLUE</code>, <code>BLACK</code>, <code>RED</code>, and
+     * <code>GREEN</code>.
      */
     public enum Color {
-        white, blue, black, red, green;
+        WHITE, BLUE, BLACK, RED, GREEN;
 
         public static Color fromString(String value) {
             if(value.isEmpty()) {

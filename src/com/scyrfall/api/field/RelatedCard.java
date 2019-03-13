@@ -49,21 +49,10 @@ public class RelatedCard extends ScryfallObject {
     }
 
     public enum Component {
-        token, meldPart, meldResult, comboPiece;
+        TOKEM, MELD_PART, MELD_RESULT, COMBO_PIECE;
 
         private static Component fromString(String value) {
-            if(value.equals("meld_part")) {
-                return meldPart;
-            }
-            else if(value.equals("meld_result")) {
-                return meldResult;
-            }
-            else if(value.equals("combo_piece")) {
-                return comboPiece;
-            }
-            else {
-                return token;
-            }
+            return valueOf(value.toUpperCase());
         }
     }
 

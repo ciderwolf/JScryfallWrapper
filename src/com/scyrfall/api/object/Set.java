@@ -37,7 +37,7 @@ public class Set extends ScryfallObject {
         mtgoCode = getString("mtgo_code");
         name = getString("name");
         setType = SetType.fromString(getString("set_type"));
-        blockCode = getString("blockCode");
+        blockCode = getString("block_code");
         block = getString("block");
         parentSetCode = getString("parent_set_code");
         try {
@@ -195,50 +195,50 @@ public class Set extends ScryfallObject {
 
     /**
      * <table><thead><tr><th>Type</th><th>Description</th></tr></thead>
-     * <tbody><tr><td><p><code>core</code></p></td><td><p>A yearly Magic core set (Tenth Edition, etc)</p>
-     * </td></tr><tr><td><p><code>expansion</code></p></td><td><p>A rotational expansion set in a block (Zendikar, etc)</p>
-     * </td></tr><tr><td><p><code>masters</code></p></td><td><p>A reprint set that contains no new cards (Modern Masters, etc)</p>
-     * </td></tr><tr><td><p><code>masterpiece</code></p></td><td><p>Masterpiece Series premium foil cards</p>
-     * </td></tr><tr><td><p><code>fromTheVault</code></p></td><td><p>From the Vault gift sets</p>
-     * </td></tr><tr><td><p><code>spellbook</code></p></td><td><p>Spellbook series gift sets</p>
-     * </td></tr><tr><td><p><code>premiumDeck</code></p></td><td><p>Premium Deck Series decks</p>
-     * </td></tr><tr><td><p><code>duelDeck</code></p></td><td><p>Duel Decks</p>
-     * </td></tr><tr><td><p><code>draftInnovation</code></p></td><td><p>Special draft sets, like Conspiracy and Battlebond</p>
-     * </td></tr><tr><td><p><code>treasureChest</code></p></td><td><p>Magic Online treasure chest prize sets</p>
-     * </td></tr><tr><td><p><code>commander</code></p></td><td><p>Commander preconstructed decks</p>
-     * </td></tr><tr><td><p><code>planechase</code></p></td><td><p>Planechase sets</p>
-     * </td></tr><tr><td><p><code>archenemy</code></p></td><td><p>Archenemy sets</p>
-     * </td></tr><tr><td><p><code>vanguard</code></p></td><td><p>Vanguard card sets</p>
-     * </td></tr><tr><td><p><code>funny</code></p></td><td><p>A funny un-set or set with funny promos (Unglued, Happy Holidays, etc)</p>
-     * </td></tr><tr><td><p><code>starter</code></p></td><td><p>A starter/introductory set (Portal, etc)</p>
-     * </td></tr><tr><td><p><code>box</code></p></td><td><p>A gift box set</p>
-     * </td></tr><tr><td><p><code>promo</code></p></td><td><p>A set that contains purely promotional cards</p>
-     * </td></tr><tr><td><p><code>token</code></p></td><td><p>A set made up of tokens and emblems.</p>
-     * </td></tr><tr><td><p><code>memorabilia</code></p></td><td><p>A set made up of gold-bordered, oversize, or trophy cards that are not legal</p>
+     * <tbody><tr><td><p><code>CORE</code></p></td><td><p>A yearly Magic CORE set (Tenth Edition, etc)</p>
+     * </td></tr><tr><td><p><code>EXPANSION</code></p></td><td><p>A rotational EXPANSION set in a block (Zendikar, etc)</p>
+     * </td></tr><tr><td><p><code>MASTERS</code></p></td><td><p>A reprint set that contains no new cards (Modern Masters, etc)</p>
+     * </td></tr><tr><td><p><code>MASTERPIECE</code></p></td><td><p>Masterpiece Series premium foil cards</p>
+     * </td></tr><tr><td><p><code>FROM_THE_VAULT</code></p></td><td><p>From the Vault gift sets</p>
+     * </td></tr><tr><td><p><code>SPELLBOOK</code></p></td><td><p>Spellbook series gift sets</p>
+     * </td></tr><tr><td><p><code>PREMIUM_DECK</code></p></td><td><p>Premium Deck Series decks</p>
+     * </td></tr><tr><td><p><code>DUEL_DECK</code></p></td><td><p>Duel Decks</p>
+     * </td></tr><tr><td><p><code>DRAFT_INNOVATION</code></p></td><td><p>Special draft sets, like Conspiracy and Battlebond</p>
+     * </td></tr><tr><td><p><code>TREASURE_CHEST</code></p></td><td><p>Magic Online treasure chest prize sets</p>
+     * </td></tr><tr><td><p><code>COMMANDER</code></p></td><td><p>Commander preconstructed decks</p>
+     * </td></tr><tr><td><p><code>PLANECHASE</code></p></td><td><p>Planechase sets</p>
+     * </td></tr><tr><td><p><code>ARCHENEMY</code></p></td><td><p>Archenemy sets</p>
+     * </td></tr><tr><td><p><code>VANGUARD</code></p></td><td><p>Vanguard card sets</p>
+     * </td></tr><tr><td><p><code>FUNNY</code></p></td><td><p>A FUNNY un-set or set with FUNNY promos (Unglued, Happy Holidays, etc)</p>
+     * </td></tr><tr><td><p><code>STARTER</code></p></td><td><p>A STARTER/introductory set (Portal, etc)</p>
+     * </td></tr><tr><td><p><code>BOX</code></p></td><td><p>A gift BOX set</p>
+     * </td></tr><tr><td><p><code>PROMO</code></p></td><td><p>A set that contains purely promotional cards</p>
+     * </td></tr><tr><td><p><code>TOKEN</code></p></td><td><p>A set made up of tokens and emblems.</p>
+     * </td></tr><tr><td><p><code>MEMORABILIA</code></p></td><td><p>A set made up of GOLD-bordered, oversize, or trophy cards that are not legal</p>
      * </td></tr></tbody></table>
-     * Default value is <code>core</code>.
+     * Default value is <code>CORE</code>.
      */
     public enum SetType {
-        core, expansion, masters, masterpiece, fromTheVault, spellbook, premiumDeck, duelDeck, draftInnovation,
-        treasureChest, commander, planechase, archenemy, vanguard, funny, starter, box, promo, token, memorabilia;
+        CORE, EXPANSION, MASTERS, MASTERPIECE, FROM_THE_VAULT, SPELLBOOK, PREMIUM_DECK, DUEL_DECK, DRAFT_INNOVATION,
+        TREASURE_CHEST, COMMANDER, PLANECHASE, ARCHENEMY, VANGUARD, FUNNY, STARTER, BOX, PROMO, TOKEN, MEMORABILIA;
 
         private static SetType fromString(String value) {
             switch (value) {
                 case "from_the_vault":
-                    return fromTheVault;
+                    return FROM_THE_VAULT;
                 case "premium_deck":
-                    return premiumDeck;
+                    return PREMIUM_DECK;
                 case "duel_deck":
-                    return duelDeck;
+                    return DUEL_DECK;
                 case "draft_innovation":
-                    return draftInnovation;
+                    return DRAFT_INNOVATION;
                 case "treasure_chest":
-                    return treasureChest;
+                    return TREASURE_CHEST;
                 default:
                     try {
-                        return valueOf(value);
+                        return valueOf(value.toUpperCase());
                     } catch (IllegalArgumentException e) {
-                        return core;
+                        return CORE;
                     }
             }
         }

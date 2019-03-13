@@ -1,7 +1,6 @@
 package com.scyrfall.api.field;
 
 import com.scyrfall.api.ScryfallObject;
-import com.scyrfall.api.object.Card;
 import com.scyrfall.api.query.Query;
 import org.json.JSONObject;
 
@@ -39,7 +38,7 @@ public class Ruling extends ScryfallObject {
     }
 
     /**
-     * @return A computer-readable string indicating which company produced this ruling, either wotc or scryfall.
+     * @return A computer-readable string indicating which company produced this ruling, either WOTC or SCRYFALL.
      */
     public RulingSource getSource() {
         return source;
@@ -65,7 +64,7 @@ public class Ruling extends ScryfallObject {
      * @return A <code>Card</code> object containing the corresponding card's rulings.
      */
     public static Ruling fromMtgoID(int id) {
-        return new Ruling(Query.dataFromPath("cards/mtgo/" + id + "/rulings"));
+        return new Ruling(Query.dataFromPath("cards/MTGO/" + id + "/rulings"));
     }
 
     /**
@@ -73,7 +72,7 @@ public class Ruling extends ScryfallObject {
      * @return rulings for the card with the given MTG Arena ID
      */
     public static Ruling fromArenaID(int id) {
-        return new Ruling(Query.dataFromPath("cards/arena/" + id + "/rulings"));
+        return new Ruling(Query.dataFromPath("cards/ARENA/" + id + "/rulings"));
     }
 
     /**
@@ -102,17 +101,17 @@ public class Ruling extends ScryfallObject {
     }
 
     /**
-     * Possible sources for a ruling. The only values should be <code>wotc</code> and <code>scryfall</code>.
-     * If a different value is provided in the constructor, {@link #source} will have the vaule <code>other</code>.
+     * Possible sources for a ruling. The only values should be <code>WOTC</code> and <code>SCRYFALL</code>.
+     * If a different value is provided in the constructor, {@link #source} will have the vaule <code>OTHER</code>.
      */
     public enum RulingSource {
-        wotc, scryfall, other;
+        WOTC, SCRYFALL, OTHER;
 
         private static RulingSource fromString(String value) {
             try {
-                return valueOf(value);
+                return valueOf(value.toUpperCase());
             } catch (IllegalArgumentException e) {
-                return other;
+                return OTHER;
             }
         }
     }

@@ -39,7 +39,7 @@ public class Card extends ScryfallObject {
     private CardFace[] faces;
     private double cmc;
     private Color[] colors, colorIdentity, colorIndicator;
-    private boolean foil, nonfoil, oversized, digital;
+    private boolean foil, nonfoil, oversized, digital, reserved;
     private Legalities legalities;
     private String artist, collectorNumber, flavorText, printedName, printedText, printedTypeLine, watermark;
     private BorderColor borderColor;
@@ -100,6 +100,7 @@ public class Card extends ScryfallObject {
         promo = getBoolean("promo");
         reprint = getBoolean("reprint");
         storySpotlight = getBoolean("story_spotlight");
+        reserved = getBoolean("reserved");
 
         printsSearchURL = getURL("prints_search_uri");
         rulingsURL = getURL("rulings_uri");
@@ -129,7 +130,7 @@ public class Card extends ScryfallObject {
         JSONArray games = getJSONArray("games");
         this.games = new Game[games.length()];
         for(int i = 0; i < games.length(); i++) {
-            this.games[i] = Game.valueOf(games.getString(i));
+            this.games[i] = Game.fromString(games.getString(i));
         }
 
         JSONArray colors = getJSONArray("colors");
@@ -156,7 +157,7 @@ public class Card extends ScryfallObject {
             this.multiverseIDs[i] = multiverseIDs.getInt(i);
         }
 
-        JSONArray relatedCards = getJSONArray("all_cards");
+        JSONArray relatedCards = getJSONArray("all_parts");
         allParts = new RelatedCard[relatedCards.length()];
         for(int i = 0; i < relatedCards.length(); i++) {
             allParts[i] = new RelatedCard(relatedCards.getJSONObject(i));
@@ -275,7 +276,7 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @return This loyalty if any. Note that some cards have loyalties that are not numeric, such as <code>X</code>.
+     * @return This loyalty if any. Note that some cards have LOYALTIES that are not numeric, such as <code>X</code>.
      */
     public String getLoyalty() {
         return loyalty;
@@ -306,14 +307,14 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @return This card’s power, if any. Note that some cards have powers that are not numeric, such as <code>*</code>.
+     * @return This card’s power, if any. Note that some cards have POWERS that are not numeric, such as <code>*</code>.
      */
     public String getPower() {
         return power;
     }
 
     /**
-     * @return This card’s toughness, if any. Note that some cards have toughnesses that are not numeric, such as <code>*</code>.
+     * @return This card’s toughness, if any. Note that some cards have TOUGHNESSES that are not numeric, such as <code>*</code>.
      */
     public String getToughness() {
         return toughness;
@@ -428,7 +429,7 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @return The card’s converted mana cost. Note that some funny cards have fractional mana costs.
+     * @return The card’s converted mana cost. Note that some FUNNY cards have fractional mana costs.
      */
     public double getCmc() {
         return cmc;
@@ -478,6 +479,12 @@ public class Card extends ScryfallObject {
         return oversized;
     }
 
+    /**
+     * @return <code>true</code> if this card is on the reserved list, <code>false</code> otherwise.
+     */
+    public boolean isReserved() {
+        return reserved;
+    }
 
     /**
      * @return <code>true</code> if this is a digital card on Magic Online., <code>false</code> otherwise.
@@ -572,6 +579,15 @@ public class Card extends ScryfallObject {
     @Deprecated
     public String getUsdPrice() {
         return usdPrice;
+    }
+
+    /**
+     * @return a <code>Prices</code> object which has information about
+     * this card's prices.
+     * @see Prices
+     */
+    public Prices getPrices() {
+        return prices;
     }
 
     /**
@@ -704,11 +720,11 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * Layout is <code>Layout.doubleFacedToken</code> or  <code>Layout.transform</code>
-     * @return True if this card is able to transform
+     * Layout is <code>Layout.DOUBLE_FACED_TOKEN</code> or <code>Layout.TRANSFORM</code>
+     * @return True if this card is able to TRANSFORM
      */
     public boolean hasMultipleFaces() {
-        return layout == Layout.doubleFacedToken || layout == Layout.transform;
+        return layout == Layout.DOUBLE_FACED_TOKEN || layout == Layout.TRANSFORM;
     }
 
     /**
@@ -787,7 +803,7 @@ public class Card extends ScryfallObject {
      * @return A <code>Card</code> object containing the corresponding card's data.
      */
     public static Card fromMtgoID(int id) {
-        return new Card(Query.dataFromPath("cards/mtgo/" + id));
+        return new Card(Query.dataFromPath("cards/MTGO/" + id));
     }
 
     /**
@@ -795,7 +811,7 @@ public class Card extends ScryfallObject {
      * @return the card with the given MTG Arena ID
      */
     public static Card fromArenaID(int id) {
-        return new Card(Query.dataFromPath("cards/arena/" + id));
+        return new Card(Query.dataFromPath("cards/ARENA/" + id));
     }
 
     /**
@@ -833,10 +849,29 @@ public class Card extends ScryfallObject {
     /**
      * @param setCode the code for the set of the card to be retrieved
      * @param collectorsNumber the collectors number of the card to be retrieved
+     * @return the card of the specified collectors number from the specified set
+     */
+    public static Card fromSet(String setCode, String collectorsNumber) {
+        return new Card(Query.dataFromPath("cards/" + setCode + "/" + collectorsNumber));
+    }
+
+    /**
+     * @param setCode the code for the set of the card to be retrieved
+     * @param collectorsNumber the collectors number of the card to be retrieved
      * @param lang The 2-3 character language code.
      * @return the card of the specified collectors number from the specified set
      */
     public static Card fromSet(String setCode, int collectorsNumber, String lang) {
+        return new Card(Query.dataFromPath("cards/" + setCode + "/" + collectorsNumber + "/" + lang));
+    }
+
+    /**
+     * @param setCode the code for the set of the card to be retrieved
+     * @param collectorsNumber the collectors number of the card to be retrieved
+     * @param lang The 2-3 character language code.
+     * @return the card of the specified collectors number from the specified set
+     */
+    public static Card fromSet(String setCode, String collectorsNumber, String lang) {
         return new Card(Query.dataFromPath("cards/" + setCode + "/" + collectorsNumber + "/" + lang));
     }
 
@@ -885,36 +920,36 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * Different ways in which a Magic card can be laid out. The options are:
-     * <li><code>normal</code> - A standard Magic card with one face
-     * <li><code>split</code> - A split-faced card (includes cards with fuse and aftermath)
-     * <li><code>flip</code> - Cards that invert vertically with the flip keyword (like those from Kamigawa)
-     * <li><code>transform</code> - Double-sided cards that transform (Like those from Innistrad)
-     * <li><code>meld</code> - Cards with meld parts printed on the back
-     * <li><code>leveler</code> - Cards with Level Up (from Rise of the Eldrazi)
-     * <li><code>saga</code> - Saga-type cards (From Dominaria)
-     * <li><code>planar</code> - Plane and Phenomenon-type cards
-     * <li><code>scheme</code> - Scheme-type cards
-     * <li><code>vanguard</code> - Vanguard-type cards
-     * <li><code>token</code> - Token cards
-     * <li><code>doubleFacedToken</code> - Tokens with another token printed on the back
-     * <li><code>emblem</code> - Emblem cards
-     * <li><code>augment</code> - Cards with Augment
-     * <li><code>host</code> - Host-type cards
+     * Different ways in which a Magic card can be laid out. The default value is NORMAL. The options are:
+     * <li><code>NORMAL</code> - A standard Magic card with one face
+     * <li><code>SPLIT</code> - A split-faced card (includes cards with fuse and aftermath)
+     * <li><code>FLIP</code> - Cards that invert vertically with the flip keyword (like those from Kamigawa)
+     * <li><code>TRANSFORM</code> - Double-sided cards that transform (Like those from Innistrad)
+     * <li><code>MELD</code> - Cards with meld parts printed on the back
+     * <li><code>LEVELER</code> - Cards with Level Up (from Rise of the Eldrazi)
+     * <li><code>SAGA</code> - Saga-type cards (From Dominaria)
+     * <li><code>PLANAR</code> - Plane and Phenomenon-type cards
+     * <li><code>SCHEME</code> - Scheme-type cards
+     * <li><code>VANGUARD</code> - Vanguard-type cards
+     * <li><code>TOKEN</code> - Token cards
+     * <li><code>DOUBLE_FACED_TOKEN</code> - Tokens with another token printed on the back
+     * <li><code>EMBLEM</code> - Emblem cards
+     * <li><code>AUGMENT</code> - Cards with Augment
+     * <li><code>HOST</code> - Host-type cards
      */
     public enum Layout {
-        normal, split, flip, transform, meld, leveler, saga, planar, scheme, vanguard, token, doubleFacedToken, emblem,
-        augment, host;
+        NORMAL, SPLIT, FLIP, TRANSFORM, MELD, LEVELER, SAGA, PLANAR, SCHEME, VANGUARD, TOKEN, DOUBLE_FACED_TOKEN, EMBLEM,
+        AUGMENT, HOST;
 
         private static Layout fromString(String value) {
             if(value.equals("double_faced_token")) {
-                return doubleFacedToken;
+                return DOUBLE_FACED_TOKEN;
             }
             else {
                 try {
-                    return valueOf(value);
+                    return valueOf(value.toUpperCase());
                 } catch (IllegalArgumentException e) {
-                    return normal;
+                    return NORMAL;
                 }
             }
         }
@@ -922,47 +957,47 @@ public class Card extends ScryfallObject {
 
     /**
      * Different border colors a card can have.
-     * If the border color field is missing or malformed, the card's border color will be <code>BorderColor.black</code>
+     * If the border color field is missing or malformed, the card's border color will be <code>BorderColor.BLACK</code>
      */
     public enum BorderColor {
-        black, borderless, gold, silver, white;
+        BLACK, BORDERLESS, GOLD, SILVER, WHITE;
         private static BorderColor fromString(String value) {
             try {
-                return valueOf(value);
+                return valueOf(value.toUpperCase());
             } catch (IllegalArgumentException e) {
-                return black;
+                return BLACK;
             }
         }
     }
 
     /**
      * Different card frames used on magic cards over the years
-     * <li><code>original</code> - Corresponds to Scyrfall's <code>1993</code> frame.
+     * <li><code>ORIGINAL</code> - Corresponds to Scyrfall's <code>1993</code> frame.
      * Used from Alpha to Mirage
-     * <li><code>old</code> - Corresponds to Scyrfall's <code>1997</code> frame.
+     * <li><code>OLD</code> - Corresponds to Scyrfall's <code>1997</code> frame.
      * Used from Mirage to Scourge
-     * <li><code>modern</code> - Corresponds to Scyrfall's <code>2003</code> frame.
+     * <li><code>MODERN</code> - Corresponds to Scyrfall's <code>2003</code> frame.
      * Used from Mirrodin to M15
-     * <li><code>m15</code> - Corresponds to Scyrfall's <code>2015</code> frame.
+     * <li><code>M15</code> - Corresponds to Scyrfall's <code>2015</code> frame.
      * Used in M15 onwards
-     * <li><code>future</code> - Corresponds to Scyrfall's <code>future</code> frame.
-     * Used on cards from the future.
+     * <li><code>FUTURE</code> - Corresponds to Scyrfall's <code>FUTURE</code> frame.
+     * Used on cards from the FUTURE.
      */
     public enum Frame {
-        original, old, modern, m15, future;
+        ORIGINAL, OLD, MODERN, M15, FUTURE;
 
         private static Frame fromString(String value) {
             switch (value) {
                 case "1993":
-                    return old;
+                    return OLD;
                 case "1997":
-                    return original;
+                    return ORIGINAL;
                 case "2003":
-                    return modern;
+                    return MODERN;
                 case "2015":
-                    return m15;
-                case "future":
-                    return future;
+                    return M15;
+                case "FUTURE":
+                    return FUTURE;
                 default:
                     return null;
             }
@@ -971,61 +1006,64 @@ public class Card extends ScryfallObject {
 
     /**
      * The different possible effects applied to the frame of a card:
-     * <li><code>legendary</code> - The legendary crown introduced in Dominaria
-     * <li><code>miracle</code> - The miracle frame effect
-     * <li><code>nyxtouched</code> - The Nyx-touched frame effect (from Theros block)
-     * <li><code>draft</code> - The draft-matters frame effect (from Conspiracy sets)
-     * <li><code>devoid</code> - The Devoid frame effect (from Battle for Zendikar block)
-     * <li><code>tombstone</code> - The Odyssey tombstone mark
-     * <li><code>colorshifted</code> - A colorshifted frame (from Planar Chaos)
-     * <li><code>sunMoonDFC</code> - The sun and moon transform marks (from Innistrad block)
-     * <li><code>compassLandDFC</code> - The compass and land transform marks (from Ixalan block)
-     * <li><code>originPwdDFC</code> - The Origins and planeswalker transform marks (from Magic Origins)
-     * <li><code>moonEldraziDFC</code> - The moon and Eldrazi transform marks (from Eldritch Moon)
-     * <li><code>none</code> - No frame effect
+     * <li><code>LEGENDARY</code> - The legendary crown introduced in Dominaria
+     * <li><code>MIRACLE</code> - The miracle frame effect
+     * <li><code>NYXTOUCHED</code> - The Nyx-touched frame effect (from Theros block)
+     * <li><code>DRAFT</code> - The DRAFT-matters frame effect (from Conspiracy sets)
+     * <li><code>DEVOID</code> - The Devoid frame effect (from Battle for Zendikar block)
+     * <li><code>TOMBSTONE</code> - The Odyssey tombstone mark
+     * <li><code>COLORSHIFTED</code> - A colorshifted frame (from Planar Chaos)
+     * <li><code>SUN_MOON_DFC</code> - The sun and moon transform marks (from Innistrad block)
+     * <li><code>COMPASS_LAND_DFC</code> - The compass and land transform marks (from Ixalan block)
+     * <li><code>ORIGIN_PW_DFC</code> - The Origins and planeswalker transform marks (from Magic Origins)
+     * <li><code>MOON_ELDRAZI_DFC</code> - The moon and Eldrazi transform marks (from Eldritch Moon)
+     * <li><code>NONE</code> - No frame effect
      */
     public enum FrameEffect {
-        legendary, miracle, nyxtouched, draft, devoid, tombstone, colorshifted, sunMoonDFC, compassLandDFC, originPwdDFC,
-        moonEldraziDFC, none;
+        LEGENDARY, MIRACLE, NYXTOUCHED, DRAFT, DEVOID, TOMBSTONE, COLORSHIFTED, SUN_MOON_DFC, COMPASS_LAND_DFC, ORIGIN_PW_DFC,
+        MOON_ELDRAZI_DFC, NONE;
 
         private static FrameEffect fromString(String value) {
             switch (value) {
                 case "sunmoondfc":
-                    return sunMoonDFC;
+                    return SUN_MOON_DFC;
                 case "compasslanddfc":
-                    return compassLandDFC;
+                    return COMPASS_LAND_DFC;
                 case "originpwdfc":
-                    return originPwdDFC;
+                    return ORIGIN_PW_DFC;
                 case "mooneldrazidfc":
-                    return moonEldraziDFC;
+                    return MOON_ELDRAZI_DFC;
                 case "":
-                    return none;
+                    return NONE;
                 default:
-                    return valueOf(value);
+                    return valueOf(value.toUpperCase());
             }
         }
     }
 
     /**
-     * The possible Magic games where a given card can exist: paper, arena, and mtgo.
+     * The possible Magic games where a given card can exist: PAPER, ARENA, and MTGO.
      */
     public enum Game {
-        paper, arena, mtgo;
+        PAPER, ARENA, MTGO;
+        public static Game fromString(String value) {
+            return valueOf(value.toUpperCase());
+        }
     }
 
     /**
-     * Different rarities a card can have: common, uncommon, rare, and mythic.
-     * If a card would have the <code>special</code> rarity, it is assigned to <code>rare</code>
-     * If the rarity field is missing or malformed, the the card's rarity will be <code>Rarity.none</code>
+     * Different rarities a card can have: COMMON, UNCOMMON, RARE, and MYTHIC.
+     * If a card would have the <code>special</code> rarity, it is assigned to <code>RARE</code>
+     * If the rarity field is missing or malformed, the the card's rarity will be <code>Rarity.NONE</code>
      */
     public enum Rarity {
-        common, uncommon, rare, mythic, none;
+        COMMON, UNCOMMON, RARE, MYTHIC, NONE;
 
         private static Rarity fromString(String value) {
             try {
-                return valueOf(value);
+                return valueOf(value.toUpperCase());
             } catch (IllegalArgumentException e) {
-                return none;
+                return NONE;
             }
         }
     }

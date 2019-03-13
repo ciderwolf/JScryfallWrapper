@@ -1,6 +1,8 @@
 package com.scyrfall.api.query;
 
 import com.scyrfall.api.ScryfallObject;
+import com.scyrfall.api.field.Images;
+import com.scyrfall.api.object.Card;
 import com.scyrfall.api.object.List;
 import com.scyrfall.api.object.Set;
 import org.json.JSONObject;
@@ -76,5 +78,9 @@ public class Query {
             e.printStackTrace();
             return "";
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Card.namedFuzzy("Brisela, Voice of Nightmares"));
     }
 }

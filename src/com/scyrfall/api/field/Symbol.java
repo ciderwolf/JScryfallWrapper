@@ -27,7 +27,7 @@ public class Symbol extends ScryfallObject {
         transposeable = getBoolean("transposable");
         representsMana = getBoolean("represents_mana");
         appearsInManaCosts = getBoolean("appears_in_mana_costs");
-        funny = getBoolean("funny");
+        funny = getBoolean("FUNNY");
 
         cmc = getDouble("cmc");
 
@@ -62,7 +62,7 @@ public class Symbol extends ScryfallObject {
     }
 
     /**
-     * @return An array of plaintext versions of this symbol that Gatherer uses on old cards to describe original
+     * @return An array of plaintext versions of this symbol that Gatherer uses on OLD cards to describe ORIGINAL
      * printed text. For example: {W} has ["oW", "ooW"] as alternates.
      */
     public String getGathererAlternates() {
@@ -94,14 +94,14 @@ public class Symbol extends ScryfallObject {
     }
 
     /**
-     * @return True if this symbol is only used on funny cards or Un-cards.
+     * @return True if this symbol is only used on FUNNY cards or Un-cards.
      */
     public boolean isFunny() {
         return funny;
     }
 
     /**
-     * @return A decimal number representing this symbol’s converted mana cost. Note that mana symbols from funny sets
+     * @return A decimal number representing this symbol’s converted mana cost. Note that mana symbols from FUNNY sets
      * can have fractional converted mana costs.
      */
     public double getCmc() {
@@ -166,7 +166,7 @@ public class Symbol extends ScryfallObject {
                 ", transposeable=" + transposeable +
                 ", representsMana=" + representsMana +
                 ", appearsInManaCosts=" + appearsInManaCosts +
-                ", funny=" + funny +
+                ", FUNNY=" + funny +
                 ", cmc=" + cmc +
                 ", colors=" + Arrays.toString(colors) +
                 '}';
