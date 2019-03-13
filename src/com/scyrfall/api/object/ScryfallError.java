@@ -25,7 +25,7 @@ public class ScryfallError extends ScryfallObject {
         details = getString("details");
         type = getString("type");
 
-        if(data.has("warnings")) {
+        if (data.has("warnings")) {
             JSONArray warnings = getJSONArray("warnings");
             this.warnings = new String[warnings.length()];
             for (int i = 0; i < warnings.length(); i++) {

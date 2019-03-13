@@ -2,15 +2,13 @@ package com.scyrfall.api;
 
 import com.scyrfall.api.field.CardFace;
 import com.scyrfall.api.field.RelatedCard;
+import com.scyrfall.api.field.Ruling;
 import com.scyrfall.api.field.Symbol;
 import com.scyrfall.api.object.*;
-import com.scyrfall.api.field.Ruling;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -25,9 +23,9 @@ public abstract class ScryfallObject {
     private boolean isError;
     protected static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
-    protected ScryfallObject(JSONObject data){
+    protected ScryfallObject(JSONObject data) {
         this.data = data;
-        if(getString("object").equals("error")) {
+        if (getString("object").equals("error")) {
             this.error = new ScryfallError(data);
             isError = true;
         } else {
@@ -35,7 +33,8 @@ public abstract class ScryfallObject {
         }
     }
 
-    protected ScryfallObject() {}
+    protected ScryfallObject() {
+    }
 
     /**
      * @return true if the Scryfall API returned an error when retrieving this object. False if this object was retrieved
@@ -103,14 +102,15 @@ public abstract class ScryfallObject {
 
     /**
      * Converts an array of <code>ScryfallObject</code>s to an array of the specified type
+     *
      * @param list the list of objects to be converted
-     * @param out the list into which the objects will be inserted
-     * @param <T> the type of the ScryfallObjects to be converted
+     * @param out  the list into which the objects will be inserted
+     * @param <T>  the type of the ScryfallObjects to be converted
      * @return the provided list as an array of the specified type
      */
     public static <T extends ScryfallObject> T[] convertArray(ScryfallObject[] list, T[] out) {
         out = Arrays.copyOf(out, list.length);
-        for(int i = 0; i < list.length; i++) {
+        for (int i = 0; i < list.length; i++) {
             out[i] = (T) out.getClass().getComponentType().cast(list[i]);
         }
         return out;
@@ -198,6 +198,7 @@ public abstract class ScryfallObject {
      * Creates a <code>URL</code> from the string located at the specified key.
      * Returns null if they key is invalid or if an exception is thrown during
      * <code>URL</code> initialization.
+     *
      * @param key The key of the <code>URL</code> to be created
      * @return A <code>URL</code> from the string located at the specified key
      */
@@ -226,7 +227,7 @@ public abstract class ScryfallObject {
         WHITE, BLUE, BLACK, RED, GREEN;
 
         public static Color fromString(String value) {
-            if(value.isEmpty()) {
+            if (value.isEmpty()) {
                 return null;
             }
             String colors = "WUBRG";

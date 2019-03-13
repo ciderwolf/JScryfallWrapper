@@ -12,6 +12,7 @@ import java.util.UUID;
 /**
  * Magic cards can have multiple faces. The faces could be shown divided on the front of the card as in split cards and
  * flip cards, or the card can be double-sided as in transform cards and double-sided tokens.
+ *
  * @see Card#getFaces()
  */
 public class CardFace extends ScryfallObject {
@@ -40,13 +41,13 @@ public class CardFace extends ScryfallObject {
 
         JSONArray colors = getJSONArray("colors");
         this.colors = new Color[colors.length()];
-        for(int i = 0; i < colors.length(); i++) {
+        for (int i = 0; i < colors.length(); i++) {
             this.colors[i] = Color.fromString(colors.getString(i));
         }
 
         JSONArray colorIndicator = getJSONArray("color_indicator");
         this.colorIndicator = new Color[colorIndicator.length()];
-        for(int i = 0; i < colorIndicator.length(); i++) {
+        for (int i = 0; i < colorIndicator.length(); i++) {
             this.colorIndicator[i] = Color.fromString(colorIndicator.getString(i));
         }
 

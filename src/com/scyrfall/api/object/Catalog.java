@@ -1,7 +1,7 @@
 package com.scyrfall.api.object;
 
-import com.scyrfall.api.query.Query;
 import com.scyrfall.api.ScryfallObject;
+import com.scyrfall.api.query.Query;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,10 +25,10 @@ public class Catalog extends ScryfallObject {
         url = getURL("uri");
         totalValues = getInt("total_values");
 
-        if(data.has("data")) {
+        if (data.has("data")) {
             JSONArray values = getJSONArray("data");
             this.values = new String[values.length()];
-            for(int i = 0; i < values.length(); i++) {
+            for (int i = 0; i < values.length(); i++) {
                 this.values[i] = values.getString(i);
             }
         }

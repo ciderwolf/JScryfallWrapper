@@ -4,7 +4,7 @@ import com.scyrfall.api.ScryfallObject.Color;
 import com.scyrfall.api.field.Symbol;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static tests.ScryfallTest.assertArrayEqualsIgnoreOrder;
 
 public class SymbolTest {
@@ -20,7 +20,7 @@ public class SymbolTest {
         Symbol[] symbols = Symbol.getSymbols();
         final double totalCost = 1000343.5; // subtract 1 because Infinity's cmc = -1
         double sumCost = 0;
-        for(Symbol s : symbols) {
+        for (Symbol s : symbols) {
             assertEquals(s.isFunny(), isFunny(s));
             sumCost += s.getCmc();
         }
@@ -34,15 +34,15 @@ public class SymbolTest {
 
     @Test
     public void costs() {
-        baseCost(Symbol.parseManaString("{2}{g}{2}"), "{4}{G}", 5.0, new Color[] {Color.GREEN}, false,
+        baseCost(Symbol.parseManaString("{2}{g}{2}"), "{4}{G}", 5.0, new Color[]{Color.GREEN}, false,
                 true, false);
-        baseCost(Symbol.parseManaString("XURW"), "{X}{U}{R}{W}", 3.0, new Color[] {Color.WHITE, Color.BLUE, Color.RED},
+        baseCost(Symbol.parseManaString("XURW"), "{X}{U}{R}{W}", 3.0, new Color[]{Color.WHITE, Color.BLUE, Color.RED},
                 false, false, true);
         baseCost(Symbol.parseManaString("½CC"), "{½}{C}{C}", 2.5, new Color[]{}, true, false, false);
     }
 
     private void baseCost(Symbol symbol, String cost, double cmc, Color[] colors, boolean colorless,
-                           boolean monoColored, boolean multiColored) {
+                          boolean monoColored, boolean multiColored) {
 
         assertEquals(symbol.getCost(), cost);
         assertEquals(symbol.getCmc(), cmc, ScryfallTest.DELTA);

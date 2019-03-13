@@ -12,11 +12,12 @@ import java.util.Objects;
  */
 public class Legalities extends ScryfallObject {
     private HashMap<Format, Legality> legalityHashMap;
+
     public Legalities(JSONObject data) {
         super(data);
         legalityHashMap = new HashMap<>();
-        if(!data.isEmpty()) {
-            for(String key : data.keySet()) {
+        if (!data.isEmpty()) {
+            for (String key : data.keySet()) {
                 legalityHashMap.put(Format.fromString(key), Legality.fromString(data.getString(key)));
             }
         }
@@ -25,11 +26,12 @@ public class Legalities extends ScryfallObject {
     /**
      * If this object doesn't contain information about the requested format,
      * this method will return {@link Legality#NOT_LEGAL}
+     *
      * @param format the format to check
      * @return the legality of this card in the given format
      */
     public Legality getFormatLegality(Format format) {
-        if(legalityHashMap.containsKey(format)) {
+        if (legalityHashMap.containsKey(format)) {
             return legalityHashMap.get(format);
         }
         return Legality.NOT_LEGAL;
@@ -49,6 +51,7 @@ public class Legalities extends ScryfallObject {
      */
     public enum Legality {
         LEGAL, NOT_LEGAL, RESTRICTED, BANNED;
+
         private static Legality fromString(String value) {
             return valueOf(value.toUpperCase());
         }
@@ -64,10 +67,9 @@ public class Legalities extends ScryfallObject {
         STANDARD, FUTURE, FRONTIER, MODERN, LEGACY, PAUPER, VINTAGE, PENNY_DREADFUL, COMMANDER, DUEL, OLDSCHOOL;
 
         public static Format fromString(String value) {
-            if(value.equalsIgnoreCase("penny")) {
+            if (value.equalsIgnoreCase("penny")) {
                 return PENNY_DREADFUL;
-            }
-            else {
+            } else {
                 return valueOf(value.toUpperCase());
             }
         }

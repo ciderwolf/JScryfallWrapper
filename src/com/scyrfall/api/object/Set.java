@@ -1,8 +1,8 @@
 package com.scyrfall.api.object;
 
+import com.scyrfall.api.ScryfallObject;
 import com.scyrfall.api.query.JSONLoader;
 import com.scyrfall.api.query.Query;
-import com.scyrfall.api.ScryfallObject;
 import org.json.JSONObject;
 
 import java.net.URL;

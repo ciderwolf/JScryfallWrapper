@@ -1,9 +1,9 @@
 package tests;
 
+import com.scyrfall.api.ScryfallObject.Color;
 import com.scyrfall.api.field.Images;
 import com.scyrfall.api.object.Card;
 import com.scyrfall.api.object.Card.*;
-import com.scyrfall.api.ScryfallObject.Color;
 import org.json.JSONObject;
 import org.junit.Test;
 
@@ -35,11 +35,11 @@ public class CardTest {
         assertEquals(card.getManaCost(), "");
 
         basicCard(card, UUID.fromString("11bf83bb-c95b-4b4f-9a56-ce7a1816307a"), "en",
-                UUID.fromString("edd531b9-f615-4399-8c8c-1c5e18c4acbf"), 1.0,new Color[]{Color.BLUE},
+                UUID.fromString("edd531b9-f615-4399-8c8c-1c5e18c4acbf"), 1.0, new Color[]{Color.BLUE},
                 "Delver of Secrets // Insectile Aberration", true, Layout.TRANSFORM, false, false,
                 "Creature — Human Wizard // Creature — Human Insect", BorderColor.BLACK, "51",
-                false, FrameEffect.SUN_MOON_DFC, Frame.MODERN, false, new Game[] {Game.MTGO, Game.PAPER},
-                true,  Rarity.COMMON, false, "isd");
+                false, FrameEffect.SUN_MOON_DFC, Frame.MODERN, false, new Game[]{Game.MTGO, Game.PAPER},
+                true, Rarity.COMMON, false, "isd");
         System.out.println("success");
     }
 
@@ -50,9 +50,9 @@ public class CardTest {
         assertEquals(card.getManaCost(), "{W}{U}{U}");
 
         basicCard(card, UUID.fromString("c1a316a5-04a3-4128-8d62-58192e2265a5"), "fr",
-                UUID.fromString("132ca99a-a3c7-4ed6-b4d0-0edcd7140ca2"), 3.0, new Color[] {Color.BLUE, Color.WHITE},
+                UUID.fromString("132ca99a-a3c7-4ed6-b4d0-0edcd7140ca2"), 3.0, new Color[]{Color.BLUE, Color.WHITE},
                 "Absorb", true, Layout.NORMAL, false, false, "Instant", BorderColor.BLACK, "151",
-                false, FrameEffect.NONE, Frame.M15, false, new Game[] {Game.ARENA, Game.MTGO, Game.PAPER}, false,
+                false, FrameEffect.NONE, Frame.M15, false, new Game[]{Game.ARENA, Game.MTGO, Game.PAPER}, false,
                 Rarity.RARE, true, "rna");
         System.out.println("success");
     }
@@ -65,9 +65,9 @@ public class CardTest {
 
 
         basicCard(card, UUID.fromString("ab68bd00-7151-4a6b-ad98-134ca02d7d59"), "en",
-                UUID.fromString("b8376cca-ea96-478a-8e98-c4482031300a"), 5.0, new Color[] {Color.BLACK, Color.GREEN, Color.RED, Color.BLUE, Color.WHITE},
+                UUID.fromString("b8376cca-ea96-478a-8e98-c4482031300a"), 5.0, new Color[]{Color.BLACK, Color.GREEN, Color.RED, Color.BLUE, Color.WHITE},
                 "Sliver Queen", false, Layout.NORMAL, true, true, "Legendary Creature — Sliver",
-                BorderColor.BLACK, "9", false, FrameEffect.NONE, Frame.MODERN, false, new Game[] {},
+                BorderColor.BLACK, "9", false, FrameEffect.NONE, Frame.MODERN, false, new Game[]{},
                 true, Rarity.RARE, true, "ocm1");
         System.out.println("success");
     }
@@ -78,9 +78,9 @@ public class CardTest {
         Card card = Card.fromID(UUID.fromString("f8772631-d4a1-440d-ac89-ac6659bdc073"));
         assertEquals(card.getManaCost(), "");
         basicCard(card, UUID.fromString("f8772631-d4a1-440d-ac89-ac6659bdc073"), "en",
-                UUID.fromString("b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6"), 0.0, new Color[] {Color.GREEN},
+                UUID.fromString("b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6"), 0.0, new Color[]{Color.GREEN},
                 "Forest", true, Layout.NORMAL, false, false, "Basic Land — Forest",
-                BorderColor.BORDERLESS, "216", false, FrameEffect.NONE, Frame.M15, true, new Game[] {Game.PAPER},
+                BorderColor.BORDERLESS, "216", false, FrameEffect.NONE, Frame.M15, true, new Game[]{Game.PAPER},
                 true, Rarity.COMMON, true, "ust");
 
         System.out.println("success");

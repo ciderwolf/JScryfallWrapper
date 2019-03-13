@@ -11,6 +11,7 @@ import java.util.UUID;
 /**
  * Cards that are closely related to other cards (because they call them by name, or generate a token, or meld, etc)
  * have a getAllParts() property that contains Related Card objects. Those objects have the following properties:
+ *
  * @see Card#getAllParts()
  */
 public class RelatedCard extends ScryfallObject {

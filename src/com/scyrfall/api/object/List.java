@@ -1,7 +1,7 @@
 package com.scyrfall.api.object;
 
-import com.scyrfall.api.query.Query;
 import com.scyrfall.api.ScryfallObject;
+import com.scyrfall.api.query.Query;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -28,7 +28,7 @@ public class List extends ScryfallObject {
         hasMore = getBoolean("has_more");
         totalCards = getInt("total_cards");
 
-        if(data.has("warnings")) {
+        if (data.has("warnings")) {
             JSONArray warnings = getJSONArray("warnings");
             this.warnings = new String[warnings.length()];
             for (int i = 0; i < warnings.length(); i++) {
@@ -80,10 +80,9 @@ public class List extends ScryfallObject {
      * @return If there is a page beyond this page, returns a List object for that page.
      */
     public List getNextPage() {
-        if(hasMore) {
+        if (hasMore) {
             return new List(Query.dataFromURL(nextPageURL));
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -97,7 +96,7 @@ public class List extends ScryfallObject {
         boolean repeat = true;
         while (repeat) {
             repeat = current.hasMore;
-            for(int i = 0; i < current.data.length(); i++) {
+            for (int i = 0; i < current.data.length(); i++) {
                 JSONObject object = current.data.getJSONObject(i);
                 total.add(ScryfallObject.getObject(object));
             }
@@ -124,9 +123,9 @@ public class List extends ScryfallObject {
         boolean repeat = true;
         while (repeat) {
             repeat = current.hasMore;
-            for(int i = 0; i < current.data.length(); i++) {
+            for (int i = 0; i < current.data.length(); i++) {
                 JSONObject object = current.data.getJSONObject(i);
-                if(object.getString("object").equals("card")) {
+                if (object.getString("object").equals("card")) {
                     total.add(new Card(object));
                 }
             }

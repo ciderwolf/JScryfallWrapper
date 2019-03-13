@@ -1,7 +1,7 @@
 package com.scyrfall.api.field;
 
-import com.scyrfall.api.query.Query;
 import com.scyrfall.api.ScryfallObject;
+import com.scyrfall.api.query.Query;
 import org.json.JSONObject;
 
 import java.awt.image.BufferedImage;

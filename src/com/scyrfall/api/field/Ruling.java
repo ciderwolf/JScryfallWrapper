@@ -60,6 +60,7 @@ public class Ruling extends ScryfallObject {
 
     /**
      * Retrieves rulings for a card with the given MTGO id.
+     *
      * @param id The MTGO id the of the card for which rulings should be retrieved.
      * @return A <code>Card</code> object containing the corresponding card's rulings.
      */
@@ -92,7 +93,7 @@ public class Ruling extends ScryfallObject {
     }
 
     /**
-     * @param setCode the code for the set of the card for which rulings should be retrieved
+     * @param setCode          the code for the set of the card for which rulings should be retrieved
      * @param collectorsNumber the collectors number of the card for which rulings should be retrieved
      * @return rulings for the card of the specified collectors number from the specified set
      */

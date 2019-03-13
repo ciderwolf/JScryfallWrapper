@@ -35,7 +35,7 @@ public class Symbol extends ScryfallObject {
 
         JSONArray colors = getJSONArray("colors");
         this.colors = new Color[colors.length()];
-        for(int i = 0; i < colors.length(); i++) {
+        for (int i = 0; i < colors.length(); i++) {
             this.colors[i] = Color.fromString(colors.getString(i));
         }
     }
@@ -147,9 +147,10 @@ public class Symbol extends ScryfallObject {
 
     /**
      * Parses the given mana cost parameter and returns Scryfall’s interpretation.
-     *
+     * <p>
      * The server understands most community shorthand for mana costs (such as 2WW for {2}{W}{W}). Symbols can also be
      * out of order, lowercase, or have multiple colorless costs (such as 2{g}2 for {4}{G}).
+     *
      * @param mana The mana string to parse.
      * @return A Symbol object describing the parsed string.
      */

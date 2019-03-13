@@ -1,8 +1,8 @@
 package com.scyrfall.api.object;
 
+import com.scyrfall.api.ScryfallObject;
 import com.scyrfall.api.field.*;
 import com.scyrfall.api.query.Query;
-import com.scyrfall.api.ScryfallObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -129,41 +129,41 @@ public class Card extends ScryfallObject {
 
         JSONArray games = getJSONArray("games");
         this.games = new Game[games.length()];
-        for(int i = 0; i < games.length(); i++) {
+        for (int i = 0; i < games.length(); i++) {
             this.games[i] = Game.fromString(games.getString(i));
         }
 
         JSONArray colors = getJSONArray("colors");
         this.colors = new Color[colors.length()];
-        for(int i = 0; i < colors.length(); i++) {
+        for (int i = 0; i < colors.length(); i++) {
             this.colors[i] = Color.fromString(colors.getString(i));
         }
 
         JSONArray colorIdentity = getJSONArray("color_identity");
         this.colorIdentity = new Color[colorIdentity.length()];
-        for(int i = 0; i < colorIdentity.length(); i++) {
+        for (int i = 0; i < colorIdentity.length(); i++) {
             this.colorIdentity[i] = Color.fromString(colorIdentity.getString(i));
         }
 
         JSONArray colorIndicator = getJSONArray("color_indicator");
         this.colorIndicator = new Color[colorIndicator.length()];
-        for(int i = 0; i < colorIndicator.length(); i++) {
+        for (int i = 0; i < colorIndicator.length(); i++) {
             this.colorIndicator[i] = Color.fromString(colorIndicator.getString(i));
         }
 
         JSONArray multiverseIDs = getJSONArray("multiverse_ids");
         this.multiverseIDs = new int[multiverseIDs.length()];
-        for(int i = 0; i < multiverseIDs.length(); i++) {
+        for (int i = 0; i < multiverseIDs.length(); i++) {
             this.multiverseIDs[i] = multiverseIDs.getInt(i);
         }
 
         JSONArray relatedCards = getJSONArray("all_parts");
         allParts = new RelatedCard[relatedCards.length()];
-        for(int i = 0; i < relatedCards.length(); i++) {
+        for (int i = 0; i < relatedCards.length(); i++) {
             allParts[i] = new RelatedCard(relatedCards.getJSONObject(i));
         }
 
-        if(data.has("card_faces")) {
+        if (data.has("card_faces")) {
             JSONArray faces = getJSONArray("card_faces");
             this.faces = new CardFace[faces.length()];
             for (int i = 0; i < faces.length(); i++) {
@@ -175,7 +175,7 @@ public class Card extends ScryfallObject {
         legalities = new Legalities(getJSONObject("legalities"));
         prices = new Prices(getJSONObject("prices"));
 
-        if(data.has("related_uris")) {
+        if (data.has("related_uris")) {
             JSONObject relatedURLs = getJSONObject("related_uris");
             this.relatedURLs = new HashMap<>();
             for (int i = 0; i < relatedURLs.names().length(); i++) {
@@ -188,7 +188,7 @@ public class Card extends ScryfallObject {
             }
         }
 
-        if(data.has("purchase_uris")) {
+        if (data.has("purchase_uris")) {
             JSONObject purchaseURLs = getJSONObject("purchase_uris");
             this.purchaseURLs = new HashMap<>();
             for (int i = 0; i < purchaseURLs.names().length(); i++) {
@@ -332,8 +332,8 @@ public class Card extends ScryfallObject {
      */
     public String[] getTypes() {
         ArrayList<String> types = new ArrayList<>();
-        for(String type : TYPES) {
-            if(typeLine.contains(type)) {
+        for (String type : TYPES) {
+            if (typeLine.contains(type)) {
                 types.add(type);
             }
         }
@@ -345,8 +345,8 @@ public class Card extends ScryfallObject {
      */
     public String[] getSupertypes() {
         ArrayList<String> types = new ArrayList<>();
-        for(String type : SUPERTYPES) {
-            if(typeLine.contains(type)) {
+        for (String type : SUPERTYPES) {
+            if (typeLine.contains(type)) {
                 types.add(type);
             }
         }
@@ -357,7 +357,7 @@ public class Card extends ScryfallObject {
      * @return an array of this card's subtypes (eg. Human, Trap, Aura, etc)
      */
     public String[] getSubtypes() {
-        if(typeLine.contains(EM_DASH)) {
+        if (typeLine.contains(EM_DASH)) {
             return typeLine.substring(typeLine.indexOf(EM_DASH)).split(" ");
         }
         return new String[0];
@@ -640,8 +640,8 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @see Game
      * @return A list of games that this card print is available in.
+     * @see Game
      */
     public Game[] getGames() {
         return games;
@@ -670,8 +670,8 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @see Rarity
      * @return This card's rarity
+     * @see Rarity
      */
     public Rarity getRarity() {
         return rarity;
@@ -721,6 +721,7 @@ public class Card extends ScryfallObject {
 
     /**
      * Layout is <code>Layout.DOUBLE_FACED_TOKEN</code> or <code>Layout.TRANSFORM</code>
+     *
      * @return True if this card is able to TRANSFORM
      */
     public boolean hasMultipleFaces() {
@@ -734,7 +735,7 @@ public class Card extends ScryfallObject {
         List rulingsList = List.fromURL(rulingsURL);
         ScryfallObject[] rulingsObjects = rulingsList.getContents();
         Ruling[] rulings = new Ruling[rulingsObjects.length];
-        for(int i = 0; i < rulings.length; i++) {
+        for (int i = 0; i < rulings.length; i++) {
             rulings[i] = ((Ruling) rulingsObjects[i]);
         }
         return rulings;
@@ -746,7 +747,7 @@ public class Card extends ScryfallObject {
      * multiple faces, an image of the front side is returned.
      */
     public BufferedImage getImage(Images.Size size) {
-        if(hasMultipleFaces()) {
+        if (hasMultipleFaces()) {
             return faces[0].getImages().getImage(size);
         } else {
             return images.getImage(size);
@@ -754,7 +755,7 @@ public class Card extends ScryfallObject {
     }
 
     public String getImageURI(Images.Size size) {
-        if(hasMultipleFaces()) {
+        if (hasMultipleFaces()) {
             return faces[0].getImages().getURL(size).toString();
         } else {
             return images.getURL(size).toString();
@@ -765,6 +766,7 @@ public class Card extends ScryfallObject {
      * Searches using the <code>exact</code> parameter in the Scryfall API, so the
      * provided card name must match exactly to an existing card. However, this
      * parameter is case insensitive
+     *
      * @param name The name of the card for which dataFromPath should be retrieved
      * @return A <code>Card</code> object containing the corresponding card's dataFromPath.
      */
@@ -776,6 +778,7 @@ public class Card extends ScryfallObject {
      * Searches using the <code>fuzzy</code> parameter in the Scryfall API, so the
      * provided card name can differ from existing cards. The closest match will be found.
      * If no card matches closely enough to the given name, an error will be thrown.
+     *
      * @param name The name of the card for which dataFromPath should be retrieved.
      * @return A <code>Card</code> object containing the corresponding card's dataFromPath.
      */
@@ -799,6 +802,7 @@ public class Card extends ScryfallObject {
 
     /**
      * Retrieves data for a card with the given MTGO id.
+     *
      * @param id The MTGO id the of the card for which data should be retrieved.
      * @return A <code>Card</code> object containing the corresponding card's data.
      */
@@ -838,7 +842,7 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @param setCode the code for the set of the card to be retrieved
+     * @param setCode          the code for the set of the card to be retrieved
      * @param collectorsNumber the collectors number of the card to be retrieved
      * @return the card of the specified collectors number from the specified set
      */
@@ -847,7 +851,7 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @param setCode the code for the set of the card to be retrieved
+     * @param setCode          the code for the set of the card to be retrieved
      * @param collectorsNumber the collectors number of the card to be retrieved
      * @return the card of the specified collectors number from the specified set
      */
@@ -856,9 +860,9 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @param setCode the code for the set of the card to be retrieved
+     * @param setCode          the code for the set of the card to be retrieved
      * @param collectorsNumber the collectors number of the card to be retrieved
-     * @param lang The 2-3 character language code.
+     * @param lang             The 2-3 character language code.
      * @return the card of the specified collectors number from the specified set
      */
     public static Card fromSet(String setCode, int collectorsNumber, String lang) {
@@ -866,9 +870,9 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @param setCode the code for the set of the card to be retrieved
+     * @param setCode          the code for the set of the card to be retrieved
      * @param collectorsNumber the collectors number of the card to be retrieved
-     * @param lang The 2-3 character language code.
+     * @param lang             The 2-3 character language code.
      * @return the card of the specified collectors number from the specified set
      */
     public static Card fromSet(String setCode, String collectorsNumber, String lang) {
@@ -880,6 +884,7 @@ public class Card extends ScryfallObject {
      * are sorted with the nearest match first, highly favoring results that begin with your given string. Spaces,
      * punctuation, and capitalization are ignored. If q is less than 2 characters long, or if no names match, the
      * Catalog will contain 0 items (instead of returning any errors).
+     *
      * @param substring The string to autocomplete.
      * @return a Catalog object containing up to 20 full English card names that could be autocompletions of the
      * given string parameter.
@@ -889,9 +894,9 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @param name Card name for the image to be retrieved
+     * @param name   Card name for the image to be retrieved
      * @param search Method for retrieving the card. Either FUZZY or EXACT.
-     * @param size The format of the image to be retrieved.
+     * @param size   The format of the image to be retrieved.
      * @return An image of the specified card in the specified format
      */
     public static BufferedImage getImage(String name, SearchType search, Images.Size size) {
@@ -900,7 +905,7 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @param name name of the card for which text should be retrieved
+     * @param name   name of the card for which text should be retrieved
      * @param search method for retrieving the card. Either FUZZY or EXACT.
      * @return Scryfall's text representation of the named card.
      */
@@ -942,10 +947,9 @@ public class Card extends ScryfallObject {
         AUGMENT, HOST;
 
         private static Layout fromString(String value) {
-            if(value.equals("double_faced_token")) {
+            if (value.equals("double_faced_token")) {
                 return DOUBLE_FACED_TOKEN;
-            }
-            else {
+            } else {
                 try {
                     return valueOf(value.toUpperCase());
                 } catch (IllegalArgumentException e) {
@@ -961,6 +965,7 @@ public class Card extends ScryfallObject {
      */
     public enum BorderColor {
         BLACK, BORDERLESS, GOLD, SILVER, WHITE;
+
         private static BorderColor fromString(String value) {
             try {
                 return valueOf(value.toUpperCase());
@@ -1046,6 +1051,7 @@ public class Card extends ScryfallObject {
      */
     public enum Game {
         PAPER, ARENA, MTGO;
+
         public static Game fromString(String value) {
             return valueOf(value.toUpperCase());
         }
