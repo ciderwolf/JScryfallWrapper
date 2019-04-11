@@ -191,7 +191,7 @@ public class Set extends ScryfallObject {
      * @return A <code>Set</code> with the specified code on Scryfall's API
      */
     public static Set fromCode(String code) {
-        return new Set(JSONLoader.JSONObjectFromURL(Query.API_STUB + "sets/" + code));
+        return new Set(Query.dataFromPath("sets/" + code));
     }
 
     /**

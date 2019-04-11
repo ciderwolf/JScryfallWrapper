@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class JSONLoader {
 
-    public static JSONObject JSONObjectFromURL(String uri) {
+    static JSONObject JSONObjectFromURL(String uri) {
         try {
             return new JSONObject(loadStringFromURL(uri));
         } catch (JSONException e) {

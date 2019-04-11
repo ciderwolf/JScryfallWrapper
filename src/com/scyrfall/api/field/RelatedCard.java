@@ -50,7 +50,7 @@ public class RelatedCard extends ScryfallObject {
     }
 
     public enum Component {
-        TOKEM, MELD_PART, MELD_RESULT, COMBO_PIECE;
+        TOKEN, MELD_PART, MELD_RESULT, COMBO_PIECE;
 
         private static Component fromString(String value) {
             return valueOf(value.toUpperCase());

@@ -15,7 +15,7 @@ public class ScryfallError extends ScryfallObject {
 
     private int status;
     private String code, details, type;
-    String[] warnings;
+    private String[] warnings;
 
     public ScryfallError(JSONObject data) {
         this.data = data;

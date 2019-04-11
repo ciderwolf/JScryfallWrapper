@@ -88,7 +88,7 @@ public class List extends ScryfallObject {
     }
 
     /**
-     * @return An array of ScryfallObjects constructed from the dataFromPath on this page and on all subsequent pages.
+     * @return An array of ScryfallObjects constructed from the data on this page and on all subsequent pages.
      */
     public ScryfallObject[] getContents() {
         List current = this;
@@ -115,7 +115,7 @@ public class List extends ScryfallObject {
     }
 
     /**
-     * @return An array of Cards constructed from the dataFromPath on this page and on all subsequent pages.
+     * @return An array of Cards constructed from the data on this page and on all subsequent pages.
      */
     public Card[] getCards() {
         List current = this;
@@ -153,7 +153,7 @@ public class List extends ScryfallObject {
     @Override
     public String toString() {
         return "List{" +
-                "dataFromPath=" + data +
+                "data=" + data +
                 ", hasMore=" + hasMore +
                 ", nextPage=" + nextPageURL +
                 ", totalCards=" + totalCards +

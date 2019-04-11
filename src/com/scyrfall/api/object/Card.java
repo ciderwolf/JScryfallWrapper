@@ -767,8 +767,8 @@ public class Card extends ScryfallObject {
      * provided card name must match exactly to an existing card. However, this
      * parameter is case insensitive
      *
-     * @param name The name of the card for which dataFromPath should be retrieved
-     * @return A <code>Card</code> object containing the corresponding card's dataFromPath.
+     * @param name The name of the card for which data should be retrieved
+     * @return A <code>Card</code> object containing the corresponding card's data.
      */
     public static Card namedExactly(String name) {
         return new Card(Query.dataFromPath("cards/named?exact=" + name.replace(' ', '+')));
@@ -779,8 +779,8 @@ public class Card extends ScryfallObject {
      * provided card name can differ from existing cards. The closest match will be found.
      * If no card matches closely enough to the given name, an error will be thrown.
      *
-     * @param name The name of the card for which dataFromPath should be retrieved.
-     * @return A <code>Card</code> object containing the corresponding card's dataFromPath.
+     * @param name The name of the card for which data should be retrieved.
+     * @return A <code>Card</code> object containing the corresponding card's data.
      */
     public static Card namedFuzzy(String name) {
         return new Card(Query.dataFromPath("cards/named?fuzzy=" + name.replace(' ', '+')));

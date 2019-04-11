@@ -1,6 +1,4 @@
 .idea/
 out/
-META-INF/
-src/create_data
 *.iml
 .DS_Store

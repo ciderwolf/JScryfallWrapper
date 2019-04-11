@@ -53,8 +53,8 @@ public abstract class ScryfallObject {
     }
 
     /**
-     * @param data the dataFromPath from which a ScryfallObject should be initialized
-     * @return creates a ScryfallObject based on the dataFromPath's <code>object</code> parameter
+     * @param data the data from which a ScryfallObject should be initialized
+     * @return creates a ScryfallObject based on the data's <code>object</code> parameter
      */
     public static ScryfallObject getObject(JSONObject data) {
         String type = data.getString("object");
