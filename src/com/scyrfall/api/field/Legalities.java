@@ -61,7 +61,7 @@ public class Legalities extends ScryfallObject {
      * Possible formats for a card to have legality information about. A given card should have a value for
      * each of these fields.
      * The values are: STANDARD, FUTURE, FRONTIER, MODERN, LEGACY, PAUPER, VINTAGE, PENNY_DREADFUL, COMMANDER, DUEL, and OLDSCHOOL.
-     * <br>Note: Brawl and 1v1 Commander were removed from Scryfall's database on February 1, 2018.
+     * <br>Note: Frontier will be removed from Scryfall on July 15, 2019
      */
     public enum Format {
         STANDARD, FUTURE, FRONTIER, MODERN, LEGACY, PAUPER, VINTAGE, PENNY_DREADFUL, COMMANDER, DUEL, OLDSCHOOL;

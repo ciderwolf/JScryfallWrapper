@@ -33,19 +33,20 @@ public class Card extends ScryfallObject {
     private int[] multiverseIDs;
     private Layout layout;
     private String lang, handModifier, lifeModifier, loyalty, manaCost, name, oracleText, power, toughness, typeLine;
-    private UUID id, oracleID, illustrationID;
+    private UUID id, oracleID, illustrationID, variationID, cardBackID;
     private URL printsSearchURL, rulingsURL, scryfallURL, url;
     private RelatedCard[] allParts;
     private CardFace[] faces;
+    private String[] promoTypes;
     private double cmc;
     private Color[] colors, colorIdentity, colorIndicator;
-    private boolean foil, nonfoil, oversized, digital, reserved;
+    private boolean foil, nonfoil, oversized, digital, reserved, inBoosters;
     private Legalities legalities;
     private String artist, collectorNumber, flavorText, printedName, printedText, printedTypeLine, watermark;
     private BorderColor borderColor;
     private Frame frame;
     private FrameEffect frameEffect;
-    private boolean fullArt, highResImage, promo, reprint, storySpotlight;
+    private boolean fullArt, highResImage, promo, reprint, storySpotlight, textless, variation;
     private Game[] games;
     private HashMap<String, URL> purchaseURLs, relatedURLs;
     private Rarity rarity;
@@ -101,6 +102,9 @@ public class Card extends ScryfallObject {
         reprint = getBoolean("reprint");
         storySpotlight = getBoolean("story_spotlight");
         reserved = getBoolean("reserved");
+        textless = getBoolean("textless");
+        variation = getBoolean("variation");
+        inBoosters = getBoolean("booster");
 
         printsSearchURL = getURL("prints_search_uri");
         rulingsURL = getURL("rulings_uri");
@@ -113,6 +117,8 @@ public class Card extends ScryfallObject {
         id = getUUID("id");
         illustrationID = getUUID("illustration_id");
         oracleID = getUUID("oracle_id");
+        variationID = getUUID("variation_of");
+        cardBackID = getUUID("card_back_id");
 
         try {
             releaseDate = dateFormat.parse(getString("released_at"));
@@ -161,6 +167,12 @@ public class Card extends ScryfallObject {
         allParts = new RelatedCard[relatedCards.length()];
         for (int i = 0; i < relatedCards.length(); i++) {
             allParts[i] = new RelatedCard(relatedCards.getJSONObject(i));
+        }
+
+        JSONArray promos = getJSONArray("promos");
+        promoTypes = new String[promos.length()];
+        for (int i = 0; i < promos.length(); i++) {
+            promoTypes[i] = promos.getString(i);
         }
 
         if (data.has("card_faces")) {
@@ -233,11 +245,32 @@ public class Card extends ScryfallObject {
     }
 
     /**
+     * @return The printing ID of the printing this card is a variation of.
+     */
+    public UUID getVariationID() {
+        return variationID;
+    }
+
+    /**
+     * @return The Scryfall ID for the card back design present on this card.
+     */
+    public UUID getCardBackID() {
+        return cardBackID;
+    }
+
+    /**
      * @return This card’s multiverse IDs on Gatherer, if any, as an array of integers. Note that Scryfall includes many
      * promo cards, tokens, and other esoteric objects that do not have these identifiers.
      */
     public int[] getMultiverseIDs() {
         return multiverseIDs;
+    }
+
+    /**
+     * @return An array of strings describing what categories of promo cards this card falls into.
+     */
+    public String[] getPromoTypes() {
+        return promoTypes;
     }
 
     /**
@@ -491,6 +524,27 @@ public class Card extends ScryfallObject {
      */
     public boolean isDigital() {
         return digital;
+    }
+
+    /**
+     * @return <code>true</code> if the card is printed without text.
+     */
+    public boolean isTextless() {
+        return textless;
+    }
+
+    /**
+     * @return Whether this card is found in boosters.
+     */
+    public boolean isInBoosters() {
+        return inBoosters;
+    }
+
+    /**
+     * @return Whether this card is a variation of another printing.
+     */
+    public boolean isVariation() {
+        return variation;
     }
 
     /**
