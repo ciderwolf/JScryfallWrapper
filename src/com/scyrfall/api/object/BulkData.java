@@ -5,7 +5,6 @@ import com.scyrfall.api.query.Query;
 import org.json.JSONObject;
 
 import java.net.URL;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
@@ -27,11 +26,7 @@ public class BulkData extends ScryfallObject {
         contentEncoding = getString("content_encoding");
         contentMimeType = getString("content_type");
         permalinkURL = getURL("permalink_uri");
-        try {
-            updated = dateFormat.parse(getString("released_at"));
-        } catch (ParseException e) {
-            updated = null;
-        }
+        updated = getDate("released_at");
         size = getInt("size");
     }
 

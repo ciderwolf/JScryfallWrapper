@@ -1,12 +1,10 @@
 package com.scyrfall.api.object;
 
 import com.scyrfall.api.ScryfallObject;
-import com.scyrfall.api.query.JSONLoader;
 import com.scyrfall.api.query.Query;
 import org.json.JSONObject;
 
 import java.net.URL;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
@@ -40,11 +38,7 @@ public class Set extends ScryfallObject {
         blockCode = getString("block_code");
         block = getString("block");
         parentSetCode = getString("parent_set_code");
-        try {
-            released = dateFormat.parse(getString("released_at"));
-        } catch (ParseException e) {
-            released = null;
-        }
+        released = getDate("released_at");
         tcgPlayerID = getInt("tcgplayer_id");
         cardCount = getInt("card_count");
         digital = getBoolean("digital");

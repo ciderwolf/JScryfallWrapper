@@ -11,8 +11,10 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -139,6 +141,21 @@ public abstract class ScryfallObject {
             return data.getJSONArray(key);
         } catch (JSONException e) {
             return new JSONArray();
+        }
+    }
+
+    /**
+     * @param key The key of the date to be returned
+     * @return A Date object representing the date at the specified key,
+     * formatted from the yyyy-MM-dd date format. If the provided key
+     * isn't in the correct format or doesn't exist, this moethod will
+     * return <code>null</code>.
+     */
+    protected Date getDate(String key) {
+        try {
+            return dateFormat.parse(getString(key));
+        } catch (ParseException e) {
+            return null;
         }
     }
 

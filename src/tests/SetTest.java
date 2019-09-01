@@ -44,7 +44,7 @@ public class SetTest {
         System.out.print("Test Promo (Magic Online Promos): ");
         Set set = Set.fromID(UUID.fromString("638940fb-6be9-4be3-b83f-68d3902fbbe5"));
         assertEquals(set.getMtgoCode(), "prm");
-        baseSet(set, "prm", "Magic Online Promos", SetType.PROMO, 1229, true, true);
+        baseSet(set, "prm", "Magic Online Promos", SetType.PROMO, 1235, true, true);
         System.out.println("success");
     }
 

@@ -11,7 +11,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
 import java.util.*;
 
 //TODO: implement /cards/search and /cards/collection
@@ -46,6 +45,7 @@ public class Card extends ScryfallObject {
     private BorderColor borderColor;
     private Frame frame;
     private FrameEffect frameEffect;
+    private FrameEffect[] frameEffects;
     private boolean fullArt, highResImage, promo, reprint, storySpotlight, textless, variation;
     private Game[] games;
     private HashMap<String, URL> purchaseURLs, relatedURLs;
@@ -56,6 +56,7 @@ public class Card extends ScryfallObject {
     private Images images;
     private String euroPrice, tixPrice, usdPrice;
     private Prices prices;
+    private Preview preview;
 
     public Card(JSONObject data) {
         super(data);
@@ -120,11 +121,7 @@ public class Card extends ScryfallObject {
         variationID = getUUID("variation_of");
         cardBackID = getUUID("card_back_id");
 
-        try {
-            releaseDate = dateFormat.parse(getString("released_at"));
-        } catch (ParseException e) {
-            releaseDate = null;
-        }
+        releaseDate = getDate("released_at");
 
         layout = Layout.fromString(getString("layout"));
         frame = Frame.fromString(getString("frame"));
@@ -175,6 +172,12 @@ public class Card extends ScryfallObject {
             promoTypes[i] = promos.getString(i);
         }
 
+        JSONArray frameEffects = getJSONArray("frame_effects");
+        this.frameEffects = new FrameEffect[frameEffects.length()];
+        for (int i = 0; i < frameEffects.length(); i++) {
+            this.frameEffects[i] = FrameEffect.fromString(frameEffects.getString(i));
+        }
+
         if (data.has("card_faces")) {
             JSONArray faces = getJSONArray("card_faces");
             this.faces = new CardFace[faces.length()];
@@ -186,6 +189,7 @@ public class Card extends ScryfallObject {
         images = new Images(getJSONObject("image_uris"));
         legalities = new Legalities(getJSONObject("legalities"));
         prices = new Prices(getJSONObject("prices"));
+        preview = new Preview(getJSONObject("preview"));
 
         if (data.has("related_uris")) {
             JSONObject relatedURLs = getJSONObject("related_uris");
@@ -995,10 +999,11 @@ public class Card extends ScryfallObject {
      * <li><code>EMBLEM</code> - Emblem cards
      * <li><code>AUGMENT</code> - Cards with Augment
      * <li><code>HOST</code> - Host-type cards
+     * <li><code>DOUBLE_SIDED</code> - A Magic card with two sides that are unrelated
      */
     public enum Layout {
         NORMAL, SPLIT, FLIP, TRANSFORM, MELD, LEVELER, SAGA, PLANAR, SCHEME, VANGUARD, TOKEN, DOUBLE_FACED_TOKEN, EMBLEM,
-        AUGMENT, HOST;
+        AUGMENT, HOST, DOUBLE_SIDED;
 
         private static Layout fromString(String value) {
             if (value.equals("double_faced_token")) {
