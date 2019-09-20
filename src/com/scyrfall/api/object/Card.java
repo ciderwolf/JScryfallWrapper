@@ -1000,10 +1000,12 @@ public class Card extends ScryfallObject {
      * <li><code>AUGMENT</code> - Cards with Augment
      * <li><code>HOST</code> - Host-type cards
      * <li><code>DOUBLE_SIDED</code> - A Magic card with two sides that are unrelated
+     * <li><code>ADVENTURE</code> - Cards with an Adventure spell part
+     * <li><code>ART_SERIES</code> - Art Series collectable double-faced cards
      */
     public enum Layout {
         NORMAL, SPLIT, FLIP, TRANSFORM, MELD, LEVELER, SAGA, PLANAR, SCHEME, VANGUARD, TOKEN, DOUBLE_FACED_TOKEN, EMBLEM,
-        AUGMENT, HOST, DOUBLE_SIDED;
+        AUGMENT, HOST, DOUBLE_SIDED, ADVENTURE, ART_SERIES;
 
         private static Layout fromString(String value) {
             if (value.equals("double_faced_token")) {
