@@ -574,7 +574,7 @@ public class Card extends ScryfallObject {
 
     /**
      * @return This card’s collector number. Note that collector numbers can contain non-numeric characters, such as
-     * letters or ★.
+     * letters or ★ (a star).
      */
     public String getCollectorNumber() {
         return collectorNumber;
@@ -649,6 +649,15 @@ public class Card extends ScryfallObject {
     }
 
     /**
+     * @return The preview information for this card. If Scryfall doesn't
+     * have any preview information for this card, this method will return null
+     * @see Preview
+     */
+    public Preview getPreview() {
+        return preview;
+    }
+
+    /**
      * @return This card's {@link Frame}.
      */
     public Frame getFrame() {
@@ -658,8 +667,16 @@ public class Card extends ScryfallObject {
     /**
      * @return This card's {@link FrameEffect}.
      */
+    @Deprecated
     public FrameEffect getFrameEffect() {
         return frameEffect;
+    }
+
+    /**
+     * @return This card’s frame effects, if any.
+     */
+    public FrameEffect[] getFrameEffects() {
+        return frameEffects;
     }
 
     /**
@@ -1150,11 +1167,15 @@ public class Card extends ScryfallObject {
                 nonfoil == card.nonfoil &&
                 oversized == card.oversized &&
                 digital == card.digital &&
+                reserved == card.reserved &&
+                inBoosters == card.inBoosters &&
                 fullArt == card.fullArt &&
                 highResImage == card.highResImage &&
                 promo == card.promo &&
                 reprint == card.reprint &&
                 storySpotlight == card.storySpotlight &&
+                textless == card.textless &&
+                variation == card.variation &&
                 Arrays.equals(multiverseIDs, card.multiverseIDs) &&
                 layout == card.layout &&
                 Objects.equals(lang, card.lang) &&
@@ -1170,12 +1191,15 @@ public class Card extends ScryfallObject {
                 Objects.equals(id, card.id) &&
                 Objects.equals(oracleID, card.oracleID) &&
                 Objects.equals(illustrationID, card.illustrationID) &&
+                Objects.equals(variationID, card.variationID) &&
+                Objects.equals(cardBackID, card.cardBackID) &&
                 Objects.equals(printsSearchURL, card.printsSearchURL) &&
                 Objects.equals(rulingsURL, card.rulingsURL) &&
                 Objects.equals(scryfallURL, card.scryfallURL) &&
                 Objects.equals(url, card.url) &&
                 Arrays.equals(allParts, card.allParts) &&
                 Arrays.equals(faces, card.faces) &&
+                Arrays.equals(promoTypes, card.promoTypes) &&
                 Arrays.equals(colors, card.colors) &&
                 Arrays.equals(colorIdentity, card.colorIdentity) &&
                 Arrays.equals(colorIndicator, card.colorIndicator) &&
@@ -1190,6 +1214,7 @@ public class Card extends ScryfallObject {
                 borderColor == card.borderColor &&
                 frame == card.frame &&
                 frameEffect == card.frameEffect &&
+                Arrays.equals(frameEffects, card.frameEffects) &&
                 Arrays.equals(games, card.games) &&
                 Objects.equals(purchaseURLs, card.purchaseURLs) &&
                 Objects.equals(relatedURLs, card.relatedURLs) &&
@@ -1204,7 +1229,8 @@ public class Card extends ScryfallObject {
                 Objects.equals(euroPrice, card.euroPrice) &&
                 Objects.equals(tixPrice, card.tixPrice) &&
                 Objects.equals(usdPrice, card.usdPrice) &&
-                Objects.equals(prices, card.prices);
+                Objects.equals(prices, card.prices) &&
+                Objects.equals(preview, card.preview);
     }
 
     @Override
@@ -1214,8 +1240,8 @@ public class Card extends ScryfallObject {
                 ", mtgoID=" + mtgoID +
                 ", mtgoFoilID=" + mtgoFoilID +
                 ", tcgplayerID=" + tcgplayerID +
-                ", multiverseIDs=" + Arrays.toString(multiverseIDs) +
                 ", edhrecRank=" + edhrecRank +
+                ", multiverseIDs=" + Arrays.toString(multiverseIDs) +
                 ", layout=" + layout +
                 ", lang='" + lang + '\'' +
                 ", handModifier='" + handModifier + '\'' +
@@ -1230,12 +1256,15 @@ public class Card extends ScryfallObject {
                 ", id=" + id +
                 ", oracleID=" + oracleID +
                 ", illustrationID=" + illustrationID +
+                ", variationID=" + variationID +
+                ", cardBackID=" + cardBackID +
                 ", printsSearchURL=" + printsSearchURL +
                 ", rulingsURL=" + rulingsURL +
                 ", scryfallURL=" + scryfallURL +
                 ", url=" + url +
                 ", allParts=" + Arrays.toString(allParts) +
                 ", faces=" + Arrays.toString(faces) +
+                ", promoTypes=" + Arrays.toString(promoTypes) +
                 ", cmc=" + cmc +
                 ", colors=" + Arrays.toString(colors) +
                 ", colorIdentity=" + Arrays.toString(colorIdentity) +
@@ -1244,6 +1273,8 @@ public class Card extends ScryfallObject {
                 ", nonfoil=" + nonfoil +
                 ", oversized=" + oversized +
                 ", digital=" + digital +
+                ", reserved=" + reserved +
+                ", inBoosters=" + inBoosters +
                 ", legalities=" + legalities +
                 ", artist='" + artist + '\'' +
                 ", collectorNumber='" + collectorNumber + '\'' +
@@ -1255,11 +1286,14 @@ public class Card extends ScryfallObject {
                 ", borderColor=" + borderColor +
                 ", frame=" + frame +
                 ", frameEffect=" + frameEffect +
+                ", frameEffects=" + Arrays.toString(frameEffects) +
                 ", fullArt=" + fullArt +
                 ", highResImage=" + highResImage +
                 ", promo=" + promo +
                 ", reprint=" + reprint +
                 ", storySpotlight=" + storySpotlight +
+                ", textless=" + textless +
+                ", variation=" + variation +
                 ", games=" + Arrays.toString(games) +
                 ", purchaseURLs=" + purchaseURLs +
                 ", relatedURLs=" + relatedURLs +
@@ -1275,6 +1309,7 @@ public class Card extends ScryfallObject {
                 ", tixPrice='" + tixPrice + '\'' +
                 ", usdPrice='" + usdPrice + '\'' +
                 ", prices=" + prices +
+                ", preview=" + preview +
                 '}';
     }
 }
