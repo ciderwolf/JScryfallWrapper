@@ -60,10 +60,11 @@ public class Legalities extends ScryfallObject {
     /**
      * Possible formats for a card to have legality information about. A given card should have a value for
      * each of these fields.
-     * The values are: STANDARD, FUTURE, BRAWL, MODERN, LEGACY, PAUPER, VINTAGE, PENNY_DREADFUL, COMMANDER, DUEL, and OLDSCHOOL.
+     * The values are: STANDARD, FUTURE, BRAWL, HISTORIC, MODERN, LEGACY, PAUPER, VINTAGE, PENNY_DREADFUL, COMMANDER,
+     * DUEL, and OLDSCHOOL.
      */
     public enum Format {
-        STANDARD, FUTURE, BRAWL, MODERN, LEGACY, PAUPER, VINTAGE, PENNY_DREADFUL, COMMANDER, DUEL, OLDSCHOOL;
+        STANDARD, FUTURE, BRAWL, HISTORIC, MODERN, LEGACY, PAUPER, VINTAGE, PENNY_DREADFUL, COMMANDER, DUEL, OLDSCHOOL;
 
         public static Format fromString(String value) {
             if (value.equalsIgnoreCase("penny")) {
