@@ -82,7 +82,7 @@ public class Card extends ScryfallObject {
         collectorNumber = getString("collector_number");
         flavorText = getString("flavor_text");
         printedName = getString("printed_name");
-        printedText = getString("printed_name");
+        printedText = getString("printed_text");
         printedTypeLine = getString("printed_type_line");
         watermark = getString("watermark");
         euroPrice = getString("eur");
@@ -395,7 +395,7 @@ public class Card extends ScryfallObject {
      */
     public String[] getSubtypes() {
         if (typeLine.contains(EM_DASH)) {
-            return typeLine.substring(typeLine.indexOf(EM_DASH)).split(" ");
+            return typeLine.substring(typeLine.indexOf(EM_DASH) + 2).split(" ");
         }
         return new String[0];
     }
@@ -975,8 +975,8 @@ public class Card extends ScryfallObject {
      * @return An image of the specified card in the specified format
      */
     public static BufferedImage getImage(String name, SearchType search, Images.Size size) {
-        return Query.imageFromPath("cards/named?" + search.toParameterString() + "=" + name.replace(' ', '+') + "&format=image&size=" +
-                size.toParameterString());
+        return Query.imageFromPath("cards/named?" + search.toParameterString() + "=" +
+                name.replace(' ', '+') + "&format=image&size=" + size.toParameterString());
     }
 
     /**
@@ -985,7 +985,8 @@ public class Card extends ScryfallObject {
      * @return Scryfall's text representation of the named card.
      */
     public static String getText(String name, SearchType search) {
-        return Query.textFromPath("cards/named?" + search.toParameterString() + "=" + name.replace(' ', '+') + "&format=text");
+        return Query.textFromPath("cards/named?" + search.toParameterString() + "=" +
+                name.replace(' ', '+') + "&format=text");
     }
 
     /**

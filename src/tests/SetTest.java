@@ -12,13 +12,6 @@ import static org.junit.Assert.assertNotNull;
 public class SetTest {
 
     @Test
-    public void allSets() {
-        expansion();
-        token();
-        promo();
-    }
-
-    @Test
     public void expansion() {
         System.out.print("Test Expansion (Aether Revolt): ");
         Set set = Set.fromID(UUID.fromString("a4a0db50-8826-4e73-833c-3fd934375f96"));

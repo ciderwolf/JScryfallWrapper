@@ -10,12 +10,6 @@ import static tests.ScryfallTest.assertArrayEqualsIgnoreOrder;
 public class SymbolTest {
 
     @Test
-    public void allSymbols() {
-        symbols();
-        costs();
-    }
-
-    @Test
     public void symbols() {
         Symbol[] symbols = Symbol.getSymbols();
         final double totalCost = 1000343.5; // subtract 1 because Infinity's cmc = -1
