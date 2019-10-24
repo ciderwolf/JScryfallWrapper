@@ -1104,11 +1104,12 @@ public class Card extends ScryfallObject {
      * <li><code>WAXING_AND_WANING_MOON_DFC</code> - The waxing and waning crescent moon transform marks (From My Little Ponies promotion)
      * <li><code>INVERTED</code> - The FNM-style inverted frame
      * <li><code>SHOWCASE</code> - A custom Showcase frame (from Eldraine)
+     * <li><code>EXTENDED_ART</code> - An extended art frame
      * <li><code>NONE</code> - No frame effect
      */
     public enum FrameEffect {
         LEGENDARY, MIRACLE, NYXTOUCHED, DRAFT, DEVOID, TOMBSTONE, COLORSHIFTED, SUN_MOON_DFC, COMPASS_LAND_DFC, ORIGIN_PW_DFC,
-        MOON_ELDRAZI_DFC, WAXING_AND_WANING_MOON_DFC, INVERTED, SHOWCASE, NONE;
+        MOON_ELDRAZI_DFC, WAXING_AND_WANING_MOON_DFC, INVERTED, SHOWCASE, EXTENDED_ART, NONE;
 
         private static FrameEffect fromString(String value) {
             switch (value) {
@@ -1122,6 +1123,8 @@ public class Card extends ScryfallObject {
                     return MOON_ELDRAZI_DFC;
                 case "waxingandwaningmoondfc":
                     return WAXING_AND_WANING_MOON_DFC;
+                case "extendedart":
+                    return EXTENDED_ART;
                 case "":
                     return NONE;
                 default:
