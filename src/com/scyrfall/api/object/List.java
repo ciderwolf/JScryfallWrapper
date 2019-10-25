@@ -100,7 +100,7 @@ public class List extends ScryfallObject {
                 JSONObject object = current.data.getJSONObject(i);
                 total.add(ScryfallObject.getObject(object));
             }
-            current = getNextPage();
+            current = current.getNextPage();
         }
         return total.toArray(new ScryfallObject[0]);
     }
@@ -129,7 +129,7 @@ public class List extends ScryfallObject {
                     total.add(new Card(object));
                 }
             }
-            current = getNextPage();
+            current = current.getNextPage();
         }
         return total.toArray(new Card[0]);
     }
