@@ -40,7 +40,6 @@ public class Query {
         try {
             return ImageIO.read(url);
         } catch (IOException e) {
-            System.out.println(url);
             e.printStackTrace();
             return null;
         }

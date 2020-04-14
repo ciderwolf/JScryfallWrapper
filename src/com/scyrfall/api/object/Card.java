@@ -1019,7 +1019,7 @@ public class Card extends ScryfallObject {
      * <li><code>HOST</code> - Host-type cards
      * <li><code>DOUBLE_SIDED</code> - A Magic card with two sides that are unrelated
      * <li><code>ADVENTURE</code> - Cards with an Adventure spell part
-     * <li><code>ART_SERIES</code> - Art Series collectable double-faced cards
+     * <li><code>ART_SERIES</code> - Art Series collectible double-faced cards
      */
     public enum Layout {
         NORMAL, SPLIT, FLIP, TRANSFORM, MELD, LEVELER, SAGA, PLANAR, SCHEME, VANGUARD, TOKEN, DOUBLE_FACED_TOKEN, EMBLEM,
@@ -1105,11 +1105,12 @@ public class Card extends ScryfallObject {
      * <li><code>INVERTED</code> - The FNM-style inverted frame
      * <li><code>SHOWCASE</code> - A custom Showcase frame (from Eldraine)
      * <li><code>EXTENDED_ART</code> - An extended art frame
+     * <li><code>COMPANION</code> - The cards have a companion frame
      * <li><code>NONE</code> - No frame effect
      */
     public enum FrameEffect {
         LEGENDARY, MIRACLE, NYXTOUCHED, DRAFT, DEVOID, TOMBSTONE, COLORSHIFTED, SUN_MOON_DFC, COMPASS_LAND_DFC, ORIGIN_PW_DFC,
-        MOON_ELDRAZI_DFC, WAXING_AND_WANING_MOON_DFC, INVERTED, SHOWCASE, EXTENDED_ART, NONE;
+        MOON_ELDRAZI_DFC, WAXING_AND_WANING_MOON_DFC, INVERTED, SHOWCASE, EXTENDED_ART, COMPANION, NONE;
 
         private static FrameEffect fromString(String value) {
             switch (value) {
