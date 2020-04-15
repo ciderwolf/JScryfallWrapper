@@ -5,10 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -66,6 +63,36 @@ public class JSONLoader {
     static String getText(String url) throws IOException {
         URL website = new URL(url);
         HttpsURLConnection connection = ((HttpsURLConnection) website.openConnection());
+        InputStreamReader reader;
+        if (connection.getResponseCode() < HttpsURLConnection.HTTP_BAD_REQUEST) {
+            reader = new InputStreamReader(connection.getInputStream());
+        } else {
+            reader = new InputStreamReader((connection).getErrorStream());
+        }
+        BufferedReader in = new BufferedReader(reader);
+
+        StringBuilder response = new StringBuilder();
+        String inputLine;
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine).append("\n");
+        }
+        response.deleteCharAt(response.lastIndexOf("\n"));
+        in.close();
+
+        return response.toString();
+    }
+
+    static String postText(String uri, String content) throws IOException {
+        URL url = new URL(uri);
+        HttpsURLConnection connection = ((HttpsURLConnection) url.openConnection());
+        connection.setRequestMethod("POST"); // PUT is another valid option
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Content-Type", "application/json");
+        OutputStream os = connection.getOutputStream();
+        os.write(content.getBytes());
+
+
         InputStreamReader reader;
         if (connection.getResponseCode() < HttpsURLConnection.HTTP_BAD_REQUEST) {
             reader = new InputStreamReader(connection.getInputStream());

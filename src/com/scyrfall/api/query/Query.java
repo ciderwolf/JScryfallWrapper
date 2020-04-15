@@ -78,4 +78,14 @@ public class Query {
             return "";
         }
     }
+
+    public static JSONObject postToPath(String pathAppend, JSONObject identifiers) {
+        try {
+            String out = JSONLoader.postText(API_STUB + pathAppend, identifiers.toString());
+            return new JSONObject(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
