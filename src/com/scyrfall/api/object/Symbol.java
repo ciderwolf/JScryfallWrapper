@@ -1,7 +1,6 @@
-package com.scyrfall.api.field;
+package com.scyrfall.api.object;
 
 import com.scyrfall.api.ScryfallObject;
-import com.scyrfall.api.object.List;
 import com.scyrfall.api.query.Query;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,14 +10,14 @@ import java.util.Objects;
 
 public class Symbol extends ScryfallObject {
 
-    private String cost, looseVariant, english, gathererAlternates;
+    private String symbol, looseVariant, english, gathererAlternates;
     private boolean transposeable, representsMana, appearsInManaCosts, funny, colorless, monoColored, multiColored;
     private double cmc;
     private Color[] colors;
 
     public Symbol(JSONObject data) {
         super(data);
-        cost = getString("cost");
+        symbol = getString("symbol");
         looseVariant = getString("loose_variant");
         english = getString("english");
         gathererAlternates = getString("gatherer_alternates");
@@ -44,8 +43,8 @@ public class Symbol extends ScryfallObject {
      * @return The plaintext symbol. Often surrounded with curly braces {}. Note that not all symbols are ASCII text
      * (for example, {∞}).
      */
-    public String getCost() {
-        return cost;
+    public String getSymbol() {
+        return symbol;
     }
 
     /**
@@ -145,19 +144,6 @@ public class Symbol extends ScryfallObject {
         return new List(Query.dataFromPath("symbology")).getContents(new Symbol[0]);
     }
 
-    /**
-     * Parses the given mana cost parameter and returns Scryfall’s interpretation.
-     * <p>
-     * The server understands most community shorthand for mana costs (such as 2WW for {2}{W}{W}). Symbols can also be
-     * out of order, lowercase, or have multiple colorless costs (such as 2{g}2 for {4}{G}).
-     *
-     * @param mana The mana string to parse.
-     * @return A Symbol object describing the parsed string.
-     */
-    public static Symbol parseManaString(String mana) {
-        return new Symbol(Query.dataFromPath("symbology/parse-mana?cost=" + mana));
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -168,7 +154,7 @@ public class Symbol extends ScryfallObject {
                 appearsInManaCosts == symbol1.appearsInManaCosts &&
                 funny == symbol1.funny &&
                 Double.compare(symbol1.cmc, cmc) == 0 &&
-                Objects.equals(cost, symbol1.cost) &&
+                Objects.equals(symbol, symbol1.symbol) &&
                 Objects.equals(looseVariant, symbol1.looseVariant) &&
                 Objects.equals(english, symbol1.english) &&
                 Objects.equals(gathererAlternates, symbol1.gathererAlternates) &&
@@ -178,7 +164,7 @@ public class Symbol extends ScryfallObject {
     @Override
     public String toString() {
         return "Symbol{" +
-                "cost='" + cost + '\'' +
+                "symbol='" + symbol + '\'' +
                 ", looseVariant='" + looseVariant + '\'' +
                 ", english='" + english + '\'' +
                 ", gathererAlternates='" + gathererAlternates + '\'' +

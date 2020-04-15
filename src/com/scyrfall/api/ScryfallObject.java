@@ -3,7 +3,7 @@ package com.scyrfall.api;
 import com.scyrfall.api.field.CardFace;
 import com.scyrfall.api.field.RelatedCard;
 import com.scyrfall.api.field.Ruling;
-import com.scyrfall.api.field.Symbol;
+import com.scyrfall.api.object.Symbol;
 import com.scyrfall.api.object.*;
 import org.json.JSONArray;
 import org.json.JSONException;
