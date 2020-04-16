@@ -12,6 +12,7 @@ import org.junit.Test;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
+import static tests.ScryfallTest.arrayOf;
 import static tests.ScryfallTest.assertArrayEqualsIgnoreOrder;
 
 public class CardTest {
@@ -34,7 +35,6 @@ public class CardTest {
         assertNotNull(card.getRelatedURLs());
         assertNotNull(card.getReleaseDate());
         assertNotNull(card.getPrintsSearchURL());
-
     }
 
     @Test
@@ -59,7 +59,7 @@ public class CardTest {
                 "remueve un contador de tiempo. Cuando remuevas el último, lánzala sin pagar su coste de maná.)\nCada" +
                 " jugador descarta su mano, luego roba siete cartas.");
         assertEquals(card.getPrintedTypeLine(), "Conjuro");
-        assertArrayEquals(card.getColorIndicator(), new Color[]{Color.RED});
+        assertArrayEquals(card.getColorIndicator(), arrayOf(Color.RED));
         // edhrec rank can change over time, so just check that it has been set to some value, and didn't default to -1
         assertNotEquals(card.getEdhrecRank(), -1);
         assertEquals(card.getCardBackID(), UUID.fromString("0aeebaf5-8c7d-4636-9e82-8c27447861f7"));
@@ -83,10 +83,10 @@ public class CardTest {
         assertFalse(card.isTextless());
 
         basicCard(card, UUID.fromString("e8ca02a0-5acf-4d89-847b-bad0d7560682"), "en",
-                UUID.fromString("fe6726a1-2aa9-492d-82f8-9e9b3125a991"), 0.0, new Color[]{},
+                UUID.fromString("fe6726a1-2aa9-492d-82f8-9e9b3125a991"), 0.0, arrayOf(),
                 "Accessories to Murder", true, Layout.NORMAL, false, false,
                 "Artifact — Contraption", BorderColor.BORDERLESS, "167",
-                false, new FrameEffect[]{}, Frame.M15, false, new Game[]{Game.PAPER},
+                false, arrayOf(), Frame.M15, false, arrayOf(Game.PAPER),
                 true, Rarity.UNCOMMON, false, "ust");
 
     }
@@ -98,10 +98,10 @@ public class CardTest {
         assertEquals(card.getLifeModifier(), "+6");
         assertEquals(card.getHandModifier(), "-1");
         basicCard(card, UUID.fromString("aa4ca825-7e52-4f26-9ab8-b68a7e294182"), "en",
-                UUID.fromString("f6c3facb-84ac-4dd9-bce9-6d2779c7f14e"), 0.0, new Color[]{},
+                UUID.fromString("f6c3facb-84ac-4dd9-bce9-6d2779c7f14e"), 0.0, arrayOf(),
                 "Ashling the Pilgrim Avatar", true, Layout.VANGUARD, false, false,
                 "Vanguard", BorderColor.BLACK, "73",
-                true, new FrameEffect[]{}, Frame.M15, false, new Game[]{Game.MTGO},
+                true, arrayOf(), Frame.M15, false, arrayOf(Game.MTGO),
                 true, Rarity.RARE, false, "pmoa");
     }
 
@@ -118,10 +118,10 @@ public class CardTest {
         assertEquals(card.getMtgoFoilID(), 42437);
 
         basicCard(card, UUID.fromString("11bf83bb-c95b-4b4f-9a56-ce7a1816307a"), "en",
-                UUID.fromString("edd531b9-f615-4399-8c8c-1c5e18c4acbf"), 1.0, new Color[]{Color.BLUE},
+                UUID.fromString("edd531b9-f615-4399-8c8c-1c5e18c4acbf"), 1.0, arrayOf(Color.BLUE),
                 "Delver of Secrets // Insectile Aberration", true, Layout.TRANSFORM, false, false,
                 "Creature — Human Wizard // Creature — Human Insect", BorderColor.BLACK, "51",
-                false, new FrameEffect[]{FrameEffect.SUN_MOON_DFC}, Frame.MODERN, false, new Game[]{Game.MTGO, Game.PAPER},
+                false, arrayOf(FrameEffect.SUN_MOON_DFC), Frame.MODERN, false, arrayOf(Game.MTGO, Game.PAPER),
                 true, Rarity.COMMON, false, "isd");
     }
 
@@ -132,9 +132,9 @@ public class CardTest {
         assertEquals(card.getManaCost(), "{W}{U}{U}");
 
         basicCard(card, UUID.fromString("c1a316a5-04a3-4128-8d62-58192e2265a5"), "fr",
-                UUID.fromString("132ca99a-a3c7-4ed6-b4d0-0edcd7140ca2"), 3.0, new Color[]{Color.BLUE, Color.WHITE},
+                UUID.fromString("132ca99a-a3c7-4ed6-b4d0-0edcd7140ca2"), 3.0, arrayOf(Color.BLUE, Color.WHITE),
                 "Absorb", true, Layout.NORMAL, false, false, "Instant", BorderColor.BLACK, "151",
-                false, new FrameEffect[]{}, Frame.M15, false, new Game[]{Game.ARENA, Game.MTGO, Game.PAPER}, false,
+                false, arrayOf(), Frame.M15, false, arrayOf(Game.ARENA, Game.MTGO, Game.PAPER), false,
                 Rarity.RARE, true, "rna");
     }
 
@@ -150,9 +150,9 @@ public class CardTest {
         assertArrayEqualsIgnoreOrder(card.getSupertypes(), new String[]{"Legendary"});
 
         basicCard(card, UUID.fromString("ab68bd00-7151-4a6b-ad98-134ca02d7d59"), "en",
-                UUID.fromString("b8376cca-ea96-478a-8e98-c4482031300a"), 5.0, new Color[]{Color.BLACK, Color.GREEN, Color.RED, Color.BLUE, Color.WHITE},
+                UUID.fromString("b8376cca-ea96-478a-8e98-c4482031300a"), 5.0, arrayOf(Color.BLACK, Color.GREEN, Color.RED, Color.BLUE, Color.WHITE),
                 "Sliver Queen", false, Layout.NORMAL, true, true, "Legendary Creature — Sliver",
-                BorderColor.BLACK, "9", false, new FrameEffect[]{}, Frame.MODERN, false, new Game[]{},
+                BorderColor.BLACK, "9", false, arrayOf(), Frame.MODERN, false, arrayOf(),
                 true, Rarity.RARE, true, "ocm1");
         System.out.println("success");
     }
@@ -162,11 +162,11 @@ public class CardTest {
         // Unstable Forest
         Card card = Card.fromID(UUID.fromString("f8772631-d4a1-440d-ac89-ac6659bdc073"));
         assertEquals(card.getManaCost(), "");
-        assertArrayEqualsIgnoreOrder(card.getColors(), new Color[]{});
+        assertArrayEqualsIgnoreOrder(card.getColors(), arrayOf());
         basicCard(card, UUID.fromString("f8772631-d4a1-440d-ac89-ac6659bdc073"), "en",
-                UUID.fromString("b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6"), 0.0, new Color[]{Color.GREEN},
+                UUID.fromString("b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6"), 0.0, arrayOf(Color.GREEN),
                 "Forest", true, Layout.NORMAL, false, false, "Basic Land — Forest",
-                BorderColor.BORDERLESS, "216", false, new FrameEffect[]{}, Frame.M15, true, new Game[]{Game.PAPER},
+                BorderColor.BORDERLESS, "216", false, arrayOf(), Frame.M15, true, arrayOf(Game.PAPER),
                 true, Rarity.COMMON, true, "ust");
     }
 

@@ -49,6 +49,7 @@ public class Legalities extends ScryfallObject {
      * Different legalities a card can have in a given format.
      * The options are: LEGAL, NOT_LEGAL, RESTRICTED, and BANNED.
      */
+    @SuppressWarnings("unused")
     public enum Legality {
         LEGAL, NOT_LEGAL, RESTRICTED, BANNED;
 
@@ -63,6 +64,7 @@ public class Legalities extends ScryfallObject {
      * The values are: STANDARD, FUTURE, BRAWL, HISTORIC, PIONEER, MODERN, LEGACY, PAUPER, VINTAGE, PENNY_DREADFUL,
      * COMMANDER, DUEL, and OLDSCHOOL.
      */
+    @SuppressWarnings("unused")
     public enum Format {
         STANDARD, FUTURE, BRAWL, HISTORIC, PIONEER, MODERN, LEGACY, PAUPER, VINTAGE, PENNY_DREADFUL, COMMANDER, DUEL, OLDSCHOOL;
 

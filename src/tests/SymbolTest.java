@@ -6,6 +6,7 @@ import com.scyrfall.api.object.Symbol;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static tests.ScryfallTest.arrayOf;
 import static tests.ScryfallTest.assertArrayEqualsIgnoreOrder;
 
 public class SymbolTest {
@@ -29,11 +30,11 @@ public class SymbolTest {
 
     @Test
     public void costs() {
-        baseCost(ManaCost.parseManaCost("{2}{g}{2}"), "{4}{G}", 5.0, new Color[]{Color.GREEN}, false,
+        baseCost(ManaCost.parseManaCost("{2}{g}{2}"), "{4}{G}", 5.0, arrayOf(Color.GREEN), false,
                 true, false);
-        baseCost(ManaCost.parseManaCost("XURW"), "{X}{U}{R}{W}", 3.0, new Color[]{Color.WHITE, Color.BLUE, Color.RED},
+        baseCost(ManaCost.parseManaCost("XURW"), "{X}{U}{R}{W}", 3.0, arrayOf(Color.WHITE, Color.BLUE, Color.RED),
                 false, false, true);
-        baseCost(ManaCost.parseManaCost("½CC"), "{½}{C}{C}", 2.5, new Color[]{}, true, false, false);
+        baseCost(ManaCost.parseManaCost("½CC"), "{½}{C}{C}", 2.5, arrayOf(), true, false, false);
     }
 
     private void baseCost(ManaCost symbol, String cost, double cmc, Color[] colors, boolean colorless,

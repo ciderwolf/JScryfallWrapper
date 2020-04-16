@@ -49,6 +49,7 @@ public class RelatedCard extends ScryfallObject {
         return component;
     }
 
+    @SuppressWarnings("unused")
     public enum Component {
         TOKEN, MELD_PART, MELD_RESULT, COMBO_PIECE;
 

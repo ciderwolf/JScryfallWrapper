@@ -1009,6 +1009,7 @@ public class Card extends ScryfallObject {
      * <li><code>MELD</code> - Cards with meld parts printed on the back
      * <li><code>LEVELER</code> - Cards with Level Up (from Rise of the Eldrazi)
      * <li><code>SAGA</code> - Saga-type cards (From Dominaria)
+     * <li><code>ADVENTURE</code> - Cards with an Adventure spell part (From Throne of Eldraine)
      * <li><code>PLANAR</code> - Plane and Phenomenon-type cards
      * <li><code>SCHEME</code> - Scheme-type cards
      * <li><code>VANGUARD</code> - Vanguard-type cards
@@ -1017,13 +1018,13 @@ public class Card extends ScryfallObject {
      * <li><code>EMBLEM</code> - Emblem cards
      * <li><code>AUGMENT</code> - Cards with Augment
      * <li><code>HOST</code> - Host-type cards
-     * <li><code>DOUBLE_SIDED</code> - A Magic card with two sides that are unrelated
-     * <li><code>ADVENTURE</code> - Cards with an Adventure spell part
      * <li><code>ART_SERIES</code> - Art Series collectible double-faced cards
+     * <li><code>DOUBLE_SIDED</code> - A Magic card with two sides that are unrelated
      */
+    @SuppressWarnings("unused")
     public enum Layout {
-        NORMAL, SPLIT, FLIP, TRANSFORM, MELD, LEVELER, SAGA, PLANAR, SCHEME, VANGUARD, TOKEN, DOUBLE_FACED_TOKEN, EMBLEM,
-        AUGMENT, HOST, DOUBLE_SIDED, ADVENTURE, ART_SERIES;
+        NORMAL, SPLIT, FLIP, TRANSFORM, MELD, LEVELER, SAGA, ADVENTURE, PLANAR, SCHEME, VANGUARD, TOKEN,
+        DOUBLE_FACED_TOKEN, EMBLEM, AUGMENT, HOST, ART_SERIES, DOUBLE_SIDED;
 
         private static Layout fromString(String value) {
             if (value.equals("double_faced_token")) {
@@ -1042,6 +1043,7 @@ public class Card extends ScryfallObject {
      * Different border colors a card can have.
      * If the border color field is missing or malformed, the card's border color will be <code>BorderColor.BLACK</code>
      */
+    @SuppressWarnings("unused")
     public enum BorderColor {
         BLACK, BORDERLESS, GOLD, SILVER, WHITE;
 
@@ -1067,20 +1069,21 @@ public class Card extends ScryfallObject {
      * <li><code>FUTURE</code> - Corresponds to Scyrfall's <code>FUTURE</code> frame.
      * Used on cards from the FUTURE.
      */
+    @SuppressWarnings("unused")
     public enum Frame {
         ORIGINAL, OLD, MODERN, M15, FUTURE;
 
         private static Frame fromString(String value) {
             switch (value) {
                 case "1993":
-                    return OLD;
-                case "1997":
                     return ORIGINAL;
+                case "1997":
+                    return OLD;
                 case "2003":
                     return MODERN;
                 case "2015":
                     return M15;
-                case "FUTURE":
+                case "future":
                     return FUTURE;
                 default:
                     return null;
@@ -1101,16 +1104,17 @@ public class Card extends ScryfallObject {
      * <li><code>COMPASS_LAND_DFC</code> - The compass and land transform marks (from Ixalan block)
      * <li><code>ORIGIN_PW_DFC</code> - The Origins and planeswalker transform marks (from Magic Origins)
      * <li><code>MOON_ELDRAZI_DFC</code> - The moon and Eldrazi transform marks (from Eldritch Moon)
-     * <li><code>WAXING_AND_WANING_MOON_DFC</code> - The waxing and waning crescent moon transform marks (From My Little Ponies promotion)
+     * <li><code>MOON_REVERSE_MOON_DFC</code> - The waxing and waning crescent moon transform marks (From My Little Ponies promotion)
      * <li><code>INVERTED</code> - The FNM-style inverted frame
      * <li><code>SHOWCASE</code> - A custom Showcase frame (from Eldraine)
      * <li><code>EXTENDED_ART</code> - An extended art frame
      * <li><code>COMPANION</code> - The cards have a companion frame
      * <li><code>NONE</code> - No frame effect
      */
+    @SuppressWarnings("unused")
     public enum FrameEffect {
         LEGENDARY, MIRACLE, NYXTOUCHED, DRAFT, DEVOID, TOMBSTONE, COLORSHIFTED, SUN_MOON_DFC, COMPASS_LAND_DFC, ORIGIN_PW_DFC,
-        MOON_ELDRAZI_DFC, WAXING_AND_WANING_MOON_DFC, INVERTED, SHOWCASE, EXTENDED_ART, COMPANION, NONE;
+        MOON_ELDRAZI_DFC, MOON_REVERSE_MOON_DFC, INVERTED, SHOWCASE, EXTENDED_ART, COMPANION, NONE;
 
         private static FrameEffect fromString(String value) {
             switch (value) {
@@ -1122,8 +1126,8 @@ public class Card extends ScryfallObject {
                     return ORIGIN_PW_DFC;
                 case "mooneldrazidfc":
                     return MOON_ELDRAZI_DFC;
-                case "waxingandwaningmoondfc":
-                    return WAXING_AND_WANING_MOON_DFC;
+                case "moonreversemoondfc":
+                    return MOON_REVERSE_MOON_DFC;
                 case "extendedart":
                     return EXTENDED_ART;
                 case "":
@@ -1137,6 +1141,7 @@ public class Card extends ScryfallObject {
     /**
      * The possible Magic games where a given card can exist: PAPER, ARENA, and MTGO.
      */
+    @SuppressWarnings("unused")
     public enum Game {
         PAPER, ARENA, MTGO;
 

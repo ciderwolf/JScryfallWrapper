@@ -7,16 +7,22 @@ public class ScryfallTest {
 
     static final double DELTA = 0.4;
 
-    static void assertArrayEqualsIgnoreOrder(Object[] arr1, Object[] arr2) {
+    static <T> void assertArrayEqualsIgnoreOrder(T[] arr1, T[] arr2) {
         assertEquals(arr1.length, arr2.length);
-        for (Object one : arr1) {
+        for (T one : arr1) {
             boolean contains = false;
-            for (Object two : arr2) {
+            for (T two : arr2) {
                 if (one.equals(two)) {
                     contains = true;
+                    break;
                 }
             }
             assertTrue(contains);
         }
+    }
+
+    @SafeVarargs
+    static <T> T[] arrayOf(T... values) {
+        return values;
     }
 }

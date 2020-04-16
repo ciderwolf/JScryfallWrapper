@@ -116,6 +116,7 @@ public class Images extends ScryfallObject {
      * <tr><td>small</td><td>146 × 204</td><td>A small full card image. Designed for use as thumbnail or list icon.</td></tr>
      * </table>
      */
+    @SuppressWarnings("unused")
     public enum Size {
         SMALL, NORMAL, LARGE, PNG, ART_CROP, BORDER_CROP;
 

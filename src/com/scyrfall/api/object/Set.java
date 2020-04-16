@@ -13,9 +13,10 @@ import java.util.UUID;
  * A Set object represents a group of related Magic cards. All Card objects on Scryfall belong to exactly one set.
  * <br>
  * Due to Magic’s long and complicated history, Scryfall includes many un-official sets as a way to group promotional or
- * outlier cards together. Such sets will likely have a four-letter code that begins with p or t, such as pcel or tori.
+ * outlier cards together. Such sets will likely have a four-letter code that begins with <code>p</code> or
+ * <code>t</code>, such as <code>pcel</code> or <code>tori</code>.
  * <br>
- * Official sets always have a three-letter set code, such as zen.
+ * Official sets always have a three-letter set code, such as <code>zen</code>.
  */
 public class Set extends ScryfallObject {
 
@@ -166,7 +167,7 @@ public class Set extends ScryfallObject {
     }
 
     /**
-     * @return This set’s ID on TCGplayer’s API, also known as the groupId.
+     * @return This set’s ID on TCGPlayer’s API, also known as the groupId.
      */
     public int getTcgPlayerID() {
         return tcgPlayerID;
@@ -190,9 +191,9 @@ public class Set extends ScryfallObject {
 
     /**
      * @param id the TCGPlayer id of the Set to be retrieved
-     * @return Returns a Set with the given tcgPlayerID, also known as the groupId on TCGplayer’s API.
+     * @return Returns a Set with the given tcgPlayerID, also known as the groupId on TCGPlayer’s API.
      */
-    public static Set fromTCGplayerID(int id) {
+    public static Set fromTCGPlayerID(int id) {
         return new Set(Query.dataFromPath("sets/tcgplayer/" + id));
     }
 
