@@ -5,6 +5,7 @@ import com.scyrfall.api.query.Query;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -13,6 +14,7 @@ public class Symbol extends ScryfallObject {
     private String symbol, looseVariant, english, gathererAlternates;
     private boolean transposeable, representsMana, appearsInManaCosts, funny, colorless, monoColored, multiColored;
     private double cmc;
+    private URL svgURL;
     private Color[] colors;
 
     public Symbol(JSONObject data) {
@@ -31,6 +33,8 @@ public class Symbol extends ScryfallObject {
         multiColored = getBoolean("multicolored");
 
         cmc = getDouble("cmc");
+
+        svgURL = getURL("svg_uri");
 
         JSONArray colors = getJSONArray("colors");
         this.colors = new Color[colors.length()];
@@ -142,6 +146,20 @@ public class Symbol extends ScryfallObject {
      */
     public static Symbol[] getSymbols() {
         return new List(Query.dataFromPath("symbology")).getContents(new Symbol[0]);
+    }
+
+    /**
+     * @return True if this is a mana symbol.
+     */
+    public boolean isRepresentsMana() {
+        return representsMana;
+    }
+
+    /**
+     * @return A url to a SVG that depicts this symbol.
+     */
+    public URL getSvgURL() {
+        return svgURL;
     }
 
     @Override

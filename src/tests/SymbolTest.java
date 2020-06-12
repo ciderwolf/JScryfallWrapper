@@ -18,6 +18,7 @@ public class SymbolTest {
         double sumCost = 0;
         for (Symbol s : symbols) {
             assertEquals(s.isFunny(), isFunny(s));
+            assertEquals(representsMana(s), s.representsMana());
             sumCost += s.getCmc();
         }
         assertEquals(sumCost, totalCost, ScryfallTest.DELTA);
@@ -26,6 +27,10 @@ public class SymbolTest {
     private boolean isFunny(Symbol symbol) {
         return symbol.getCmc() == 0.5 || symbol.getCmc() > 99 || symbol.getLooseVariant().equals("Y") ||
                 symbol.getLooseVariant().equals("Z") || symbol.getCmc() == -1 || symbol.getSymbol().equals("{A}");
+    }
+
+    private boolean representsMana(Symbol symbol) {
+        return symbol.getEnglish().contains("mana");
     }
 
     @Test

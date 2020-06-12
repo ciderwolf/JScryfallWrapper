@@ -6,6 +6,7 @@ import com.scyrfall.api.field.RelatedCard;
 import com.scyrfall.api.field.Ruling;
 import com.scyrfall.api.object.Card;
 import com.scyrfall.api.object.Set;
+import com.scyrfall.api.object.Symbol;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -62,7 +63,7 @@ public class EnumValuesTest {
     @Test
     public void color() {
         String[] colors = {"W", "U", "B", "R", "G"};
-        assertArrayValues(colors, ScryfallObject.Color.values(), "colors", Card.class, Card::getColors);
+        assertArrayValues(colors, ScryfallObject.Color.values(), "colors", Symbol.class, Symbol::getColors);
     }
 
     @Test

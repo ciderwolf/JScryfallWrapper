@@ -177,6 +177,7 @@ public abstract class ScryfallObject {
      * @return The double at the specified key. If the key is invalid,
      * <code>-1.0</code> is returned instead.
      */
+    @SuppressWarnings("SameParameterValue")
     protected double getDouble(String key) {
         try {
             return data.getDouble(key);

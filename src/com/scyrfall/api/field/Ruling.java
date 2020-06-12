@@ -20,11 +20,7 @@ public class Ruling extends ScryfallObject {
         super(data);
 
         comment = getString("comment");
-        try {
-            publishedDate = dateFormat.parse(getString("released_at"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        publishedDate = getDate("released_at");
 
         source = RulingSource.fromString(getString("source"));
         oracleID = getUUID("oracle_id");
