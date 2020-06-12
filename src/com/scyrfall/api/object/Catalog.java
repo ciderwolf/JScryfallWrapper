@@ -68,30 +68,33 @@ public class Catalog extends ScryfallObject {
     /**
      * The name of a catalog to be retrieved. All values are updated as soon as a new card is entered for spoiler seasons.
      * <table><thead><tr><th>Name</th><th>Description</th></tr></thead>
-     * <tbody><tr><td><p><code>CARD_NAMES</code></p></td><td><p>A list of all nontoken English card names in Scryfall’s database.</p>
-     * </td></tr><tr><td><p><code>ARTIST_NAMES</code></p></td><td><p>A list of all canonical artist names in Scryfall’s
-     * database. This catalog won’t include duplicate, misspelled, or FUNNY names for artists. </p>
-     * </td></tr><tr><td><p><code>WORD_BANK</code></p></td><td><p>A list of all English words, of length 2 or more, that
-     * could appear in a card name. Values are drawn from cards currently in Scryfall’s database. </p>
-     * </td></tr><tr><td><p><code>CREATURE_TYPES</code></p></td><td><p>A list of all creature types in Scryfall’s database.</p>
-     * </td></tr><tr><td><p><code>PLANESWALKER_TYPES</code></p></td><td><p>A list of all Planeswalker types in Scryfall’s database. </p>
-     * </td></tr><tr><td><p><code>LAND_TYPES</code></p></td><td><p>A list of all Land types in Scryfall’s database. </p>
-     * </td></tr><tr><td><p><code>ARTIFACT_TYPES</code></p></td><td><p>A list of all artifact types in Scryfall’s database. </p>
-     * </td></tr><tr><td><p><code>ENCHANTMENT_TYPES</code></p></td><td><p>A list of all enchantment types in Scryfall’s database. </p>
-     * </td></tr><tr><td><p><code>SPELL_TYPES</code></p></td><td><p>A list of all spell types in Scryfall’s database. </p>
-     * </td></tr><tr><td><p><code>POWERS</code></p></td><td><p>A list of all possible values for a creature or vehicle’s
-     * power in Scryfall’s database. </p>
-     * </td></tr><tr><td><p><code>TOUGHNESSES</code></p></td><td><p>A list of all possible values for a creature or
-     * vehicle’s toughness in Scryfall’s database</p>
-     * </td></tr><tr><td><p><code>LOYALTIES</code></p></td><td><p>A list of all possible values for a Planeswalker’s
-     * loyalty in Scryfall’s database. </p>
-     * </td></tr><tr><td><p><code>WATERMARKS</code></p></td><td><p>A list of all card WATERMARKS in Scryfall’s database</p>
-     * </td></tr></tbody></table>
+     * <tbody><tr><td><code>CARD_NAMES</code></td><td>A list of all nontoken English card names in Scryfall’s database.</td></tr>
+     * <tr><td><code>ARTIST_NAMES</code></td><td>A list of all canonical artist names in Scryfall’s
+     * database. This catalog won’t include duplicate, misspelled, or FUNNY names for artists.</td></tr> 
+     * <tr><td><code>WORD_BANK</code></td><td>A list of all English words, of length 2 or more, that
+     * could appear in a card name. Values are drawn from cards currently in Scryfall’s database. </td></tr>
+     * <tr><td><code>CREATURE_TYPES</code></td><td>A list of all creature types in Scryfall’s database.</td></tr>
+     * <tr><td><code>PLANESWALKER_TYPES</code></td><td>A list of all Planeswalker types in Scryfall’s database. </td></tr>
+     * <tr><td><code>LAND_TYPES</code></td><td>A list of all Land types in Scryfall’s database. </td></tr>
+     * <tr><td><code>ARTIFACT_TYPES</code></td><td>A list of all artifact types in Scryfall’s database. </td></tr>
+     * <tr><td><code>ENCHANTMENT_TYPES</code></td><td>A list of all enchantment types in Scryfall’s database. </td></tr>
+     * <tr><td><code>SPELL_TYPES</code></td><td>A list of all spell types in Scryfall’s database. </td></tr>
+     * <tr><td><code>POWERS</code></td><td>A list of all possible values for a creature or vehicle’s
+     * power in Scryfall’s database. </td></tr>
+     * <tr><td><code>TOUGHNESSES</code></td><td>A list of all possible values for a creature or
+     * vehicle’s toughness in Scryfall’s database</td></tr>
+     * <tr><td><code>LOYALTIES</code></td><td>A list of all possible values for a Planeswalker’s
+     * loyalty in Scryfall’s database. </td></tr>
+     * <tr><td><code>WATERMARKS</code></td><td>A list of all card watermarks in Scryfall’s database.</td></tr>
+     * <tr><td><code>KEYWORD_ABILITIES</code></td><td>A list of all keyword abilities in Scryfall’s database.</td></tr>
+     * <tr><td><code>KEYWORD_ACTIONS</code></td><td>A list of all keyword actions in Scryfall’s database.</td></tr>
+     * <tr><td><code>ABILITY_WORDS</code></td><td>A list of all ability words in Scryfall’s database.</td></tr>
+     * </tbody></table>
      */
     @SuppressWarnings("unused")
     public enum Name {
         CARD_NAMES, ARTIST_NAMES, WORD_BANK, CREATURE_TYPES, PLANESWALKER_TYPES, LAND_TYPES, ARTIFACT_TYPES, ENCHANTMENT_TYPES,
-        SPELL_TYPES, POWERS, TOUGHNESSES, LOYALTIES, WATERMARKS;
+        SPELL_TYPES, POWERS, TOUGHNESSES, LOYALTIES, WATERMARKS, KEYWORD_ABILITIES, KEYWORD_ACTIONS, ABILITY_WORDS;
 
         public String toParameterString() {
             return this.toString().toLowerCase();

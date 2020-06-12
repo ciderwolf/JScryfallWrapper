@@ -24,7 +24,7 @@ public class Set extends ScryfallObject {
     private SetType setType;
     private Date released;
     private int cardCount, tcgPlayerID;
-    private boolean digital, foilOnly;
+    private boolean digital, foilOnly, nonfoilOnly;
     private URL iconSvgURL, searchURL, scryfallURL, url;
     private UUID id;
 
@@ -44,6 +44,7 @@ public class Set extends ScryfallObject {
         cardCount = getInt("card_count");
         digital = getBoolean("digital");
         foilOnly = getBoolean("foil_only");
+        nonfoilOnly = getBoolean("nonfoil_only");
         iconSvgURL = getURL("icon_svg_uri");
         searchURL = getURL("search_uri");
         scryfallURL = getURL("scryfall_uri");
@@ -115,7 +116,7 @@ public class Set extends ScryfallObject {
     }
 
     /**
-     * @return True if this set was only released on Magic Online.
+     * @return True if this set was only released in a video game.
      */
     public boolean isDigital() {
         return digital;
@@ -126,6 +127,13 @@ public class Set extends ScryfallObject {
      */
     public boolean isFoilOnly() {
         return foilOnly;
+    }
+
+    /**
+     * @return True if this set contains only nonfoil cards.
+     */
+    public boolean isNonfoilOnly() {
+        return nonfoilOnly;
     }
 
     /**
@@ -262,8 +270,10 @@ public class Set extends ScryfallObject {
         if (o == null || getClass() != o.getClass()) return false;
         Set set = (Set) o;
         return cardCount == set.cardCount &&
+                tcgPlayerID == set.tcgPlayerID &&
                 digital == set.digital &&
                 foilOnly == set.foilOnly &&
+                nonfoilOnly == set.nonfoilOnly &&
                 Objects.equals(code, set.code) &&
                 Objects.equals(mtgoCode, set.mtgoCode) &&
                 Objects.equals(name, set.name) &&
@@ -273,7 +283,10 @@ public class Set extends ScryfallObject {
                 setType == set.setType &&
                 Objects.equals(released, set.released) &&
                 Objects.equals(iconSvgURL, set.iconSvgURL) &&
-                Objects.equals(searchURL, set.searchURL);
+                Objects.equals(searchURL, set.searchURL) &&
+                Objects.equals(scryfallURL, set.scryfallURL) &&
+                Objects.equals(url, set.url) &&
+                Objects.equals(id, set.id);
     }
 
     @Override
@@ -288,10 +301,15 @@ public class Set extends ScryfallObject {
                 ", setType=" + setType +
                 ", released=" + released +
                 ", cardCount=" + cardCount +
+                ", tcgPlayerID=" + tcgPlayerID +
                 ", digital=" + digital +
                 ", foilOnly=" + foilOnly +
+                ", nonfoilOnly=" + nonfoilOnly +
                 ", iconSvgURL=" + iconSvgURL +
                 ", searchURL=" + searchURL +
+                ", scryfallURL=" + scryfallURL +
+                ", url=" + url +
+                ", id=" + id +
                 '}';
     }
 }

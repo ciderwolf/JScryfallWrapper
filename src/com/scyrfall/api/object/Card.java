@@ -31,7 +31,8 @@ public class Card extends ScryfallObject {
     private int arenaID, mtgoID, mtgoFoilID, tcgplayerID, edhrecRank;
     private int[] multiverseIDs;
     private Layout layout;
-    private String lang, handModifier, lifeModifier, loyalty, manaCost, name, oracleText, power, toughness, typeLine;
+    private String lang, handModifier, lifeModifier, loyalty, manaCost, name,
+            flavorName, oracleText, power, toughness, typeLine;
     private UUID id, oracleID, illustrationID, variationID, cardBackID;
     private URL printsSearchURL, rulingsURL, scryfallURL, url;
     private RelatedCard[] allParts;
@@ -74,6 +75,7 @@ public class Card extends ScryfallObject {
         loyalty = getString("loyalty");
         manaCost = getString("mana_cost");
         name = getString("name");
+        flavorName = getString("flavor_name");
         oracleText = getString("oracle_text");
         power = getString("power");
         toughness = getString("toughness");
@@ -330,10 +332,17 @@ public class Card extends ScryfallObject {
 
     /**
      * @return The name of this card. If this card has multiple faces, this field will contain both names separated by
-     * <code>␣//␣</code>.
+     * "<code> // </code>".
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return The just-for-fun name printed on the card (such as for Godzilla series cards).
+     */
+    public String getFlavorName() {
+        return flavorName;
     }
 
     /**
@@ -524,7 +533,7 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @return <code>true</code> if this is a digital card on Magic Online., <code>false</code> otherwise.
+     * @return <code>true</code> if this card was only released in a video game, <code>false</code> otherwise.
      */
     public boolean isDigital() {
         return digital;
@@ -1199,6 +1208,7 @@ public class Card extends ScryfallObject {
                 Objects.equals(loyalty, card.loyalty) &&
                 Objects.equals(manaCost, card.manaCost) &&
                 Objects.equals(name, card.name) &&
+                Objects.equals(flavorName, card.flavorName) &&
                 Objects.equals(oracleText, card.oracleText) &&
                 Objects.equals(power, card.power) &&
                 Objects.equals(toughness, card.toughness) &&
@@ -1264,6 +1274,7 @@ public class Card extends ScryfallObject {
                 ", loyalty='" + loyalty + '\'' +
                 ", manaCost='" + manaCost + '\'' +
                 ", name='" + name + '\'' +
+                ", flavorName='" + flavorName + '\'' +
                 ", oracleText='" + oracleText + '\'' +
                 ", power='" + power + '\'' +
                 ", toughness='" + toughness + '\'' +

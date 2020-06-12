@@ -5,7 +5,7 @@ import com.scyrfall.api.query.Query;
 import org.json.JSONObject;
 
 import java.net.URL;
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -13,9 +13,9 @@ public class BulkData extends ScryfallObject {
 
     private UUID id;
     private String type, name, description, contentMimeType, contentEncoding;
-    private URL permalinkURL;
-    private Date updated;
-    private int size;
+    private URL downloadURL, url;
+    private ZonedDateTime updated;
+    private int compressedSize;
 
     public BulkData(JSONObject data) {
         super(data);
@@ -25,9 +25,10 @@ public class BulkData extends ScryfallObject {
         description = getString("description");
         contentEncoding = getString("content_encoding");
         contentMimeType = getString("content_type");
-        permalinkURL = getURL("permalink_uri");
-        updated = getDate("released_at");
-        size = getInt("size");
+        downloadURL = getURL("download_uri");
+        url = getURL("uri");
+        updated = ZonedDateTime.parse(getString("released_at"));
+        compressedSize = getInt("compressed_size");
     }
 
     /**
@@ -73,24 +74,31 @@ public class BulkData extends ScryfallObject {
     }
 
     /**
-     * @return The URL that hosts this bulk file.
+     * @return The URL that hosts this bulk file for fetching.
      */
-    public URL getPermalinkURL() {
-        return permalinkURL;
+    public URL getDownloadURL() {
+        return downloadURL;
+    }
+
+    /**
+     * @return The Scryfall API URL for this file.
+     */
+    public URL getUrl() {
+        return url;
     }
 
     /**
      * @return The time when this file was last updated.
      */
-    public Date getUpdated() {
+    public ZonedDateTime getUpdated() {
         return updated;
     }
 
     /**
      * @return The size of this file in integer bytes.
      */
-    public int getSize() {
-        return size;
+    public int getCompressedSize() {
+        return compressedSize;
     }
 
     /**
@@ -100,19 +108,37 @@ public class BulkData extends ScryfallObject {
         return new List(Query.dataFromPath("bulk-data")).getContents(new BulkData[0]);
     }
 
+    /**
+     * @param id The UUID of the Bulk Data object to be retrieved
+     * @return a single Bulk Data object with the given id.
+     * @see BulkData#getId()
+     */
+    public static BulkData fromId(UUID id) {
+        return new BulkData(Query.dataFromPath("bulk-data/" + id.toString()));
+    }
+
+    /**
+     * @param type the <code>type</code> of the Bulk Data object to be retrieved
+     * @return a single Bulk Data object with the given type.
+     * @see BulkData#getType()
+     */
+    public static BulkData fromType(String type) {
+        return new BulkData(Query.dataFromPath("bulk-data/" + type));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BulkData bulkData = (BulkData) o;
-        return size == bulkData.size &&
+        return compressedSize == bulkData.compressedSize &&
                 Objects.equals(id, bulkData.id) &&
                 Objects.equals(type, bulkData.type) &&
                 Objects.equals(name, bulkData.name) &&
                 Objects.equals(description, bulkData.description) &&
                 Objects.equals(contentMimeType, bulkData.contentMimeType) &&
                 Objects.equals(contentEncoding, bulkData.contentEncoding) &&
-                Objects.equals(permalinkURL, bulkData.permalinkURL) &&
+                Objects.equals(downloadURL, bulkData.downloadURL) &&
                 Objects.equals(updated, bulkData.updated);
     }
 
@@ -125,9 +151,9 @@ public class BulkData extends ScryfallObject {
                 ", description='" + description + '\'' +
                 ", contentMimeType='" + contentMimeType + '\'' +
                 ", contentEncoding='" + contentEncoding + '\'' +
-                ", permalinkURL=" + permalinkURL +
+                ", permalinkURL=" + downloadURL +
                 ", updated=" + updated +
-                ", size=" + size +
+                ", size=" + compressedSize +
                 '}';
     }
 }
