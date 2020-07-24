@@ -23,7 +23,7 @@ public class Set extends ScryfallObject {
     private String code, mtgoCode, name, blockCode, block, parentSetCode;
     private SetType setType;
     private Date released;
-    private int cardCount, tcgPlayerID;
+    private int cardCount, tcgPlayerID, printedSize;
     private boolean digital, foilOnly, nonfoilOnly;
     private URL iconSvgURL, searchURL, scryfallURL, url;
     private UUID id;
@@ -42,6 +42,7 @@ public class Set extends ScryfallObject {
         released = getDate("released_at");
         tcgPlayerID = getInt("tcgplayer_id");
         cardCount = getInt("card_count");
+        printedSize = getInt("printed_size");
         digital = getBoolean("digital");
         foilOnly = getBoolean("foil_only");
         nonfoilOnly = getBoolean("nonfoil_only");
@@ -113,6 +114,13 @@ public class Set extends ScryfallObject {
      */
     public int getCardCount() {
         return cardCount;
+    }
+
+    /**
+     * @return The denominator for the set&rsquo;s printed collector numbers.
+     */
+    public int getPrintedSize() {
+        return printedSize;
     }
 
     /**

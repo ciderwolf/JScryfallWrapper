@@ -37,10 +37,10 @@ public class Card extends ScryfallObject {
     private URL printsSearchURL, rulingsURL, scryfallURL, url;
     private RelatedCard[] allParts;
     private CardFace[] faces;
-    private String[] promoTypes;
+    private String[] promoTypes, keywords;
     private double cmc;
-    private Color[] colors, colorIdentity, colorIndicator;
-    private boolean foil, nonfoil, oversized, digital, reserved, inBoosters;
+    private Color[] colors, colorIdentity, colorIndicator, producedMana;
+    private boolean foil, nonfoil, oversized, digital, reserved, inBoosters, contentWarning;
     private Legalities legalities;
     private String artist, collectorNumber, flavorText, printedName, printedText, printedTypeLine, watermark;
     private BorderColor borderColor;
@@ -108,6 +108,7 @@ public class Card extends ScryfallObject {
         textless = getBoolean("textless");
         variation = getBoolean("variation");
         inBoosters = getBoolean("booster");
+        contentWarning = getBoolean("content_warning");
 
         printsSearchURL = getURL("prints_search_uri");
         rulingsURL = getURL("rulings_uri");
@@ -150,6 +151,12 @@ public class Card extends ScryfallObject {
             this.colorIdentity[i] = Color.fromString(colorIdentity.getString(i));
         }
 
+        JSONArray producedMana = getJSONArray("produced_mana");
+        this.producedMana = new Color[producedMana.length()];
+        for (int i = 0; i < producedMana.length(); i++) {
+            this.producedMana[i] = Color.fromString(producedMana.getString(i));
+        }
+
         JSONArray colorIndicator = getJSONArray("color_indicator");
         this.colorIndicator = new Color[colorIndicator.length()];
         for (int i = 0; i < colorIndicator.length(); i++) {
@@ -172,6 +179,12 @@ public class Card extends ScryfallObject {
         promoTypes = new String[promos.length()];
         for (int i = 0; i < promos.length(); i++) {
             promoTypes[i] = promos.getString(i);
+        }
+
+        JSONArray kws = getJSONArray("keywords");
+        keywords = new String[kws.length()];
+        for (int i = 0; i < kws.length(); i++) {
+            keywords[i] = kws.getString(i);
         }
 
         JSONArray frameEffects = getJSONArray("frame_effects");
@@ -305,6 +318,15 @@ public class Card extends ScryfallObject {
      */
     public String getHandModifier() {
         return handModifier;
+    }
+
+    /**
+     * @return An array of keywords that this card uses, such as <code>&#39;Flying&#39;</code> and
+     * <code>&#39;Cumulative upkeep&#39;</code>.
+     * @see Catalog.Name#KEYWORD_ABILITIES
+     */
+    public String[] getKeywords() {
+        return keywords;
     }
 
     /**
@@ -497,11 +519,18 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @return The colors in this card’s color indicator, if any. A null value for this field indicates the card does
+     * @return The colors in this card’s color indicator, if any. An empty array for this field indicates the card does
      * not have one.
      */
     public Color[] getColorIndicator() {
         return colorIndicator;
+    }
+
+    /**
+     * @return Colors of mana that this card could produce.
+     */
+    public Color[] getProducedMana() {
+        return producedMana;
     }
 
     /**
@@ -551,6 +580,14 @@ public class Card extends ScryfallObject {
      */
     public boolean isInBoosters() {
         return inBoosters;
+    }
+
+    /**
+     * @return True if you should consider <a href="https://scryfall.com/blog/220">avoiding use of this print</a>
+     * downstream.
+     */
+    public boolean hasContentWarning() {
+        return contentWarning;
     }
 
     /**
@@ -1193,6 +1230,7 @@ public class Card extends ScryfallObject {
                 digital == card.digital &&
                 reserved == card.reserved &&
                 inBoosters == card.inBoosters &&
+                contentWarning == card.contentWarning &&
                 fullArt == card.fullArt &&
                 highResImage == card.highResImage &&
                 promo == card.promo &&
@@ -1225,9 +1263,11 @@ public class Card extends ScryfallObject {
                 Arrays.equals(allParts, card.allParts) &&
                 Arrays.equals(faces, card.faces) &&
                 Arrays.equals(promoTypes, card.promoTypes) &&
+                Arrays.equals(keywords, card.keywords) &&
                 Arrays.equals(colors, card.colors) &&
                 Arrays.equals(colorIdentity, card.colorIdentity) &&
                 Arrays.equals(colorIndicator, card.colorIndicator) &&
+                Arrays.equals(producedMana, card.producedMana) &&
                 Objects.equals(legalities, card.legalities) &&
                 Objects.equals(artist, card.artist) &&
                 Objects.equals(collectorNumber, card.collectorNumber) &&
@@ -1291,16 +1331,19 @@ public class Card extends ScryfallObject {
                 ", allParts=" + Arrays.toString(allParts) +
                 ", faces=" + Arrays.toString(faces) +
                 ", promoTypes=" + Arrays.toString(promoTypes) +
+                ", keywords=" + Arrays.toString(keywords) +
                 ", cmc=" + cmc +
                 ", colors=" + Arrays.toString(colors) +
                 ", colorIdentity=" + Arrays.toString(colorIdentity) +
                 ", colorIndicator=" + Arrays.toString(colorIndicator) +
+                ", producedMana=" + Arrays.toString(producedMana) +
                 ", foil=" + foil +
                 ", nonfoil=" + nonfoil +
                 ", oversized=" + oversized +
                 ", digital=" + digital +
                 ", reserved=" + reserved +
                 ", inBoosters=" + inBoosters +
+                ", contentWarning=" + contentWarning +
                 ", legalities=" + legalities +
                 ", artist='" + artist + '\'' +
                 ", collectorNumber='" + collectorNumber + '\'' +

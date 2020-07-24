@@ -9,6 +9,8 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+// TODO: Implement type query parameter
+
 public class BulkData extends ScryfallObject {
 
     private UUID id;
