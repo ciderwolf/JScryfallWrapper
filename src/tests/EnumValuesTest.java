@@ -42,8 +42,8 @@ public class EnumValuesTest {
 
     @Test
     public void layout() {
-        String[] layouts = {"normal", "split", "flip", "transform", "meld", "leveler", "saga", "adventure", "planar",
-                "scheme", "vanguard", "token", "double_faced_token", "emblem", "augment", "host",
+        String[] layouts = {"normal", "split", "flip", "transform", "modal_dfc", "meld", "leveler", "saga", "adventure",
+                "planar", "scheme", "vanguard", "token", "double_faced_token", "emblem", "augment", "host",
                 "art_series", "double_sided"};
         assertValues(layouts, Card.Layout.values(), "layout", Card.class, Card::getLayout);
     }

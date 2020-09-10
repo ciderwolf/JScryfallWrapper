@@ -1052,6 +1052,7 @@ public class Card extends ScryfallObject {
      * <li><code>SPLIT</code> - A split-faced card (includes cards with fuse and aftermath)
      * <li><code>FLIP</code> - Cards that invert vertically with the flip keyword (like those from Kamigawa)
      * <li><code>TRANSFORM</code> - Double-sided cards that transform (Like those from Innistrad)
+     * <li><code>MODAL_DFC</code> - Double-sided cards that can be played either-side (Like those from Zendikar Rising)
      * <li><code>MELD</code> - Cards with meld parts printed on the back
      * <li><code>LEVELER</code> - Cards with Level Up (from Rise of the Eldrazi)
      * <li><code>SAGA</code> - Saga-type cards (From Dominaria)
@@ -1069,18 +1070,14 @@ public class Card extends ScryfallObject {
      */
     @SuppressWarnings("unused")
     public enum Layout {
-        NORMAL, SPLIT, FLIP, TRANSFORM, MELD, LEVELER, SAGA, ADVENTURE, PLANAR, SCHEME, VANGUARD, TOKEN,
+        NORMAL, SPLIT, FLIP, TRANSFORM, MODAL_DFC, MELD, LEVELER, SAGA, ADVENTURE, PLANAR, SCHEME, VANGUARD, TOKEN,
         DOUBLE_FACED_TOKEN, EMBLEM, AUGMENT, HOST, ART_SERIES, DOUBLE_SIDED;
 
         private static Layout fromString(String value) {
-            if (value.equals("double_faced_token")) {
-                return DOUBLE_FACED_TOKEN;
-            } else {
-                try {
-                    return valueOf(value.toUpperCase());
-                } catch (IllegalArgumentException e) {
-                    return NORMAL;
-                }
+            try {
+                return valueOf(value.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                return NORMAL;
             }
         }
     }
