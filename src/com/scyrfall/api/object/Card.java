@@ -28,7 +28,7 @@ public class Card extends ScryfallObject {
             "Planeswalker", "Tribal"};
     private static final String EM_DASH = "—";
 
-    private int arenaID, mtgoID, mtgoFoilID, tcgplayerID, edhrecRank;
+    private int arenaID, mtgoID, mtgoFoilID, tcgplayerID, cardmarketID, edhrecRank;
     private int[] multiverseIDs;
     private Layout layout;
     private String lang, handModifier, lifeModifier, loyalty, manaCost, name,
@@ -67,6 +67,7 @@ public class Card extends ScryfallObject {
         mtgoID = getInt("mtgo_id");
         mtgoFoilID = getInt("mtgo_foil_id");
         tcgplayerID = getInt("tcgplayer_id");
+        cardmarketID = getInt("cardmarket_id");
         edhrecRank = getInt("edhrec_rank");
 
         lang = getString("lang");
@@ -261,6 +262,13 @@ public class Card extends ScryfallObject {
      */
     public int getTcgplayerID() {
         return tcgplayerID;
+    }
+
+    /**
+     * @return This card’s ID on Cardmarket’s API, also known as the <code>idProduct</code>.
+     */
+    public int getCardmarketID() {
+        return cardmarketID;
     }
 
     /**
@@ -948,6 +956,25 @@ public class Card extends ScryfallObject {
     }
 
     /**
+     * @param id The TCGPlayer ID of the card to retrieve.
+     * @return A single card with the given <code>tcgplayer_id</code>, also known as the <code>productId</code> on
+     * <a href="https://docs.tcgplayer.com/docs">TCGplayer’s API</a>.
+     */
+    public static Card fromTcgPlayerID(int id) {
+        return new Card(Query.dataFromPath("cards/tcgplayer/" + id));
+    }
+
+
+    /**
+     * @param id The Cardmarket ID of the card to retrieve.
+     * @return A single card with the given <code>cardmarket_id</code>, also known as the <code>productId</code> on
+     * Cardmarket's APIs.
+     */
+    public static Card fromCardmarketID(int id) {
+        return new Card(Query.dataFromPath("cards/cardmarket/" + id));
+    }
+
+    /**
      * @param id the Scryfall id of the card to be retrieved
      * @return the card with the given Scryfall ID
      */
@@ -1219,6 +1246,7 @@ public class Card extends ScryfallObject {
                 mtgoID == card.mtgoID &&
                 mtgoFoilID == card.mtgoFoilID &&
                 tcgplayerID == card.tcgplayerID &&
+                cardmarketID == card.cardmarketID &&
                 edhrecRank == card.edhrecRank &&
                 Double.compare(card.cmc, cmc) == 0 &&
                 foil == card.foil &&
@@ -1302,6 +1330,7 @@ public class Card extends ScryfallObject {
                 ", mtgoID=" + mtgoID +
                 ", mtgoFoilID=" + mtgoFoilID +
                 ", tcgplayerID=" + tcgplayerID +
+                ", cardmarketID=" + cardmarketID +
                 ", edhrecRank=" + edhrecRank +
                 ", multiverseIDs=" + Arrays.toString(multiverseIDs) +
                 ", layout=" + layout +
