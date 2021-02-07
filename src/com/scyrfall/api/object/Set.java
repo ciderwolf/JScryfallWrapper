@@ -179,7 +179,7 @@ public class Set extends ScryfallObject {
      * @see Card
      */
     public Card[] getCards() {
-        return List.fromURL(searchURL).getCards();
+        return ScryfallList.fromURL(searchURL).getCards();
     }
 
     /**

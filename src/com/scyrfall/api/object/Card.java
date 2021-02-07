@@ -11,7 +11,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.*;
+import java.util.function.Function;
 
 //TODO: implement /cards/search and /cards/collection
 //TODO: allow for retrieval in all formats for all endpoints (json, text, image)
@@ -21,6 +23,7 @@ import java.util.*;
  * Card objects represent individual Magic: The Gathering cards that players could obtain and add to their collection
  * (with a few minor exceptions).
  */
+@SuppressWarnings("unused")
 public class Card extends ScryfallObject {
 
     private static final String[] SUPERTYPES = {"Legendary", "Basic", "Snow"};
@@ -29,26 +32,26 @@ public class Card extends ScryfallObject {
     private static final String EM_DASH = "—";
 
     private int arenaID, mtgoID, mtgoFoilID, tcgplayerID, cardmarketID, edhrecRank;
-    private int[] multiverseIDs;
+    private List<Integer> multiverseIDs;
     private Layout layout;
     private String lang, handModifier, lifeModifier, loyalty, manaCost, name,
             flavorName, oracleText, power, toughness, typeLine;
     private UUID id, oracleID, illustrationID, variationID, cardBackID;
     private URL printsSearchURL, rulingsURL, scryfallURL, url;
-    private RelatedCard[] allParts;
-    private CardFace[] faces;
-    private String[] promoTypes, keywords;
+    private List<RelatedCard> allParts;
+    private List<CardFace> faces;
+    private List<String> promoTypes, keywords;
     private double cmc;
-    private Color[] colors, colorIdentity, colorIndicator, producedMana;
+    private List<Color> colors, colorIdentity, colorIndicator, producedMana;
     private boolean foil, nonfoil, oversized, digital, reserved, inBoosters, contentWarning;
     private Legalities legalities;
     private String artist, collectorNumber, flavorText, printedName, printedText, printedTypeLine, watermark;
     private BorderColor borderColor;
     private Frame frame;
     private FrameEffect frameEffect;
-    private FrameEffect[] frameEffects;
+    private List<FrameEffect> frameEffects;
     private boolean fullArt, highResImage, promo, reprint, storySpotlight, textless, variation;
-    private Game[] games;
+    private List<Game> games;
     private HashMap<String, URL> purchaseURLs, relatedURLs;
     private Rarity rarity;
     private Date releaseDate;
@@ -133,104 +136,31 @@ public class Card extends ScryfallObject {
         rarity = Rarity.fromString(getString("rarity"));
         borderColor = BorderColor.fromString(getString("border_color"));
 
-
-        JSONArray games = getJSONArray("games");
-        this.games = new Game[games.length()];
-        for (int i = 0; i < games.length(); i++) {
-            this.games[i] = Game.fromString(games.getString(i));
-        }
-
-        JSONArray colors = getJSONArray("colors");
-        this.colors = new Color[colors.length()];
-        for (int i = 0; i < colors.length(); i++) {
-            this.colors[i] = Color.fromString(colors.getString(i));
-        }
-
-        JSONArray colorIdentity = getJSONArray("color_identity");
-        this.colorIdentity = new Color[colorIdentity.length()];
-        for (int i = 0; i < colorIdentity.length(); i++) {
-            this.colorIdentity[i] = Color.fromString(colorIdentity.getString(i));
-        }
-
-        JSONArray producedMana = getJSONArray("produced_mana");
-        this.producedMana = new Color[producedMana.length()];
-        for (int i = 0; i < producedMana.length(); i++) {
-            this.producedMana[i] = Color.fromString(producedMana.getString(i));
-        }
-
-        JSONArray colorIndicator = getJSONArray("color_indicator");
-        this.colorIndicator = new Color[colorIndicator.length()];
-        for (int i = 0; i < colorIndicator.length(); i++) {
-            this.colorIndicator[i] = Color.fromString(colorIndicator.getString(i));
-        }
-
-        JSONArray multiverseIDs = getJSONArray("multiverse_ids");
-        this.multiverseIDs = new int[multiverseIDs.length()];
-        for (int i = 0; i < multiverseIDs.length(); i++) {
-            this.multiverseIDs[i] = multiverseIDs.getInt(i);
-        }
-
-        JSONArray relatedCards = getJSONArray("all_parts");
-        allParts = new RelatedCard[relatedCards.length()];
-        for (int i = 0; i < relatedCards.length(); i++) {
-            allParts[i] = new RelatedCard(relatedCards.getJSONObject(i));
-        }
-
-        JSONArray promos = getJSONArray("promos");
-        promoTypes = new String[promos.length()];
-        for (int i = 0; i < promos.length(); i++) {
-            promoTypes[i] = promos.getString(i);
-        }
-
-        JSONArray kws = getJSONArray("keywords");
-        keywords = new String[kws.length()];
-        for (int i = 0; i < kws.length(); i++) {
-            keywords[i] = kws.getString(i);
-        }
-
-        JSONArray frameEffects = getJSONArray("frame_effects");
-        this.frameEffects = new FrameEffect[frameEffects.length()];
-        for (int i = 0; i < frameEffects.length(); i++) {
-            this.frameEffects[i] = FrameEffect.fromString(frameEffects.getString(i));
-        }
-
-        if (data.has("card_faces")) {
-            JSONArray faces = getJSONArray("card_faces");
-            this.faces = new CardFace[faces.length()];
-            for (int i = 0; i < faces.length(); i++) {
-                this.faces[i] = new CardFace(faces.getJSONObject(i));
-            }
-        }
+        games = getList("games", Game::fromString, JSONArray::getString);
+        colors = getList("colors", Color::fromString, JSONArray::getString);
+        colorIdentity = getList("color_identity", Color::fromString, JSONArray::getString);
+        producedMana = getList("produced_mana", Color::fromString, JSONArray::getString);
+        colorIndicator = getList("color_indicator", Color::fromString, JSONArray::getString);
+        multiverseIDs = getList("multiverse_ids", Function.identity(), JSONArray::getInt);
+        allParts = getList("all_parts", RelatedCard::new, JSONArray::getJSONObject);
+        promoTypes = getList("promo_types", Function.identity(), JSONArray::getString);
+        keywords = getList("keywords", Function.identity(), JSONArray::getString);
+        frameEffects = getList("frame_effects", FrameEffect::fromString, JSONArray::getString);
+        faces = getList("card_faces", CardFace::new, JSONArray::getJSONObject);
+        relatedURLs = getMap("related_uris", this::makeURL, JSONObject::getString);
+        purchaseURLs = getMap("purchase_uris", this::makeURL, JSONObject::getString);
 
         images = new Images(getJSONObject("image_uris"));
         legalities = new Legalities(getJSONObject("legalities"));
         prices = new Prices(getJSONObject("prices"));
         preview = new Preview(getJSONObject("preview"));
+    }
 
-        if (data.has("related_uris")) {
-            JSONObject relatedURLs = getJSONObject("related_uris");
-            this.relatedURLs = new HashMap<>();
-            for (int i = 0; i < relatedURLs.names().length(); i++) {
-                String name = relatedURLs.names().getString(i);
-                try {
-                    relatedURLs.put(name, new URL(relatedURLs.getString(name)));
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        if (data.has("purchase_uris")) {
-            JSONObject purchaseURLs = getJSONObject("purchase_uris");
-            this.purchaseURLs = new HashMap<>();
-            for (int i = 0; i < purchaseURLs.names().length(); i++) {
-                String name = purchaseURLs.names().getString(i);
-                try {
-                    purchaseURLs.put(name, new URL(purchaseURLs.getString(name)));
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-            }
+    private URL makeURL(String url) {
+        try {
+            return new URL(url);
+        } catch (MalformedURLException e) {
+            return null;
         }
     }
 
@@ -289,14 +219,14 @@ public class Card extends ScryfallObject {
      * @return This card’s multiverse IDs on Gatherer, if any, as an array of integers. Note that Scryfall includes many
      * promo cards, tokens, and other esoteric objects that do not have these identifiers.
      */
-    public int[] getMultiverseIDs() {
+    public List<Integer> getMultiverseIDs() {
         return multiverseIDs;
     }
 
     /**
      * @return An array of strings describing what categories of promo cards this card falls into.
      */
-    public String[] getPromoTypes() {
+    public List<String> getPromoTypes() {
         return promoTypes;
     }
 
@@ -333,7 +263,7 @@ public class Card extends ScryfallObject {
      * <code>&#39;Cumulative upkeep&#39;</code>.
      * @see Catalog.Name#KEYWORD_ABILITIES
      */
-    public String[] getKeywords() {
+    public List<String> getKeywords() {
         return keywords;
     }
 
@@ -493,14 +423,14 @@ public class Card extends ScryfallObject {
     /**
      * @return If this card is closely related to other cards, this property will be an array with {@link RelatedCard}s.
      */
-    public RelatedCard[] getAllParts() {
+    public List<RelatedCard> getAllParts() {
         return allParts;
     }
 
     /**
      * @return An array of {@link CardFace}s, if this card is multifaced.
      */
-    public CardFace[] getFaces() {
+    public List<CardFace> getFaces() {
         return faces;
     }
 
@@ -515,14 +445,14 @@ public class Card extends ScryfallObject {
      * @return This card’s colors, if the overall card has colors defined by the rules. Otherwise the colors will be on
      * the {@link CardFace} objects, from {@link #getFaces()}.
      */
-    public Color[] getColors() {
+    public List<Color> getColors() {
         return colors;
     }
 
     /**
      * @return This card’s color identity.
      */
-    public Color[] getColorIdentity() {
+    public List<Color> getColorIdentity() {
         return colorIdentity;
     }
 
@@ -530,14 +460,14 @@ public class Card extends ScryfallObject {
      * @return The colors in this card’s color indicator, if any. An empty array for this field indicates the card does
      * not have one.
      */
-    public Color[] getColorIndicator() {
+    public List<Color> getColorIndicator() {
         return colorIndicator;
     }
 
     /**
      * @return Colors of mana that this card could produce.
      */
-    public Color[] getProducedMana() {
+    public List<Color> getProducedMana() {
         return producedMana;
     }
 
@@ -729,7 +659,7 @@ public class Card extends ScryfallObject {
     /**
      * @return This card’s frame effects, if any.
      */
-    public FrameEffect[] getFrameEffects() {
+    public List<FrameEffect> getFrameEffects() {
         return frameEffects;
     }
 
@@ -772,7 +702,7 @@ public class Card extends ScryfallObject {
      * @return A list of games that this card print is available in.
      * @see Game
      */
-    public Game[] getGames() {
+    public List<Game> getGames() {
         return games;
     }
 
@@ -860,14 +790,14 @@ public class Card extends ScryfallObject {
     /**
      * @return An array of Ruling objects for all of the rulings on this card.
      */
-    public Ruling[] getRulings() {
-        List rulingsList = List.fromURL(rulingsURL);
+    public List<Ruling> getRulings() {
+        ScryfallList rulingsList = ScryfallList.fromURL(rulingsURL);
         ScryfallObject[] rulingsObjects = rulingsList.getContents();
         Ruling[] rulings = new Ruling[rulingsObjects.length];
         for (int i = 0; i < rulings.length; i++) {
             rulings[i] = ((Ruling) rulingsObjects[i]);
         }
-        return rulings;
+        return List.of(rulings);
     }
 
     /**
@@ -877,7 +807,7 @@ public class Card extends ScryfallObject {
      */
     public BufferedImage getImage(Images.Size size) {
         if (hasMultipleFaces()) {
-            return faces[0].getImages().getImage(size);
+            return faces.get(0).getImages().getImage(size);
         } else {
             return images.getImage(size);
         }
@@ -885,7 +815,7 @@ public class Card extends ScryfallObject {
 
     public String getImageURI(Images.Size size) {
         if (hasMultipleFaces()) {
-            return faces[0].getImages().getURL(size).toString();
+            return faces.get(0).getImages().getURL(size).toString();
         } else {
             return images.getURL(size).toString();
         }
@@ -925,8 +855,8 @@ public class Card extends ScryfallObject {
                 name.replace(' ', '+')));
     }
 
-    public static List search(String query) {
-        return new List(Query.dataFromPath("cards/search?q=" + URLEncoder.encode(query, StandardCharsets.UTF_8)));
+    public static ScryfallList search(String query) {
+        return new ScryfallList(Query.dataFromPath("cards/search?q=" + URLEncoder.encode(query, StandardCharsets.UTF_8)));
     }
 
     /**
@@ -1264,7 +1194,7 @@ public class Card extends ScryfallObject {
                 storySpotlight == card.storySpotlight &&
                 textless == card.textless &&
                 variation == card.variation &&
-                Arrays.equals(multiverseIDs, card.multiverseIDs) &&
+                Objects.equals(multiverseIDs, card.multiverseIDs) &&
                 layout == card.layout &&
                 Objects.equals(lang, card.lang) &&
                 Objects.equals(handModifier, card.handModifier) &&
@@ -1286,14 +1216,14 @@ public class Card extends ScryfallObject {
                 Objects.equals(rulingsURL, card.rulingsURL) &&
                 Objects.equals(scryfallURL, card.scryfallURL) &&
                 Objects.equals(url, card.url) &&
-                Arrays.equals(allParts, card.allParts) &&
-                Arrays.equals(faces, card.faces) &&
-                Arrays.equals(promoTypes, card.promoTypes) &&
-                Arrays.equals(keywords, card.keywords) &&
-                Arrays.equals(colors, card.colors) &&
-                Arrays.equals(colorIdentity, card.colorIdentity) &&
-                Arrays.equals(colorIndicator, card.colorIndicator) &&
-                Arrays.equals(producedMana, card.producedMana) &&
+                Objects.equals(allParts, card.allParts) &&
+                Objects.equals(faces, card.faces) &&
+                Objects.equals(promoTypes, card.promoTypes) &&
+                Objects.equals(keywords, card.keywords) &&
+                Objects.equals(colors, card.colors) &&
+                Objects.equals(colorIdentity, card.colorIdentity) &&
+                Objects.equals(colorIndicator, card.colorIndicator) &&
+                Objects.equals(producedMana, card.producedMana) &&
                 Objects.equals(legalities, card.legalities) &&
                 Objects.equals(artist, card.artist) &&
                 Objects.equals(collectorNumber, card.collectorNumber) &&
@@ -1305,8 +1235,8 @@ public class Card extends ScryfallObject {
                 borderColor == card.borderColor &&
                 frame == card.frame &&
                 frameEffect == card.frameEffect &&
-                Arrays.equals(frameEffects, card.frameEffects) &&
-                Arrays.equals(games, card.games) &&
+                Objects.equals(frameEffects, card.frameEffects) &&
+                Objects.equals(games, card.games) &&
                 Objects.equals(purchaseURLs, card.purchaseURLs) &&
                 Objects.equals(relatedURLs, card.relatedURLs) &&
                 rarity == card.rarity &&
@@ -1333,7 +1263,7 @@ public class Card extends ScryfallObject {
                 ", tcgplayerID=" + tcgplayerID +
                 ", cardmarketID=" + cardmarketID +
                 ", edhrecRank=" + edhrecRank +
-                ", multiverseIDs=" + Arrays.toString(multiverseIDs) +
+                ", multiverseIDs=" + multiverseIDs +
                 ", layout=" + layout +
                 ", lang='" + lang + '\'' +
                 ", handModifier='" + handModifier + '\'' +
@@ -1355,15 +1285,15 @@ public class Card extends ScryfallObject {
                 ", rulingsURL=" + rulingsURL +
                 ", scryfallURL=" + scryfallURL +
                 ", url=" + url +
-                ", allParts=" + Arrays.toString(allParts) +
-                ", faces=" + Arrays.toString(faces) +
-                ", promoTypes=" + Arrays.toString(promoTypes) +
-                ", keywords=" + Arrays.toString(keywords) +
+                ", allParts=" + allParts +
+                ", faces=" + faces +
+                ", promoTypes=" + promoTypes +
+                ", keywords=" + keywords +
                 ", cmc=" + cmc +
-                ", colors=" + Arrays.toString(colors) +
-                ", colorIdentity=" + Arrays.toString(colorIdentity) +
-                ", colorIndicator=" + Arrays.toString(colorIndicator) +
-                ", producedMana=" + Arrays.toString(producedMana) +
+                ", colors=" + colors +
+                ", colorIdentity=" + colorIdentity +
+                ", colorIndicator=" + colorIndicator +
+                ", producedMana=" + producedMana +
                 ", foil=" + foil +
                 ", nonfoil=" + nonfoil +
                 ", oversized=" + oversized +
@@ -1382,7 +1312,7 @@ public class Card extends ScryfallObject {
                 ", borderColor=" + borderColor +
                 ", frame=" + frame +
                 ", frameEffect=" + frameEffect +
-                ", frameEffects=" + Arrays.toString(frameEffects) +
+                ", frameEffects=" + frameEffects +
                 ", fullArt=" + fullArt +
                 ", highResImage=" + highResImage +
                 ", promo=" + promo +
@@ -1390,7 +1320,7 @@ public class Card extends ScryfallObject {
                 ", storySpotlight=" + storySpotlight +
                 ", textless=" + textless +
                 ", variation=" + variation +
-                ", games=" + Arrays.toString(games) +
+                ", games=" + games +
                 ", purchaseURLs=" + purchaseURLs +
                 ", relatedURLs=" + relatedURLs +
                 ", rarity=" + rarity +

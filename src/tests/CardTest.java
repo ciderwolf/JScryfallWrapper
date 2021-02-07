@@ -9,11 +9,11 @@ import com.scyrfall.api.object.ScryfallError;
 import org.json.JSONObject;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
-import static tests.ScryfallTest.arrayOf;
-import static tests.ScryfallTest.assertArrayEqualsIgnoreOrder;
+import static tests.ScryfallTest.*;
 
 public class CardTest {
 
@@ -59,7 +59,7 @@ public class CardTest {
                 "remueve un contador de tiempo. Cuando remuevas el último, lánzala sin pagar su coste de maná.)\nCada" +
                 " jugador descarta su mano, luego roba siete cartas.");
         assertEquals(card.getPrintedTypeLine(), "Conjuro");
-        assertArrayEquals(card.getColorIndicator(), arrayOf(Color.RED));
+        assertEquals(card.getColorIndicator(), List.of(Color.RED));
         // edhrec rank can change over time, so just check that it has been set to some value, and didn't default to -1
         assertNotEquals(card.getEdhrecRank(), -1);
         assertEquals(card.getCardBackID(), UUID.fromString("0aeebaf5-8c7d-4636-9e82-8c27447861f7"));
@@ -74,7 +74,7 @@ public class CardTest {
         assertTrue(card.isNonfoil());
         assertEquals(card.getWatermark(), "agentsofsneak");
         assertEquals(card.getArtist(), "Ralph Horsley");
-        assertArrayEquals(card.getMultiverseIDs(), new int[]{439556});
+        assertEquals(card.getMultiverseIDs(), List.of(439556));
         assertEquals(card.getTcgplayerID(), 153169);
         assertEquals(card.getManaCost(), "");
         assertFalse(card.isVariation());
@@ -109,9 +109,9 @@ public class CardTest {
     public void transform() {
         // Delver of Secrets
         Card card = Card.fromID(UUID.fromString("11bf83bb-c95b-4b4f-9a56-ce7a1816307a"));
-        assertEquals(card.getFaces()[1].getName(), "Insectile Aberration");
+        assertEquals(card.getFaces().get(1).getName(), "Insectile Aberration");
         assertTrue(card.hasMultipleFaces());
-        assertEquals(card.getImageURI(Images.Size.NORMAL), card.getFaces()[0].getImages().getNormalURL().toString());
+        assertEquals(card.getImageURI(Images.Size.NORMAL), card.getFaces().get(0).getImages().getNormalURL().toString());
         assertEquals(card.getImages(), new Images(emptyJSONObject));
         assertEquals(card.getManaCost(), "");
         assertEquals(card.getMtgoID(), 42436);
@@ -162,7 +162,7 @@ public class CardTest {
         // Unstable Forest
         Card card = Card.fromID(UUID.fromString("f8772631-d4a1-440d-ac89-ac6659bdc073"));
         assertEquals(card.getManaCost(), "");
-        assertArrayEqualsIgnoreOrder(card.getColors(), arrayOf());
+        assertListArrayEqualsIgnoreOrder(card.getColors(), arrayOf());
         basicCard(card, UUID.fromString("f8772631-d4a1-440d-ac89-ac6659bdc073"), "en",
                 UUID.fromString("b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6"), 0.0, arrayOf(Color.GREEN),
                 "Forest", true, Layout.NORMAL, false, false, "Basic Land — Forest",
@@ -178,7 +178,7 @@ public class CardTest {
         assertEquals(card.getLang(), lang);
         assertEquals(card.getOracleID(), oracleID);
         assertEquals(card.getCmc(), cmc, ScryfallTest.DELTA);
-        assertArrayEqualsIgnoreOrder(colorIdentity, card.getColorIdentity());
+        assertListArrayEqualsIgnoreOrder(card.getColorIdentity(), colorIdentity);
         assertEquals(card.getName(), name);
         assertEquals(card.isNonfoil(), nonfoil);
         assertEquals(card.getLayout(), layout);
@@ -188,10 +188,10 @@ public class CardTest {
         assertEquals(card.getBorderColor(), borderColor);
         assertEquals(card.getCollectorNumber(), collectorNumber);
         assertEquals(card.isDigital(), digital);
-        assertArrayEqualsIgnoreOrder(card.getFrameEffects(), effects);
+        assertListArrayEqualsIgnoreOrder(card.getFrameEffects(), effects);
         assertEquals(card.getFrame(), frame);
         assertEquals(card.isFullArt(), fullArt);
-        assertArrayEqualsIgnoreOrder(card.getGames(), games);
+        assertListArrayEqualsIgnoreOrder(card.getGames(), games);
         assertEquals(card.isHighResImage(), hiRes);
         assertEquals(card.getRarity(), rarity);
         assertEquals(card.isReprint(), reprint);

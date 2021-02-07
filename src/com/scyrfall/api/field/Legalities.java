@@ -66,7 +66,7 @@ public class Legalities extends ScryfallObject {
      */
     @SuppressWarnings("unused")
     public enum Format {
-        STANDARD, FUTURE, BRAWL, HISTORIC, PIONEER, MODERN, LEGACY, PAUPER, VINTAGE, PENNY_DREADFUL, COMMANDER, DUEL, OLDSCHOOL;
+        STANDARD, FUTURE, BRAWL, HISTORIC, GLADIATOR, PIONEER, MODERN, LEGACY, PAUPER, VINTAGE, PENNY_DREADFUL, COMMANDER, DUEL, OLDSCHOOL, PREMODERN;
 
         public static Format fromString(String value) {
             if (value.equalsIgnoreCase("penny")) {

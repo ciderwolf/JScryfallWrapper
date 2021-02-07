@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.net.URL;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Symbol extends ScryfallObject {
@@ -15,7 +16,7 @@ public class Symbol extends ScryfallObject {
     private boolean transposeable, representsMana, appearsInManaCosts, funny, colorless, monoColored, multiColored;
     private double cmc;
     private URL svgURL;
-    private Color[] colors;
+    private List<Color> colors;
 
     public Symbol(JSONObject data) {
         super(data);
@@ -36,11 +37,7 @@ public class Symbol extends ScryfallObject {
 
         svgURL = getURL("svg_uri");
 
-        JSONArray colors = getJSONArray("colors");
-        this.colors = new Color[colors.length()];
-        for (int i = 0; i < colors.length(); i++) {
-            this.colors[i] = Color.fromString(colors.getString(i));
-        }
+        colors = getList("colors", Color::fromString, JSONArray::getString);
     }
 
     /**
@@ -116,7 +113,7 @@ public class Symbol extends ScryfallObject {
     /**
      * @return An array of colors that this symbol represents.
      */
-    public Color[] getColors() {
+    public List<Color> getColors() {
         return colors;
     }
 
@@ -145,7 +142,7 @@ public class Symbol extends ScryfallObject {
      * @return an array of all card symbols.
      */
     public static Symbol[] getSymbols() {
-        return new List(Query.dataFromPath("symbology")).getContents(new Symbol[0]);
+        return new ScryfallList(Query.dataFromPath("symbology")).getContents(new Symbol[0]);
     }
 
     /**
@@ -167,16 +164,7 @@ public class Symbol extends ScryfallObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Symbol symbol1 = (Symbol) o;
-        return transposeable == symbol1.transposeable &&
-                representsMana == symbol1.representsMana &&
-                appearsInManaCosts == symbol1.appearsInManaCosts &&
-                funny == symbol1.funny &&
-                Double.compare(symbol1.cmc, cmc) == 0 &&
-                Objects.equals(symbol, symbol1.symbol) &&
-                Objects.equals(looseVariant, symbol1.looseVariant) &&
-                Objects.equals(english, symbol1.english) &&
-                Objects.equals(gathererAlternates, symbol1.gathererAlternates) &&
-                Arrays.equals(colors, symbol1.colors);
+        return transposeable == symbol1.transposeable && representsMana == symbol1.representsMana && appearsInManaCosts == symbol1.appearsInManaCosts && funny == symbol1.funny && colorless == symbol1.colorless && monoColored == symbol1.monoColored && multiColored == symbol1.multiColored && Double.compare(symbol1.cmc, cmc) == 0 && Objects.equals(symbol, symbol1.symbol) && Objects.equals(looseVariant, symbol1.looseVariant) && Objects.equals(english, symbol1.english) && Objects.equals(gathererAlternates, symbol1.gathererAlternates) && Objects.equals(svgURL, symbol1.svgURL) && Objects.equals(colors, symbol1.colors);
     }
 
     @Override
@@ -190,8 +178,12 @@ public class Symbol extends ScryfallObject {
                 ", representsMana=" + representsMana +
                 ", appearsInManaCosts=" + appearsInManaCosts +
                 ", funny=" + funny +
+                ", colorless=" + colorless +
+                ", monoColored=" + monoColored +
+                ", multiColored=" + multiColored +
                 ", cmc=" + cmc +
-                ", colors=" + Arrays.toString(colors) +
+                ", svgURL=" + svgURL +
+                ", colors=" + colors +
                 '}';
     }
 }

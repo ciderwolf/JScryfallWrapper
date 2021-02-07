@@ -3,6 +3,7 @@ package com.scyrfall.api;
 import com.scyrfall.api.field.CardFace;
 import com.scyrfall.api.field.RelatedCard;
 import com.scyrfall.api.field.Ruling;
+import com.scyrfall.api.object.Set;
 import com.scyrfall.api.object.Symbol;
 import com.scyrfall.api.object.*;
 import org.json.JSONArray;
@@ -13,10 +14,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public abstract class ScryfallObject {
 
@@ -90,7 +90,7 @@ public abstract class ScryfallObject {
                 scryfallObject = new Catalog(data);
                 break;
             case "list":
-                scryfallObject = new List(data);
+                scryfallObject = new ScryfallList(data);
                 break;
             default:
                 scryfallObject = null;
@@ -234,6 +234,31 @@ public abstract class ScryfallObject {
         } catch (JSONException | IllegalArgumentException e) {
             return null;
         }
+    }
+
+    protected <K, V> List<V> getList(String key, Function<K, V> converter, BiFunction<JSONArray, Integer, K> extractor) {
+        if(!data.has(key)) {
+            return List.of();
+        }
+        JSONArray data = getJSONArray(key);
+        V[] arr = (V[]) new Object[data.length()];
+        for (int i = 0; i < data.length(); i++) {
+            arr[i] = converter.apply(extractor.apply(data, i));
+        }
+        return List.of(arr);
+    }
+
+    protected <K, V> HashMap<String, V> getMap(String key, Function<K, V> converter, BiFunction<JSONObject, String, K> extractor) {
+        if (!data.has(key)) {
+            return new HashMap<>();
+        }
+        JSONObject data = getJSONObject(key);
+        HashMap<String, V> map = new HashMap<>();
+        for (int i = 0; i < data.names().length(); i++) {
+            String name = data.names().getString(i);
+            data.put(name, converter.apply(extractor.apply(data, name)));
+        }
+        return map;
     }
 
     /**

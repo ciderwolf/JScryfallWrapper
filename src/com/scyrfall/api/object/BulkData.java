@@ -107,7 +107,7 @@ public class BulkData extends ScryfallObject {
      * @return An array of all bulk data items on Scryfall.
      */
     public static BulkData[] getBulkData() {
-        return new List(Query.dataFromPath("bulk-data")).getContents(new BulkData[0]);
+        return new ScryfallList(Query.dataFromPath("bulk-data")).getContents(new BulkData[0]);
     }
 
     /**

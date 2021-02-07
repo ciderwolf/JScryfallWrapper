@@ -1,7 +1,7 @@
 package com.scyrfall.api.query;
 
 import com.scyrfall.api.ScryfallObject;
-import com.scyrfall.api.object.List;
+import com.scyrfall.api.object.ScryfallList;
 import com.scyrfall.api.object.Set;
 import org.json.JSONObject;
 
@@ -19,7 +19,7 @@ public class Query {
     public static final String API_STUB = "https://api.scryfall.com/";
 
     public static Set[] getSets() {
-        List data = new List(dataFromPath("sets"));
+        ScryfallList data = new ScryfallList(dataFromPath("sets"));
         ScryfallObject[] contents = data.getContents();
         return ScryfallObject.convertArray(contents, new Set[0]);
     }

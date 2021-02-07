@@ -13,10 +13,12 @@ import org.junit.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
 import static tests.ScryfallTest.assertArrayEqualsIgnoreOrder;
+import static tests.ScryfallTest.assertListArrayEqualsIgnoreOrder;
 
 public class EnumValuesTest {
 
@@ -82,8 +84,8 @@ public class EnumValuesTest {
 
     @Test
     public void legality() {
-        String[] formats = {"standard", "future", "brawl", "historic", "pioneer", "modern", "legacy", "pauper",
-                "vintage", "penny", "commander", "duel", "oldschool"};
+        String[] formats = {"standard", "future", "brawl", "historic", "gladiator", "pioneer", "modern", "legacy", "pauper",
+                "vintage", "penny", "commander", "duel", "oldschool", "premodern"};
         assertEquals(formats.length, Legalities.Format.values().length);
         for(int i = 0; i < formats.length; i++) {
             assertEquals(Legalities.Format.fromString(formats[i]), Legalities.Format.values()[i]);
@@ -132,9 +134,9 @@ public class EnumValuesTest {
         }
     }
 
-    private <E extends Enum<E>, S extends ScryfallObject> void assertArrayValues(String[] source, Enum<E>[] values,
+    private <E extends Enum<E>, S extends ScryfallObject> void assertArrayValues(String[] source, E[] values,
                                                                                  String key, Class<S> cls,
-                                                                                 Function<S, E[]> getter) {
+                                                                                 Function<S, List<E>> getter) {
 
         Constructor<S> constructor;
         try {
@@ -148,7 +150,7 @@ public class EnumValuesTest {
         JSONObject data = new JSONObject().put(key, new JSONArray(source));
         try {
             S dummy = constructor.newInstance(data);
-            assertArrayEqualsIgnoreOrder(getter.apply(dummy), values);
+            assertListArrayEqualsIgnoreOrder(getter.apply(dummy), values);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             assert false : e.getCause();
             e.printStackTrace();

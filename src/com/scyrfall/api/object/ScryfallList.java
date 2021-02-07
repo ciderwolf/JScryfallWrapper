@@ -14,7 +14,7 @@ import java.util.Objects;
  * A List object represents a requested sequence of other objects (Cards, Sets, etc). List objects may be paginated, and
  * also include information about issues raised when generating the list.
  */
-public class List extends ScryfallObject {
+public class ScryfallList extends ScryfallObject {
 
     private JSONArray data;
     private boolean hasMore;
@@ -22,7 +22,7 @@ public class List extends ScryfallObject {
     private int totalCards;
     private String[] warnings;
 
-    public List(JSONObject data) {
+    public ScryfallList(JSONObject data) {
         super(data);
         this.data = getJSONArray("data");
         hasMore = getBoolean("has_more");
@@ -79,9 +79,9 @@ public class List extends ScryfallObject {
     /**
      * @return If there is a page beyond this page, returns a List object for that page.
      */
-    public List getNextPage() {
+    public ScryfallList getNextPage() {
         if (hasMore) {
-            return new List(Query.dataFromURL(nextPageURL));
+            return new ScryfallList(Query.dataFromURL(nextPageURL));
         } else {
             return null;
         }
@@ -91,7 +91,7 @@ public class List extends ScryfallObject {
      * @return An array of ScryfallObjects constructed from the data on this page and on all subsequent pages.
      */
     public ScryfallObject[] getContents() {
-        List current = this;
+        ScryfallList current = this;
         ArrayList<ScryfallObject> total = new ArrayList<>();
         boolean repeat = true;
         while (repeat) {
@@ -118,7 +118,7 @@ public class List extends ScryfallObject {
      * @return An array of Cards constructed from the data on this page and on all subsequent pages.
      */
     public Card[] getCards() {
-        List current = this;
+        ScryfallList current = this;
         ArrayList<Card> total = new ArrayList<>();
         boolean repeat = true;
         while (repeat) {
@@ -134,15 +134,15 @@ public class List extends ScryfallObject {
         return total.toArray(new Card[0]);
     }
 
-    public static List fromURL(URL url) {
-        return new List(Query.dataFromURL(url));
+    public static ScryfallList fromURL(URL url) {
+        return new ScryfallList(Query.dataFromURL(url));
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        List list = (List) o;
+        ScryfallList list = (ScryfallList) o;
         return hasMore == list.hasMore &&
                 totalCards == list.totalCards &&
                 Objects.equals(data, list.data) &&
