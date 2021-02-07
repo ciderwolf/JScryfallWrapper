@@ -38,7 +38,7 @@ public class EnumValuesTest {
     public void frameEffect() {
         String[] frameEffects = {"legendary", "miracle", "nyxtouched", "draft", "devoid", "tombstone", "colorshifted",
                 "inverted", "sunmoondfc", "compasslanddfc", "originpwdfc", "mooneldrazidfc", "moonreversemoondfc",
-                "showcase", "extendedart", "companion", "etched", "none"};
+                "showcase", "extendedart", "companion", "etched", "snow", "none"};
         assertArrayValues(frameEffects, Card.FrameEffect.values(), "frame_effects", Card.class, Card::getFrameEffects);
     }
 

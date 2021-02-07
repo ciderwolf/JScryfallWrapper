@@ -1110,12 +1110,13 @@ public class Card extends ScryfallObject {
      * <li><code>EXTENDED_ART</code> - An extended art frame
      * <li><code>COMPANION</code> - The cards have a companion frame
      * <li><code>ETCHED</code> - The cards have an etched foil treatment
+     * <li><code>SNOW</code> - The cards have the snowy frame effect (from Kaldheim)
      * <li><code>NONE</code> - No frame effect
      */
     @SuppressWarnings("unused")
     public enum FrameEffect {
         LEGENDARY, MIRACLE, NYXTOUCHED, DRAFT, DEVOID, TOMBSTONE, COLORSHIFTED, SUN_MOON_DFC, COMPASS_LAND_DFC, ORIGIN_PW_DFC,
-        MOON_ELDRAZI_DFC, MOON_REVERSE_MOON_DFC, INVERTED, SHOWCASE, EXTENDED_ART, COMPANION, ETCHED, NONE;
+        MOON_ELDRAZI_DFC, MOON_REVERSE_MOON_DFC, INVERTED, SHOWCASE, EXTENDED_ART, COMPANION, ETCHED, SNOW, NONE;
 
         private static FrameEffect fromString(String value) {
             switch (value) {
