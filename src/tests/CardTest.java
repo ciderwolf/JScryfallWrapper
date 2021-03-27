@@ -67,6 +67,13 @@ public class CardTest {
     }
 
     @Test
+    public void pony() {
+        Card card = Card.fromID(UUID.fromString("5646ea19-0025-4f88-ad22-36968a1d3b89"));
+        assertEquals(card.getFrameEffects().get(1), FrameEffect.WAXING_AND_WANING_MOON_DFC);
+    }
+
+
+    @Test
     public void funny() {
         // Accessories to Murder
         Card card = Card.fromID(UUID.fromString("e8ca02a0-5acf-4d89-847b-bad0d7560682"));

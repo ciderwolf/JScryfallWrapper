@@ -30,8 +30,8 @@ public class EnumValuesTest {
 
     @Test
     public void imageStatus() {
-        String[] rarities = {"missing", "placeholder", "lowres", "highres_scan"};
-        assertValues(rarities, Card.Rarity.values(), "rarity", Card.class, Card::getRarity);
+        String[] imageStatuses = {"missing", "placeholder", "lowres", "highres_scan"};
+        assertValues(imageStatuses, Card.ImageStatus.values(), "image_status", Card.class, Card::getImageStatus);
     }
 
 
@@ -44,7 +44,7 @@ public class EnumValuesTest {
     @Test
     public void frameEffect() {
         String[] frameEffects = {"legendary", "miracle", "nyxtouched", "draft", "devoid", "tombstone", "colorshifted",
-                "inverted", "sunmoondfc", "compasslanddfc", "originpwdfc", "mooneldrazidfc", "moonreversemoondfc",
+                "inverted", "sunmoondfc", "compasslanddfc", "originpwdfc", "mooneldrazidfc", "waxingandwaningmoondfc",
                 "showcase", "extendedart", "companion", "etched", "snow", "none"};
         assertArrayValues(frameEffects, Card.FrameEffect.values(), "frame_effects", Card.class, Card::getFrameEffects);
     }
