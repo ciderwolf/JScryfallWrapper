@@ -24,9 +24,16 @@ public class EnumValuesTest {
 
     @Test
     public void rarity() {
-        String[] rarities = {"common", "uncommon", "rare", "mythic", "none"};
+        String[] rarities = {"common", "uncommon", "rare", "mythic", "special", "bonus", "none"};
         assertValues(rarities, Card.Rarity.values(), "rarity", Card.class, Card::getRarity);
     }
+
+    @Test
+    public void imageStatus() {
+        String[] rarities = {"missing", "placeholder", "lowres", "highres_scan"};
+        assertValues(rarities, Card.Rarity.values(), "rarity", Card.class, Card::getRarity);
+    }
+
 
     @Test
     public void game() {

@@ -61,6 +61,7 @@ public class Card extends ScryfallObject {
     private String euroPrice, tixPrice, usdPrice;
     private Prices prices;
     private Preview preview;
+    private ImageStatus imageStatus;
 
     public Card(JSONObject data) {
         super(data);
@@ -135,6 +136,7 @@ public class Card extends ScryfallObject {
         frameEffect = FrameEffect.fromString(getString("frame_effect"));
         rarity = Rarity.fromString(getString("rarity"));
         borderColor = BorderColor.fromString(getString("border_color"));
+        imageStatus = ImageStatus.fromString(getString("image_status"));
 
         games = getList("games", Game::fromString, JSONArray::getString);
         colors = getList("colors", Color::fromString, JSONArray::getString);
@@ -390,6 +392,14 @@ public class Card extends ScryfallObject {
      */
     public UUID getIllustrationID() {
         return illustrationID;
+    }
+
+    /**
+     * @return A computer-readable indicator for the state of this card&rsquo;s image, one of <code>missing</code>,
+     * <code>placeholder</code>, <code>lowres</code>, or <code>highres_scan</code>.
+     */
+    public ImageStatus getImageStatus() {
+        return imageStatus;
     }
 
     /**
@@ -1153,18 +1163,39 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * Different rarities a card can have: COMMON, UNCOMMON, RARE, and MYTHIC.
-     * If a card would have the <code>special</code> rarity, it is assigned to <code>RARE</code>
+     * Different rarities a card can have: COMMON, UNCOMMON, RARE, MYTHIC, SPECIAL, and BONUS.
      * If the rarity field is missing or malformed, the the card's rarity will be <code>Rarity.NONE</code>
      */
     public enum Rarity {
-        COMMON, UNCOMMON, RARE, MYTHIC, NONE;
+        COMMON, UNCOMMON, RARE, MYTHIC, SPECIAL, BONUS, NONE;
 
         private static Rarity fromString(String value) {
             try {
                 return valueOf(value.toUpperCase());
             } catch (IllegalArgumentException e) {
                 return NONE;
+            }
+        }
+    }
+
+    /**
+     * The possible values are:
+     * <li><code>MISSING</code> - The card has no image, or the image is being processed.
+     * This value should only be temporary for very new cards.
+     * <li><code>PLACEHOLDER</code> - Scryfall doesn’t have an image of this card, but we know it exists
+     * and we have uploaded a placeholder in the meantime. This value is most common on localized cards.
+     * <li><code>LOWRES</code> - The card’s image is low-quality, either because
+     * it was just spoiled or we don’t have better photography for it yet.
+     * <li><code>HIGHRES_SCAN</code> - This card has a full-resolution scanner image. Crisp and glossy!
+     */
+    public enum ImageStatus {
+        MISSING, PLACEHOLDER, LOWRES, HIGHRES_SCAN;
+
+        private static ImageStatus fromString(String value) {
+            try {
+                return valueOf(value.toUpperCase());
+            } catch(IllegalArgumentException e) {
+                return MISSING;
             }
         }
     }
