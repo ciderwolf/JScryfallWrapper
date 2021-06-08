@@ -263,17 +263,17 @@ public abstract class ScryfallObject {
 
     /**
      * Represents the different colors which appear on a magic card.
-     * Values are <code>WHITE</code>, <code>BLUE</code>, <code>BLACK</code>, <code>RED</code>, and
-     * <code>GREEN</code>.
+     * Values are <code>WHITE</code>, <code>BLUE</code>, <code>BLACK</code>, <code>RED</code>,
+     * <code>GREEN</code>, and <code>COLORLESS</code>.
      */
     public enum Color {
-        WHITE, BLUE, BLACK, RED, GREEN;
+        WHITE, BLUE, BLACK, RED, GREEN, COLORLESS;
 
         public static Color fromString(String value) {
             if (value.isEmpty()) {
                 return null;
             }
-            String colors = "WUBRG";
+            String colors = "WUBRGC";
             return Color.values()[colors.indexOf(value)];
         }
     }
