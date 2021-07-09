@@ -36,7 +36,7 @@ public class Card extends ScryfallObject {
     private Layout layout;
     private String lang, handModifier, lifeModifier, loyalty, manaCost, name,
             flavorName, oracleText, power, toughness, typeLine;
-    private UUID id, oracleID, illustrationID, variationID, cardBackID;
+    private UUID id, oracleID, illustrationID, variationID, cardBackID, setID;
     private URL printsSearchURL, rulingsURL, scryfallURL, url;
     private List<RelatedCard> allParts;
     private List<CardFace> faces;
@@ -128,6 +128,7 @@ public class Card extends ScryfallObject {
         oracleID = getUUID("oracle_id");
         variationID = getUUID("variation_of");
         cardBackID = getUUID("card_back_id");
+        setID = getUUID("set_id");
 
         releaseDate = getDate("released_at");
 
@@ -215,6 +216,13 @@ public class Card extends ScryfallObject {
      */
     public UUID getCardBackID() {
         return cardBackID;
+    }
+
+    /**
+     * @return This card&rsquo;s Set object UUID.
+     */
+    public UUID getSetID() {
+        return setID;
     }
 
     /**
