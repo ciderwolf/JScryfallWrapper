@@ -794,7 +794,7 @@ public class Card extends ScryfallObject {
      * @return True if this card is able to TRANSFORM
      */
     public boolean hasMultipleFaces() {
-        return layout == Layout.DOUBLE_FACED_TOKEN || layout == Layout.TRANSFORM;
+        return layout == Layout.DOUBLE_FACED_TOKEN || layout == Layout.TRANSFORM || layout == Layout.MODAL_DFC;
     }
 
     /**
@@ -1152,10 +1152,12 @@ public class Card extends ScryfallObject {
 
     /**
      * The possible Magic games where a given card can exist: PAPER, ARENA, and MTGO.
+     * Scryfall's database also includes cards from the Shandalar digital game (ASTRAL),
+     * as well cards which were available on the Sega Dreamcast (SEGA).
      */
     @SuppressWarnings("unused")
     public enum Game {
-        PAPER, ARENA, MTGO;
+        PAPER, ARENA, MTGO, ASTRAL, SEGA;
 
         public static Game fromString(String value) {
             return valueOf(value.toUpperCase());
