@@ -1030,6 +1030,7 @@ public class Card extends ScryfallObject {
      * <li><code>MODAL_DFC</code> - Double-sided cards that can be played either-side (Like those from Zendikar Rising)
      * <li><code>MELD</code> - Cards with meld parts printed on the back
      * <li><code>LEVELER</code> - Cards with Level Up (from Rise of the Eldrazi)
+     * <li><code>CLASS</code> - Class-type enchantment cards (from Adventures in the Forgotten Realms)
      * <li><code>SAGA</code> - Saga-type cards (From Dominaria)
      * <li><code>ADVENTURE</code> - Cards with an Adventure spell part (From Throne of Eldraine)
      * <li><code>PLANAR</code> - Plane and Phenomenon-type cards
@@ -1045,8 +1046,8 @@ public class Card extends ScryfallObject {
      */
     @SuppressWarnings("unused")
     public enum Layout {
-        NORMAL, SPLIT, FLIP, TRANSFORM, MODAL_DFC, MELD, LEVELER, SAGA, ADVENTURE, PLANAR, SCHEME, VANGUARD, TOKEN,
-        DOUBLE_FACED_TOKEN, EMBLEM, AUGMENT, HOST, ART_SERIES, DOUBLE_SIDED;
+        NORMAL, SPLIT, FLIP, TRANSFORM, MODAL_DFC, MELD, LEVELER, CLASS, SAGA, ADVENTURE, PLANAR, SCHEME, VANGUARD,
+        TOKEN, DOUBLE_FACED_TOKEN, EMBLEM, AUGMENT, HOST, ART_SERIES, DOUBLE_SIDED;
 
         private static Layout fromString(String value) {
             try {
