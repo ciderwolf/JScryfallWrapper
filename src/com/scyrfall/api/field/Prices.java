@@ -11,13 +11,14 @@ import java.util.Objects;
  */
 public class Prices extends ScryfallObject {
 
-    private String usdFoil, usd, eur, tix;
+    private String usdFoil, usdEtched, usd, eur, tix;
 
     public Prices(JSONObject data) {
         super(data);
 
         usd = getString("usd");
         usdFoil = getString("usd_foil");
+        usdEtched = getString("usd_etched");
         tix = getString("tix");
         eur = getString("eur");
     }
@@ -27,6 +28,13 @@ public class Prices extends ScryfallObject {
      */
     public String getUsdFoil() {
         return usdFoil;
+    }
+
+    /**
+     * @return the lowest etched price for this card in US Dollars from Scryfall's affiliates, updated daily.
+     */
+    public String getUsdEtched() {
+        return usdEtched;
     }
 
     /**

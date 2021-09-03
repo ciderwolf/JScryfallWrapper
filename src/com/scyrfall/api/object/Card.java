@@ -11,7 +11,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.*;
 import java.util.function.Function;
 
@@ -31,7 +30,7 @@ public class Card extends ScryfallObject {
             "Planeswalker", "Tribal"};
     private static final String EM_DASH = "—";
 
-    private int arenaID, mtgoID, mtgoFoilID, tcgplayerID, cardmarketID, edhrecRank;
+    private int arenaID, mtgoID, mtgoFoilID, tcgplayerID, tcgplayerEtchedID, cardmarketID, edhrecRank;
     private List<Integer> multiverseIDs;
     private Layout layout;
     private String lang, handModifier, lifeModifier, loyalty, manaCost, name,
@@ -43,7 +42,7 @@ public class Card extends ScryfallObject {
     private List<String> promoTypes, keywords;
     private double cmc;
     private List<Color> colors, colorIdentity, colorIndicator, producedMana;
-    private boolean foil, nonfoil, oversized, digital, reserved, inBoosters, contentWarning;
+    private boolean oversized, digital, reserved, inBoosters, contentWarning;
     private Legalities legalities;
     private String artist, collectorNumber, flavorText, printedName, printedText, printedTypeLine, watermark;
     private BorderColor borderColor;
@@ -51,6 +50,7 @@ public class Card extends ScryfallObject {
     private FrameEffect frameEffect;
     private List<FrameEffect> frameEffects;
     private boolean fullArt, highResImage, promo, reprint, storySpotlight, textless, variation;
+    private List<Finish> finishes;
     private List<Game> games;
     private HashMap<String, URL> purchaseURLs, relatedURLs;
     private Rarity rarity;
@@ -71,6 +71,7 @@ public class Card extends ScryfallObject {
         mtgoID = getInt("mtgo_id");
         mtgoFoilID = getInt("mtgo_foil_id");
         tcgplayerID = getInt("tcgplayer_id");
+        tcgplayerEtchedID = getInt("tcgplayer_etched_id");
         cardmarketID = getInt("cardmarket_id");
         edhrecRank = getInt("edhrec_rank");
 
@@ -100,8 +101,6 @@ public class Card extends ScryfallObject {
 
         cmc = getDouble("cmc");
 
-        foil = getBoolean("foil");
-        nonfoil = getBoolean("nonfoil");
         oversized = getBoolean("oversized");
         digital = getBoolean("digital");
         fullArt = getBoolean("full_art");
@@ -139,6 +138,8 @@ public class Card extends ScryfallObject {
         borderColor = BorderColor.fromString(getString("border_color"));
         imageStatus = ImageStatus.fromString(getString("image_status"));
 
+
+        finishes = getList("finishes", Finish::valueOf, JSONArray::getString);
         games = getList("games", Game::fromString, JSONArray::getString);
         colors = getList("colors", Color::fromString, JSONArray::getString);
         colorIdentity = getList("color_identity", Color::fromString, JSONArray::getString);
@@ -195,6 +196,14 @@ public class Card extends ScryfallObject {
      */
     public int getTcgplayerID() {
         return tcgplayerID;
+    }
+
+    /**
+     * @return This card&rsquo;s ID on <a href="https://docs.tcgplayer.com/docs">TCGplayer&rsquo;s API</a>, for
+     * its etched version if that version is a separate product.
+     */
+    public int getTcgplayerEtchedID() {
+        return tcgplayerEtchedID;
     }
 
     /**
@@ -490,20 +499,6 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @return <code>true</code> if this printing exists in a foil version, <code>false</code> otherwise.
-     */
-    public boolean isFoil() {
-        return foil;
-    }
-
-    /**
-     * @return <code>true</code> if this printing exists in a nonfoil version, <code>false</code> otherwise.
-     */
-    public boolean isNonfoil() {
-        return nonfoil;
-    }
-
-    /**
      * @return <code>true</code> if this card is oversized, <code>false</code> otherwise.
      */
     public boolean isOversized() {
@@ -725,6 +720,15 @@ public class Card extends ScryfallObject {
     }
 
     /**
+     * @return An array of computer-readable flags that indicate if this card can come in <code>foil</code>,
+     * <code>nonfoil</code>, <code>etched</code>, or <code>glossy</code> finishes.
+     * @see Finish
+     */
+    public List<Finish> getFinishes() {
+        return finishes;
+    }
+
+    /**
      * @return an <code>Images</code> object which contains information
      * about the artwork for this card.
      */
@@ -905,10 +909,10 @@ public class Card extends ScryfallObject {
 
     /**
      * @param id The TCGPlayer ID of the card to retrieve.
-     * @return A single card with the given <code>tcgplayer_id</code>, also known as the <code>productId</code> on
-     * <a href="https://docs.tcgplayer.com/docs">TCGplayer’s API</a>.
+     * @return <p>Returns a single card with the given <code>tcgplayer_id</code> or <code>tcgplayer_etched_id</code>,
+     * also known as the <code>productId</code> on <a href="https://docs.tcgplayer.com/docs">TCGplayer&rsquo;s API</a>.</p>
      */
-    public static Card fromTcgPlayerID(int id) {
+    public static Card fromxTcgPlayerID(int id) {
         return new Card(Query.dataFromPath("cards/tcgplayer/" + id));
     }
 
@@ -1205,10 +1209,14 @@ public class Card extends ScryfallObject {
         private static ImageStatus fromString(String value) {
             try {
                 return valueOf(value.toUpperCase());
-            } catch(IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 return MISSING;
             }
         }
+    }
+
+    public enum Finish {
+        FOIL, NONFOIL, ETCHED, GLOSSY
     }
 
     @Override
@@ -1223,8 +1231,6 @@ public class Card extends ScryfallObject {
                 cardmarketID == card.cardmarketID &&
                 edhrecRank == card.edhrecRank &&
                 Double.compare(card.cmc, cmc) == 0 &&
-                foil == card.foil &&
-                nonfoil == card.nonfoil &&
                 oversized == card.oversized &&
                 digital == card.digital &&
                 reserved == card.reserved &&
@@ -1238,8 +1244,7 @@ public class Card extends ScryfallObject {
                 textless == card.textless &&
                 variation == card.variation &&
                 Objects.equals(multiverseIDs, card.multiverseIDs) &&
-                layout == card.layout &&
-                Objects.equals(lang, card.lang) &&
+                layout == card.layout && Objects.equals(lang, card.lang) &&
                 Objects.equals(handModifier, card.handModifier) &&
                 Objects.equals(lifeModifier, card.lifeModifier) &&
                 Objects.equals(loyalty, card.loyalty) &&
@@ -1255,11 +1260,11 @@ public class Card extends ScryfallObject {
                 Objects.equals(illustrationID, card.illustrationID) &&
                 Objects.equals(variationID, card.variationID) &&
                 Objects.equals(cardBackID, card.cardBackID) &&
+                Objects.equals(setID, card.setID) &&
                 Objects.equals(printsSearchURL, card.printsSearchURL) &&
                 Objects.equals(rulingsURL, card.rulingsURL) &&
                 Objects.equals(scryfallURL, card.scryfallURL) &&
-                Objects.equals(url, card.url) &&
-                Objects.equals(allParts, card.allParts) &&
+                Objects.equals(url, card.url) && Objects.equals(allParts, card.allParts) &&
                 Objects.equals(faces, card.faces) &&
                 Objects.equals(promoTypes, card.promoTypes) &&
                 Objects.equals(keywords, card.keywords) &&
@@ -1280,6 +1285,7 @@ public class Card extends ScryfallObject {
                 frameEffect == card.frameEffect &&
                 Objects.equals(frameEffects, card.frameEffects) &&
                 Objects.equals(games, card.games) &&
+                Objects.equals(finishes, card.finishes) &&
                 Objects.equals(purchaseURLs, card.purchaseURLs) &&
                 Objects.equals(relatedURLs, card.relatedURLs) &&
                 rarity == card.rarity &&
@@ -1294,7 +1300,8 @@ public class Card extends ScryfallObject {
                 Objects.equals(tixPrice, card.tixPrice) &&
                 Objects.equals(usdPrice, card.usdPrice) &&
                 Objects.equals(prices, card.prices) &&
-                Objects.equals(preview, card.preview);
+                Objects.equals(preview, card.preview) &&
+                imageStatus == card.imageStatus;
     }
 
     @Override
@@ -1324,6 +1331,7 @@ public class Card extends ScryfallObject {
                 ", illustrationID=" + illustrationID +
                 ", variationID=" + variationID +
                 ", cardBackID=" + cardBackID +
+                ", setID=" + setID +
                 ", printsSearchURL=" + printsSearchURL +
                 ", rulingsURL=" + rulingsURL +
                 ", scryfallURL=" + scryfallURL +
@@ -1337,8 +1345,6 @@ public class Card extends ScryfallObject {
                 ", colorIdentity=" + colorIdentity +
                 ", colorIndicator=" + colorIndicator +
                 ", producedMana=" + producedMana +
-                ", foil=" + foil +
-                ", nonfoil=" + nonfoil +
                 ", oversized=" + oversized +
                 ", digital=" + digital +
                 ", reserved=" + reserved +
@@ -1364,6 +1370,7 @@ public class Card extends ScryfallObject {
                 ", textless=" + textless +
                 ", variation=" + variation +
                 ", games=" + games +
+                ", finishes=" + finishes +
                 ", purchaseURLs=" + purchaseURLs +
                 ", relatedURLs=" + relatedURLs +
                 ", rarity=" + rarity +
@@ -1379,6 +1386,7 @@ public class Card extends ScryfallObject {
                 ", usdPrice='" + usdPrice + '\'' +
                 ", prices=" + prices +
                 ", preview=" + preview +
+                ", imageStatus=" + imageStatus +
                 '}';
     }
 }
