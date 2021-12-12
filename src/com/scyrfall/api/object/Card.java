@@ -62,6 +62,7 @@ public class Card extends ScryfallObject {
     private Prices prices;
     private Preview preview;
     private ImageStatus imageStatus;
+    private SecurityStamp securityStamp;
 
     public Card(JSONObject data) {
         super(data);
@@ -137,6 +138,7 @@ public class Card extends ScryfallObject {
         rarity = Rarity.fromString(getString("rarity"));
         borderColor = BorderColor.fromString(getString("border_color"));
         imageStatus = ImageStatus.fromString(getString("image_status"));
+        securityStamp = SecurityStamp.fromString(getString("security_stamp"));
 
         finishes = getList("finishes", Finish::fromString, JSONArray::getString);
         games = getList("games", Game::fromString, JSONArray::getString);
@@ -416,6 +418,14 @@ public class Card extends ScryfallObject {
      */
     public ImageStatus getImageStatus() {
         return imageStatus;
+    }
+
+    /**
+     * @return The security stamp on this card, if any. One of <code>oval</code>, <code>triangle</code>,
+     * <code>acorn</code>, <code>arena</code>, or <code>none</code>.
+     */
+    public SecurityStamp getSecurityStamp() {
+        return securityStamp;
     }
 
     /**
@@ -1045,14 +1055,14 @@ public class Card extends ScryfallObject {
      * <li><code>AUGMENT</code> - Cards with Augment
      * <li><code>HOST</code> - Host-type cards
      * <li><code>ART_SERIES</code> - Art Series collectible double-faced cards
-     * <li><code>DOUBLE_SIDED</code> - A Magic card with two sides that are unrelated
+     * <li><code>REVERSIBLE_CARD</code> - A Magic card with two sides that are unrelated
      */
     @SuppressWarnings("unused")
     public enum Layout {
         NORMAL, SPLIT, FLIP, TRANSFORM, MODAL_DFC, MELD, LEVELER, CLASS, SAGA, ADVENTURE, PLANAR, SCHEME, VANGUARD,
-        TOKEN, DOUBLE_FACED_TOKEN, EMBLEM, AUGMENT, HOST, ART_SERIES, DOUBLE_SIDED;
+        TOKEN, DOUBLE_FACED_TOKEN, EMBLEM, AUGMENT, HOST, ART_SERIES, REVERSIBLE_CARD;
 
-        private static Layout fromString(String value) {
+        public static Layout fromString(String value) {
             try {
                 return valueOf(value.toUpperCase());
             } catch (IllegalArgumentException e) {
@@ -1220,8 +1230,18 @@ public class Card extends ScryfallObject {
         public static Finish fromString(String value) {
             return Finish.valueOf(value.toUpperCase());
         }
+    }
 
+    public enum SecurityStamp {
+        OVAL, TRIANGLE, ACORN, ARENA, NONE;
 
+        public static SecurityStamp fromString(String value) {
+            try {
+                return SecurityStamp.valueOf(value.toUpperCase());
+            } catch(IllegalArgumentException e) {
+                return NONE;
+            }
+        }
     }
 
     @Override

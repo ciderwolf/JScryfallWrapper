@@ -19,8 +19,10 @@ public class CardFace extends ScryfallObject {
 
     private String artist, flavorText, manaCost, name, oracleText, power, toughness, loyalty, printedName, printedTypeLine, typeLine;
     private Color[] colors, colorIndicator;
-    private UUID illustrationID;
+    private UUID illustrationID, oracleId;
     private Images images;
+    private Card.Layout layout;
+    private double cmc;
 
 
     public CardFace(JSONObject data) {
@@ -36,8 +38,11 @@ public class CardFace extends ScryfallObject {
         printedName = getString("printed_name");
         printedTypeLine = getString("printed_type_line");
         typeLine = getString("type_line");
+        cmc = getDouble("cmc");
+        layout = Card.Layout.fromString(getString("layout"));
 
         illustrationID = getUUID("illustration_id");
+        oracleId = getUUID("oracle_id");
 
         JSONArray colors = getJSONArray("colors");
         this.colors = new Color[colors.length()];
@@ -70,8 +75,16 @@ public class CardFace extends ScryfallObject {
         return name;
     }
 
+    public double getCmc() {
+        return cmc;
+    }
+
     public String getOracleText() {
         return oracleText;
+    }
+
+    public UUID getOracleId() {
+        return oracleId;
     }
 
     public String getPower() {
@@ -108,6 +121,10 @@ public class CardFace extends ScryfallObject {
 
     public UUID getIllustrationID() {
         return illustrationID;
+    }
+
+    public Card.Layout getLayout() {
+        return layout;
     }
 
     public Images getImages() {

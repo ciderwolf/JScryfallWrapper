@@ -53,7 +53,7 @@ public class EnumValuesTest {
     public void layout() {
         String[] layouts = {"normal", "split", "flip", "transform", "modal_dfc", "meld", "leveler", "class", "saga",
                 "adventure", "planar", "scheme", "vanguard", "token", "double_faced_token", "emblem", "augment", "host",
-                "art_series", "double_sided"};
+                "art_series", "reversible_card"};
         assertValues(layouts, Card.Layout.values(), "layout", Card.class, Card::getLayout);
     }
 
@@ -83,7 +83,7 @@ public class EnumValuesTest {
 
     @Test
     public void setType() {
-        String[] setCodes = {"core", "expansion", "masters", "masterpiece", "from_the_vault", "spellbook",
+        String[] setCodes = {"core", "expansion", "masters", "masterpiece", "from_the_vault", "arsenal", "spellbook",
                 "premium_deck", "duel_deck", "draft_innovation", "treasure_chest", "commander", "planechase",
                 "archenemy", "vanguard", "funny", "starter", "box", "promo", "token", "memorabilia"};
         assertValues(setCodes, Set.SetType.values(), "set_type", Set.class, Set::getSetType);

@@ -228,6 +228,7 @@ public class Set extends ScryfallObject {
      * </td></tr><tr><td><p><code>MASTERS</code></p></td><td><p>A reprint set that contains no new cards (Modern Masters, etc)</p>
      * </td></tr><tr><td><p><code>MASTERPIECE</code></p></td><td><p>Masterpiece Series premium foil cards</p>
      * </td></tr><tr><td><p><code>FROM_THE_VAULT</code></p></td><td><p>From the Vault gift sets</p>
+     * </td></tr><tr><td><p><code>FROM_THE_VAULT</code></p></td><td><p>A Commander-oriented gift set</p>
      * </td></tr><tr><td><p><code>SPELLBOOK</code></p></td><td><p>Spellbook series gift sets</p>
      * </td></tr><tr><td><p><code>PREMIUM_DECK</code></p></td><td><p>Premium Deck Series decks</p>
      * </td></tr><tr><td><p><code>DUEL_DECK</code></p></td><td><p>Duel Decks</p>
@@ -247,7 +248,7 @@ public class Set extends ScryfallObject {
      * Default value is <code>CORE</code>.
      */
     public enum SetType {
-        CORE, EXPANSION, MASTERS, MASTERPIECE, FROM_THE_VAULT, SPELLBOOK, PREMIUM_DECK, DUEL_DECK, DRAFT_INNOVATION,
+        CORE, EXPANSION, MASTERS, MASTERPIECE, FROM_THE_VAULT, ARSENAL, SPELLBOOK, PREMIUM_DECK, DUEL_DECK, DRAFT_INNOVATION,
         TREASURE_CHEST, COMMANDER, PLANECHASE, ARCHENEMY, VANGUARD, FUNNY, STARTER, BOX, PROMO, TOKEN, MEMORABILIA;
 
         private static SetType fromString(String value) {

@@ -62,7 +62,7 @@ public class Legalities extends ScryfallObject {
      * Possible formats for a card to have legality information about. A given card should have a value for
      * each of these fields.
      * The values are: STANDARD, FUTURE, BRAWL, HISTORIC, PIONEER, MODERN, LEGACY, PAUPER, VINTAGE, PENNY_DREADFUL,
-     * COMMANDER, DUEL, and OLDSCHOOL.
+     * COMMANDER, DUEL, OLDSCHOOL, PREMODERN, HISTORICBRAWL, PAUPERCOMMANDER, and ALCHEMY.
      */
     @SuppressWarnings("unused")
     public enum Format {
