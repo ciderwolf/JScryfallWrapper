@@ -17,7 +17,7 @@ import static tests.ScryfallTest.*;
 
 public class CardTest {
 
-    private JSONObject emptyJSONObject = new JSONObject("{}");
+    private final JSONObject emptyJSONObject = new JSONObject("{}");
 
     @Test
     public void random() {
@@ -77,8 +77,6 @@ public class CardTest {
     public void funny() {
         // Accessories to Murder
         Card card = Card.fromID(UUID.fromString("e8ca02a0-5acf-4d89-847b-bad0d7560682"));
-        assertTrue(card.isFoil());
-        assertTrue(card.isNonfoil());
         assertEquals(card.getWatermark(), "agentsofsneak");
         assertEquals(card.getArtist(), "Ralph Horsley");
         assertEquals(card.getMultiverseIDs(), List.of(439556));
@@ -187,7 +185,7 @@ public class CardTest {
         assertEquals(card.getCmc(), cmc, ScryfallTest.DELTA);
         assertListArrayEqualsIgnoreOrder(card.getColorIdentity(), colorIdentity);
         assertEquals(card.getName(), name);
-        assertEquals(card.isNonfoil(), nonfoil);
+        assertEquals(card.getFinishes().contains(Finish.NONFOIL), nonfoil);
         assertEquals(card.getLayout(), layout);
         assertEquals(card.isOversized(), oversized);
         assertEquals(card.isReserved(), reserved);

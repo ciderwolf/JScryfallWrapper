@@ -138,8 +138,7 @@ public class Card extends ScryfallObject {
         borderColor = BorderColor.fromString(getString("border_color"));
         imageStatus = ImageStatus.fromString(getString("image_status"));
 
-
-        finishes = getList("finishes", Finish::valueOf, JSONArray::getString);
+        finishes = getList("finishes", Finish::fromString, JSONArray::getString);
         games = getList("games", Game::fromString, JSONArray::getString);
         colors = getList("colors", Color::fromString, JSONArray::getString);
         colorIdentity = getList("color_identity", Color::fromString, JSONArray::getString);
@@ -1216,7 +1215,13 @@ public class Card extends ScryfallObject {
     }
 
     public enum Finish {
-        FOIL, NONFOIL, ETCHED, GLOSSY
+        FOIL, NONFOIL, ETCHED, GLOSSY;
+
+        public static Finish fromString(String value) {
+            return Finish.valueOf(value.toUpperCase());
+        }
+
+
     }
 
     @Override
