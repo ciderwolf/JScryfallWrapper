@@ -1148,7 +1148,7 @@ public class Card extends ScryfallObject {
     @SuppressWarnings("unused")
     public enum FrameEffect {
         LEGENDARY, MIRACLE, NYXTOUCHED, DRAFT, DEVOID, TOMBSTONE, COLORSHIFTED, SUN_MOON_DFC, COMPASS_LAND_DFC, ORIGIN_PW_DFC,
-        MOON_ELDRAZI_DFC, WAXING_AND_WANING_MOON_DFC, INVERTED, SHOWCASE, EXTENDED_ART, COMPANION, ETCHED, SNOW, NONE;
+        MOON_ELDRAZI_DFC, WAXING_AND_WANING_MOON_DFC, INVERTED, SHOWCASE, EXTENDED_ART, COMPANION, ETCHED, SNOW, FULLART, LESSON, NONE;
 
         private static FrameEffect fromString(String value) {
             switch (value) {
