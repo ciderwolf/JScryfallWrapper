@@ -44,8 +44,8 @@ public class EnumValuesTest {
     @Test
     public void frameEffect() {
         String[] frameEffects = {"legendary", "miracle", "nyxtouched", "draft", "devoid", "tombstone", "colorshifted",
-                "inverted", "sunmoondfc", "compasslanddfc", "originpwdfc", "mooneldrazidfc", "waxingandwaningmoondfc",
-                "showcase", "extendedart", "companion", "etched", "snow", "none"};
+                "sunmoondfc", "compasslanddfc", "originpwdfc", "mooneldrazidfc", "waxingandwaningmoondfc", "inverted",
+                "showcase", "extendedart", "companion", "etched", "snow", "fullart", "lesson", "none"};
         assertArrayValues(frameEffects, Card.FrameEffect.values(), "frame_effects", Card.class, Card::getFrameEffects);
     }
 
@@ -83,7 +83,7 @@ public class EnumValuesTest {
 
     @Test
     public void setType() {
-        String[] setCodes = {"core", "expansion", "masters", "masterpiece", "from_the_vault", "arsenal", "spellbook",
+        String[] setCodes = {"core", "expansion", "masters", "alchemy", "masterpiece", "from_the_vault", "arsenal", "spellbook",
                 "premium_deck", "duel_deck", "draft_innovation", "treasure_chest", "commander", "planechase",
                 "archenemy", "vanguard", "funny", "starter", "box", "promo", "token", "memorabilia"};
         assertValues(setCodes, Set.SetType.values(), "set_type", Set.class, Set::getSetType);
