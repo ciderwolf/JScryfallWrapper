@@ -30,7 +30,7 @@ public class Card extends ScryfallObject {
             "Planeswalker", "Tribal"};
     private static final String EM_DASH = "—";
 
-    private int arenaID, mtgoID, mtgoFoilID, tcgplayerID, tcgplayerEtchedID, cardmarketID, edhrecRank;
+    private int arenaID, mtgoID, mtgoFoilID, tcgplayerID, tcgplayerEtchedID, cardmarketID, edhrecRank, pennyRank;
     private List<Integer> multiverseIDs;
     private Layout layout;
     private String lang, handModifier, lifeModifier, loyalty, manaCost, name,
@@ -75,6 +75,7 @@ public class Card extends ScryfallObject {
         tcgplayerEtchedID = getInt("tcgplayer_etched_id");
         cardmarketID = getInt("cardmarket_id");
         edhrecRank = getInt("edhrec_rank");
+        pennyRank = getInt("penny_rank");
 
         lang = getString("lang");
         handModifier = getString("hand_modifier");
@@ -255,6 +256,13 @@ public class Card extends ScryfallObject {
      */
     public int getEdhrecRank() {
         return edhrecRank;
+    }
+
+    /**
+     * @return This card&rsquo;s rank/popularity on Penny Dreadful. Not all cards are ranked.
+     */
+    public int getPennyRank() {
+        return pennyRank;
     }
 
     /**

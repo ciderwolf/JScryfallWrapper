@@ -91,7 +91,7 @@ public class EnumValuesTest {
 
     @Test
     public void legality() {
-        String[] formats = {"standard", "future", "brawl", "historic", "gladiator", "pioneer", "modern", "legacy", "pauper",
+        String[] formats = {"standard", "future", "brawl", "historic", "gladiator", "pioneer", "explorer", "modern", "legacy", "pauper",
                 "vintage", "penny", "commander", "duel", "oldschool", "premodern", "historicbrawl", "paupercommander", "alchemy"};
         assertEquals(formats.length, Legalities.Format.values().length);
         for(int i = 0; i < formats.length; i++) {

@@ -157,7 +157,7 @@ public class CardTest {
         basicCard(card, UUID.fromString("ab68bd00-7151-4a6b-ad98-134ca02d7d59"), "en",
                 UUID.fromString("b8376cca-ea96-478a-8e98-c4482031300a"), 5.0, arrayOf(Color.BLACK, Color.GREEN, Color.RED, Color.BLUE, Color.WHITE),
                 "Sliver Queen", false, Layout.NORMAL, true, true, "Legendary Creature — Sliver",
-                BorderColor.BLACK, "9", false, arrayOf(), Frame.MODERN, false, arrayOf(),
+                BorderColor.BLACK, "9", false, arrayOf(), Frame.MODERN, false, arrayOf(Game.PAPER),
                 true, Rarity.RARE, true, "ocm1");
         System.out.println("success");
     }
