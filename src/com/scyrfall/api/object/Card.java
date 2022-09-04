@@ -430,7 +430,7 @@ public class Card extends ScryfallObject {
 
     /**
      * @return The security stamp on this card, if any. One of <code>oval</code>, <code>triangle</code>,
-     * <code>acorn</code>, <code>arena</code>, or <code>none</code>.
+     * <code>acorn</code>, <code>arena</code>, <code>heart</code> or <code>none</code>.
      */
     public SecurityStamp getSecurityStamp() {
         return securityStamp;
@@ -1241,7 +1241,7 @@ public class Card extends ScryfallObject {
     }
 
     public enum SecurityStamp {
-        OVAL, TRIANGLE, ACORN, ARENA, NONE;
+        OVAL, TRIANGLE, ACORN, ARENA, HEART, NONE;
 
         public static SecurityStamp fromString(String value) {
             try {

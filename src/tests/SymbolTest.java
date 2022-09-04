@@ -26,7 +26,8 @@ public class SymbolTest {
 
     private boolean isFunny(Symbol symbol) {
         return symbol.getCmc() == 0.5 || symbol.getCmc() > 99 || symbol.getLooseVariant().equals("Y") ||
-                symbol.getLooseVariant().equals("Z") || symbol.getCmc() == -1 || symbol.getSymbol().equals("{A}");
+                symbol.getLooseVariant().equals("Z") || symbol.getCmc() == -1 || symbol.getSymbol().equals("{A}") ||
+                symbol.getSymbol().equals("{TIX}");
     }
 
     private boolean representsMana(Symbol symbol) {
