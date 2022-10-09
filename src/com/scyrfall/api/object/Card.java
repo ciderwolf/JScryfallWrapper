@@ -40,6 +40,7 @@ public class Card extends ScryfallObject {
     private List<RelatedCard> allParts;
     private List<CardFace> faces;
     private List<String> promoTypes, keywords;
+    private List<Integer> attractionLights;
     private double cmc;
     private List<Color> colors, colorIdentity, colorIndicator, producedMana;
     private boolean oversized, digital, reserved, inBoosters, contentWarning;
@@ -153,6 +154,7 @@ public class Card extends ScryfallObject {
         keywords = getList("keywords", Function.identity(), JSONArray::getString);
         frameEffects = getList("frame_effects", FrameEffect::fromString, JSONArray::getString);
         faces = getList("card_faces", CardFace::new, JSONArray::getJSONObject);
+        attractionLights = getList("attraction_lights", Function.identity(), JSONArray::getInt);
         relatedURLs = getMap("related_uris", this::makeURL, JSONObject::getString);
         purchaseURLs = getMap("purchase_uris", this::makeURL, JSONObject::getString);
 
@@ -548,6 +550,14 @@ public class Card extends ScryfallObject {
      */
     public boolean isInBoosters() {
         return inBoosters;
+    }
+
+    /**
+     * @return The lit <a href="https://scryfall.com/search?q=t%3Aattraction+unique%3Aprints">Unfinity attractions</a>
+     * lights on this card, if any.
+     */
+    public List<Integer> getAttractionLights() {
+        return attractionLights;
     }
 
     /**
