@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
-import static tests.ScryfallTest.assertArrayEqualsIgnoreOrder;
 import static tests.ScryfallTest.assertListArrayEqualsIgnoreOrder;
 
 public class EnumValuesTest {
@@ -47,6 +46,18 @@ public class EnumValuesTest {
                 "sunmoondfc", "compasslanddfc", "originpwdfc", "mooneldrazidfc", "waxingandwaningmoondfc", "inverted",
                 "showcase", "extendedart", "companion", "etched", "snow", "fullart", "lesson", "none"};
         assertArrayValues(frameEffects, Card.FrameEffect.values(), "frame_effects", Card.class, Card::getFrameEffects);
+    }
+
+    @Test
+    public void finish() {
+        String[] games = {"foil", "nonfoil", "etched", "glossy"};
+        assertArrayValues(games, Card.Finish.values(), "finishes", Card.class, Card::getFinishes);
+    }
+
+    @Test
+    public void securityStamp() {
+        String[] games = {"oval", "triangle", "acorn", "circle", "arena", "heart", "none"};
+        assertValues(games, Card.SecurityStamp.values(), "security_stamp", Card.class, Card::getSecurityStamp);
     }
 
     @Test
@@ -162,7 +173,5 @@ public class EnumValuesTest {
             assert false : e.getCause();
             e.printStackTrace();
         }
-
-
     }
 }

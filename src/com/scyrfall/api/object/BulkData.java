@@ -17,7 +17,7 @@ public class BulkData extends ScryfallObject {
     private String type, name, description, contentMimeType, contentEncoding;
     private URL downloadURL, url;
     private ZonedDateTime updated;
-    private int compressedSize;
+    private int size;
 
     public BulkData(JSONObject data) {
         super(data);
@@ -30,7 +30,7 @@ public class BulkData extends ScryfallObject {
         downloadURL = getURL("download_uri");
         url = getURL("uri");
         updated = ZonedDateTime.parse(getString("released_at"));
-        compressedSize = getInt("compressed_size");
+        size = getInt("size");
     }
 
     /**
@@ -98,9 +98,18 @@ public class BulkData extends ScryfallObject {
 
     /**
      * @return The size of this file in integer bytes.
+     * @deprecated Use {@link BulkData#getSize()} instead
      */
+    @Deprecated
     public int getCompressedSize() {
-        return compressedSize;
+        return size;
+    }
+
+    /**
+     * @return The size of this file in integer bytes.
+     */
+    public int getSize() {
+        return size;
     }
 
     /**
@@ -133,7 +142,7 @@ public class BulkData extends ScryfallObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BulkData bulkData = (BulkData) o;
-        return compressedSize == bulkData.compressedSize &&
+        return size == bulkData.size &&
                 Objects.equals(id, bulkData.id) &&
                 Objects.equals(type, bulkData.type) &&
                 Objects.equals(name, bulkData.name) &&
@@ -155,7 +164,7 @@ public class BulkData extends ScryfallObject {
                 ", contentEncoding='" + contentEncoding + '\'' +
                 ", permalinkURL=" + downloadURL +
                 ", updated=" + updated +
-                ", size=" + compressedSize +
+                ", size=" + size +
                 '}';
     }
 }

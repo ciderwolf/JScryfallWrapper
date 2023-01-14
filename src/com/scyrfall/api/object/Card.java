@@ -1206,7 +1206,7 @@ public class Card extends ScryfallObject {
 
     /**
      * Different rarities a card can have: COMMON, UNCOMMON, RARE, MYTHIC, SPECIAL, and BONUS.
-     * If the rarity field is missing or malformed, the the card's rarity will be <code>Rarity.NONE</code>
+     * If the rarity field is missing or malformed, the card's rarity will be <code>Rarity.NONE</code>
      */
     public enum Rarity {
         COMMON, UNCOMMON, RARE, MYTHIC, SPECIAL, BONUS, NONE;
@@ -1251,7 +1251,7 @@ public class Card extends ScryfallObject {
     }
 
     public enum SecurityStamp {
-        OVAL, TRIANGLE, ACORN, ARENA, HEART, NONE;
+        OVAL, TRIANGLE, ACORN, CIRCLE, ARENA, HEART, NONE;
 
         public static SecurityStamp fromString(String value) {
             try {
