@@ -13,8 +13,8 @@ import java.util.Objects;
 public class Symbol extends ScryfallObject {
 
     private String symbol, looseVariant, english, gathererAlternates;
-    private boolean transposeable, representsMana, appearsInManaCosts, funny, colorless, monoColored, multiColored;
-    private double cmc;
+    private boolean transposeable, representsMana, appearsInManaCosts, funny, colorless, monoColored, multiColored, hybrid, phyrexian;
+    private double manaValue;
     private URL svgURL;
     private List<Color> colors;
 
@@ -32,8 +32,10 @@ public class Symbol extends ScryfallObject {
         colorless = getBoolean("colorless");
         monoColored = getBoolean("monocolored");
         multiColored = getBoolean("multicolored");
+        hybrid = getBoolean("hybrid");
+        phyrexian = getBoolean("phyrexian");
 
-        cmc = getDouble("cmc");
+        manaValue = getDouble("mana_value");
 
         svgURL = getURL("svg_uri");
 
@@ -106,8 +108,19 @@ public class Symbol extends ScryfallObject {
      * @return A decimal number representing this symbol’s converted mana cost. Note that mana symbols from FUNNY sets
      * can have fractional converted mana costs.
      */
+    @Deprecated
     public double getCmc() {
-        return cmc;
+        return manaValue;
+    }
+
+    /**
+     * @return A decimal number representing this symbol’s mana value
+     *     (also knowns as the converted mana cost).
+     *     Note that mana symbols from funny sets can have fractional
+     *     mana values.
+     */
+    public double getManaValue() {
+        return manaValue;
     }
 
     /**
@@ -139,6 +152,21 @@ public class Symbol extends ScryfallObject {
     }
 
     /**
+     * @return True if the symbol is a hybrid mana symbol. Note that monocolor
+     * Phyrexian symbols aren&rsquo;t considered hybrid.
+     */
+    public boolean isHybrid() {
+        return hybrid;
+    }
+
+    /**
+     * @return True if the symbol is a Phyrexian mana symbol, i.e. it can be paid with 2 life.
+     */
+    public boolean isPhyrexian() {
+        return phyrexian;
+    }
+
+    /**
      * @return an array of all card symbols.
      */
     public static Symbol[] getSymbols() {
@@ -153,7 +181,7 @@ public class Symbol extends ScryfallObject {
     }
 
     /**
-     * @return A url to a SVG that depicts this symbol.
+     * @return A url to an SVG that depicts this symbol.
      */
     public URL getSvgURL() {
         return svgURL;
@@ -164,7 +192,7 @@ public class Symbol extends ScryfallObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Symbol symbol1 = (Symbol) o;
-        return transposeable == symbol1.transposeable && representsMana == symbol1.representsMana && appearsInManaCosts == symbol1.appearsInManaCosts && funny == symbol1.funny && colorless == symbol1.colorless && monoColored == symbol1.monoColored && multiColored == symbol1.multiColored && Double.compare(symbol1.cmc, cmc) == 0 && Objects.equals(symbol, symbol1.symbol) && Objects.equals(looseVariant, symbol1.looseVariant) && Objects.equals(english, symbol1.english) && Objects.equals(gathererAlternates, symbol1.gathererAlternates) && Objects.equals(svgURL, symbol1.svgURL) && Objects.equals(colors, symbol1.colors);
+        return transposeable == symbol1.transposeable && representsMana == symbol1.representsMana && appearsInManaCosts == symbol1.appearsInManaCosts && funny == symbol1.funny && colorless == symbol1.colorless && monoColored == symbol1.monoColored && multiColored == symbol1.multiColored && hybrid == symbol1.hybrid && phyrexian == symbol1.phyrexian && Double.compare(symbol1.manaValue, manaValue) == 0 && Objects.equals(symbol, symbol1.symbol) && Objects.equals(looseVariant, symbol1.looseVariant) && Objects.equals(english, symbol1.english) && Objects.equals(gathererAlternates, symbol1.gathererAlternates) && Objects.equals(svgURL, symbol1.svgURL) && Objects.equals(colors, symbol1.colors);
     }
 
     @Override
@@ -181,7 +209,9 @@ public class Symbol extends ScryfallObject {
                 ", colorless=" + colorless +
                 ", monoColored=" + monoColored +
                 ", multiColored=" + multiColored +
-                ", cmc=" + cmc +
+                ", hybrid=" + hybrid +
+                ", phyrexian=" + phyrexian +
+                ", manaValue=" + manaValue +
                 ", svgURL=" + svgURL +
                 ", colors=" + colors +
                 '}';

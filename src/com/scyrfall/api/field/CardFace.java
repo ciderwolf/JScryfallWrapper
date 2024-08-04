@@ -17,9 +17,9 @@ import java.util.UUID;
  */
 public class CardFace extends ScryfallObject {
 
-    private String artist, flavorText, manaCost, name, oracleText, power, toughness, loyalty, printedName, printedTypeLine, typeLine;
+    private String artist, flavorText, manaCost, name, oracleText, power, toughness, loyalty, defense, printedName, printedTypeLine, typeLine;
     private Color[] colors, colorIndicator;
-    private UUID illustrationID, oracleId;
+    private UUID illustrationID, oracleId, artistId;
     private Images images;
     private Card.Layout layout;
     private double cmc;
@@ -35,6 +35,7 @@ public class CardFace extends ScryfallObject {
         power = getString("power");
         toughness = getString("toughness");
         loyalty = getString("loyalty");
+        defense = getString("defense");
         printedName = getString("printed_name");
         printedTypeLine = getString("printed_type_line");
         typeLine = getString("type_line");
@@ -43,6 +44,7 @@ public class CardFace extends ScryfallObject {
 
         illustrationID = getUUID("illustration_id");
         oracleId = getUUID("oracle_id");
+        artistId = getUUID("artist_id");
 
         JSONArray colors = getJSONArray("colors");
         this.colors = new Color[colors.length()];
@@ -123,8 +125,22 @@ public class CardFace extends ScryfallObject {
         return illustrationID;
     }
 
+    /**
+     * @return The ID of the illustrator of this card face. Newly spoiled cards may not have this field yet.
+     */
+    public UUID getArtistId() {
+        return artistId;
+    }
+
     public Card.Layout getLayout() {
         return layout;
+    }
+
+    /**
+     * @return This face&rsquo;s defense, if any.
+     */
+    public String getDefense() {
+        return defense;
     }
 
     public Images getImages() {

@@ -44,6 +44,16 @@ public class Catalog extends ScryfallObject {
     }
 
     /**
+     * @param name The name of the catalog to be retrieved.
+     * @return The catalog located at the specified name in Scryfall's API
+     * @apiNote This method is not recommended, use {@link #fromIdentifier(Name)} instead.
+     * Use this method only if the catalog you want to retrieve is not yet in the {@link Name} enum.
+     */
+    public static Catalog fromName(String name) {
+        return new Catalog(Query.dataFromPath("catalog/" + name));
+    }
+
+    /**
      * @return A link to the current catalog on Scryfall’s API.
      */
     public URL getUrl() {
@@ -93,8 +103,8 @@ public class Catalog extends ScryfallObject {
      */
     @SuppressWarnings("unused")
     public enum Name {
-        CARD_NAMES, ARTIST_NAMES, WORD_BANK, CREATURE_TYPES, PLANESWALKER_TYPES, LAND_TYPES, ARTIFACT_TYPES, ENCHANTMENT_TYPES,
-        SPELL_TYPES, POWERS, TOUGHNESSES, LOYALTIES, WATERMARKS, KEYWORD_ABILITIES, KEYWORD_ACTIONS, ABILITY_WORDS;
+        CARD_NAMES, ARTIST_NAMES, WORD_BANK, SUPERTYPES, CARD_TYPES, ARTIFACT_TYPES, BATTLE_TYPES, CREATURE_TYPES, ENCHANTMENT_TYPES, LAND_TYPES, PLANESWALKER_TYPES,
+        SPELL_TYPES, POWERS, TOUGHNESSES, LOYALTIES, KEYWORD_ABILITIES, KEYWORD_ACTIONS, ABILITY_WORDS, WATERMARKS;
 
         public String toParameterString() {
             return this.toString().toLowerCase();

@@ -33,13 +33,13 @@ public class Card extends ScryfallObject {
     private int arenaID, mtgoID, mtgoFoilID, tcgplayerID, tcgplayerEtchedID, cardmarketID, edhrecRank, pennyRank;
     private List<Integer> multiverseIDs;
     private Layout layout;
-    private String lang, handModifier, lifeModifier, loyalty, manaCost, name,
+    private String lang, handModifier, lifeModifier, loyalty, defense, manaCost, name,
             flavorName, oracleText, power, toughness, typeLine;
     private UUID id, oracleID, illustrationID, variationID, cardBackID, setID;
     private URL printsSearchURL, rulingsURL, scryfallURL, url;
     private List<RelatedCard> allParts;
     private List<CardFace> faces;
-    private List<String> promoTypes, keywords;
+    private List<String> promoTypes, keywords, artistIds;
     private List<Integer> attractionLights;
     private double cmc;
     private List<Color> colors, colorIdentity, colorIndicator, producedMana;
@@ -88,6 +88,7 @@ public class Card extends ScryfallObject {
         oracleText = getString("oracle_text");
         power = getString("power");
         toughness = getString("toughness");
+        defense = getString("defense");
         typeLine = getString("type_line");
         artist = getString("artist");
         collectorNumber = getString("collector_number");
@@ -157,6 +158,7 @@ public class Card extends ScryfallObject {
         attractionLights = getList("attraction_lights", Function.identity(), JSONArray::getInt);
         relatedURLs = getMap("related_uris", this::makeURL, JSONObject::getString);
         purchaseURLs = getMap("purchase_uris", this::makeURL, JSONObject::getString);
+        artistIds = getList("artist_ids", Function.identity(), JSONArray::getString);
 
         images = new Images(getJSONObject("image_uris"));
         legalities = new Legalities(getJSONObject("legalities"));
@@ -407,8 +409,10 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @return A unique ID for this card’s oracle identity. This value is consistent across reprinted card editions, and
-     * unique among different cards with the same name (tokens, Unstable variants, etc).
+     * @return A unique ID for this card&rsquo;s oracle identity. This value is consistent
+     * across reprinted card editions, and unique among different cards with the same name
+     * (tokens, Unstable variants, etc). Always present except for the <code>reversible_card</code>
+     * layout where it will be absent; <code>oracle_id</code> will be found on each face instead.
      */
     public UUID getOracleID() {
         return oracleID;
@@ -481,9 +485,16 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @return The card’s converted mana cost. Note that some FUNNY cards have fractional mana costs.
+     * @return The card’s mana value. Note that some funny cards have fractional mana costs.
      */
     public double getCmc() {
+        return cmc;
+    }
+
+    /**
+     * @return The card’s mana value. Note that some funny cards have fractional mana costs.
+     */
+    public double getManaValue() {
         return cmc;
     }
 
@@ -588,6 +599,14 @@ public class Card extends ScryfallObject {
     public String getArtist() {
         return artist;
     }
+
+    /**
+     * @return The IDs of the artists that illustrated this card. Newly spoiled cards may not have this field yet.
+     */
+    public List<String> getArtistIds() {
+        return artistIds;
+    }
+
 
     /**
      * @return This card's {@link BorderColor}
@@ -764,7 +783,7 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @return A HashMap providing URLs to this card’s listing on major marketplaces.
+     * @return A HashMap providing URLs to this card’s listing on major marketplaces. Omitted if the card is unpurchaseable.
      */
     public HashMap<String, URL> getPurchaseURLs() {
         return purchaseURLs;
@@ -873,7 +892,7 @@ public class Card extends ScryfallObject {
     /**
      * Searches using the <code>exact</code> parameter in the Scryfall API, so the
      * provided card name must match exactly to an existing card. However, this
-     * parameter is case insensitive
+     * parameter is case-insensitive
      *
      * @param name The name of the card for which data should be retrieved
      * @return A <code>Card</code> object containing the corresponding card's data.
@@ -1065,6 +1084,7 @@ public class Card extends ScryfallObject {
      * <li><code>SAGA</code> - Saga-type cards (From Dominaria)
      * <li><code>ADVENTURE</code> - Cards with an Adventure spell part (From Throne of Eldraine)
      * <li><code>PLANAR</code> - Plane and Phenomenon-type cards
+     * <li><code>BATTLE</code> - Battle-type cards
      * <li><code>SCHEME</code> - Scheme-type cards
      * <li><code>VANGUARD</code> - Vanguard-type cards
      * <li><code>TOKEN</code> - Token cards
@@ -1077,7 +1097,7 @@ public class Card extends ScryfallObject {
      */
     @SuppressWarnings("unused")
     public enum Layout {
-        NORMAL, SPLIT, FLIP, TRANSFORM, MODAL_DFC, MELD, LEVELER, CLASS, SAGA, ADVENTURE, PLANAR, SCHEME, VANGUARD,
+        NORMAL, SPLIT, FLIP, TRANSFORM, MODAL_DFC, MELD, LEVELER, CLASS, SAGA, ADVENTURE, PLANAR, BATTLE, SCHEME, VANGUARD,
         TOKEN, DOUBLE_FACED_TOKEN, EMBLEM, AUGMENT, HOST, ART_SERIES, REVERSIBLE_CARD;
 
         public static Layout fromString(String value) {
@@ -1161,12 +1181,18 @@ public class Card extends ScryfallObject {
      * <li><code>COMPANION</code> - The cards have a companion frame
      * <li><code>ETCHED</code> - The cards have an etched foil treatment
      * <li><code>SNOW</code> - The cards have the snowy frame effect (from Kaldheim)
+     * <li><code>SHATTEREDGLASS</code> - The cards have the Shattered Glass frame effect
+     * <li><code>CONVERTDFC</code> - The cards have More Than Meets the Eye™ marks
+     * <li><code>FANDFC</code> - The cards have fan transforming marks (from Kamigawa: Neon Dynasty)
+     * <li><code>UPSIDEDOWNDFC</code> - The cards have the Upside Down transforming marks
+     * <li><code>SPREE</code> - The cards have Spree asterisks (from Bloomburrow)
      * <li><code>NONE</code> - No frame effect
      */
     @SuppressWarnings("unused")
     public enum FrameEffect {
         LEGENDARY, MIRACLE, NYXTOUCHED, DRAFT, DEVOID, TOMBSTONE, COLORSHIFTED, SUN_MOON_DFC, COMPASS_LAND_DFC, ORIGIN_PW_DFC,
-        MOON_ELDRAZI_DFC, WAXING_AND_WANING_MOON_DFC, INVERTED, SHOWCASE, EXTENDED_ART, COMPANION, ETCHED, SNOW, FULLART, LESSON, NONE;
+        MOON_ELDRAZI_DFC, WAXING_AND_WANING_MOON_DFC, INVERTED, SHOWCASE, EXTENDED_ART, COMPANION, ETCHED, SNOW, FULLART, LESSON,
+        SPREE, FANDFC, SHATTEREDGLASS, CONVERTDFC, UPSIDEDOWNDFC, NONE;
 
         private static FrameEffect fromString(String value) {
             switch (value) {

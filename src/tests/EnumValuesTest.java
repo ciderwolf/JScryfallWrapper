@@ -44,7 +44,8 @@ public class EnumValuesTest {
     public void frameEffect() {
         String[] frameEffects = {"legendary", "miracle", "nyxtouched", "draft", "devoid", "tombstone", "colorshifted",
                 "sunmoondfc", "compasslanddfc", "originpwdfc", "mooneldrazidfc", "waxingandwaningmoondfc", "inverted",
-                "showcase", "extendedart", "companion", "etched", "snow", "fullart", "lesson", "none"};
+                "showcase", "extendedart", "companion", "etched", "snow", "fullart", "lesson", "shatteredglass", "convertdfc",
+                "fandfc", "upsidedowndfc", "spree", "none"};
         assertArrayValues(frameEffects, Card.FrameEffect.values(), "frame_effects", Card.class, Card::getFrameEffects);
     }
 
@@ -63,8 +64,8 @@ public class EnumValuesTest {
     @Test
     public void layout() {
         String[] layouts = {"normal", "split", "flip", "transform", "modal_dfc", "meld", "leveler", "class", "saga",
-                "adventure", "planar", "scheme", "vanguard", "token", "double_faced_token", "emblem", "augment", "host",
-                "art_series", "reversible_card"};
+                "adventure", "planar", "battle", "scheme", "vanguard", "token", "double_faced_token", "emblem", "augment",
+                "host", "art_series", "reversible_card"};
         assertValues(layouts, Card.Layout.values(), "layout", Card.class, Card::getLayout);
     }
 
@@ -96,14 +97,14 @@ public class EnumValuesTest {
     public void setType() {
         String[] setCodes = {"core", "expansion", "masters", "alchemy", "masterpiece", "from_the_vault", "arsenal", "spellbook",
                 "premium_deck", "duel_deck", "draft_innovation", "treasure_chest", "commander", "planechase",
-                "archenemy", "vanguard", "funny", "starter", "box", "promo", "token", "memorabilia"};
+                "archenemy", "vanguard", "funny", "starter", "box", "promo", "token", "memorabilia", "minigame"};
         assertValues(setCodes, Set.SetType.values(), "set_type", Set.class, Set::getSetType);
     }
 
     @Test
     public void legality() {
         String[] formats = {"standard", "future", "brawl", "historic", "gladiator", "pioneer", "explorer", "modern", "legacy", "pauper",
-                "vintage", "penny", "commander", "duel", "oldschool", "premodern", "historicbrawl", "paupercommander", "alchemy"};
+                "vintage", "timeless", "penny", "commander", "duel", "oldschool", "premodern", "standardbrawl", "historicbrawl", "paupercommander", "alchemy", "oathbreaker", "predh"};
         assertEquals(formats.length, Legalities.Format.values().length);
         for(int i = 0; i < formats.length; i++) {
             assertEquals(Legalities.Format.fromString(formats[i]), Legalities.Format.values()[i]);

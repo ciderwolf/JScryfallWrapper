@@ -20,7 +20,7 @@ import java.util.UUID;
  */
 public class Set extends ScryfallObject {
 
-    private String code, mtgoCode, name, blockCode, block, parentSetCode;
+    private String code, mtgoCode, arenaCode, name, blockCode, block, parentSetCode;
     private SetType setType;
     private Date released;
     private int cardCount, tcgPlayerID, printedSize;
@@ -34,6 +34,7 @@ public class Set extends ScryfallObject {
         id = getUUID("id");
         code = getString("code");
         mtgoCode = getString("mtgo_code");
+        arenaCode = getString("arena_code");
         name = getString("name");
         setType = SetType.fromString(getString("set_type"));
         blockCode = getString("block_code");
@@ -53,7 +54,7 @@ public class Set extends ScryfallObject {
     }
 
     /**
-     * @return The unique three or four-letter code for this set.
+     * @return The unique three to six-letter code for this set.
      */
     public String getCode() {
         return code;
@@ -64,6 +65,13 @@ public class Set extends ScryfallObject {
      */
     public String getMtgoCode() {
         return mtgoCode;
+    }
+
+    /**
+     * @return The unique code for this set on Arena, which may differ from the regular code.
+     */
+    public String getArenaCode() {
+        return arenaCode;
     }
 
     /**
@@ -245,12 +253,13 @@ public class Set extends ScryfallObject {
      * </td></tr><tr><td><p><code>PROMO</code></p></td><td><p>A set that contains purely promotional cards</p>
      * </td></tr><tr><td><p><code>TOKEN</code></p></td><td><p>A set made up of tokens and emblems.</p>
      * </td></tr><tr><td><p><code>MEMORABILIA</code></p></td><td><p>A set made up of GOLD-bordered, oversize, or trophy cards that are not legal</p>
+     * </td></tr><tr><td><p><code>MINIGAME</code></p></td><td><p>A set that contains minigame card inserts from booster packs</p>
      * </td></tr></tbody></table>
      * Default value is <code>CORE</code>.
      */
     public enum SetType {
         CORE, EXPANSION, MASTERS, ALCHEMY, MASTERPIECE, FROM_THE_VAULT, ARSENAL, SPELLBOOK, PREMIUM_DECK, DUEL_DECK, DRAFT_INNOVATION,
-        TREASURE_CHEST, COMMANDER, PLANECHASE, ARCHENEMY, VANGUARD, FUNNY, STARTER, BOX, PROMO, TOKEN, MEMORABILIA;
+        TREASURE_CHEST, COMMANDER, PLANECHASE, ARCHENEMY, VANGUARD, FUNNY, STARTER, BOX, PROMO, TOKEN, MEMORABILIA, MINIGAME;
 
         private static SetType fromString(String value) {
             switch (value) {

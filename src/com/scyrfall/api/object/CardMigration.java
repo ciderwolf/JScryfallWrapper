@@ -24,6 +24,7 @@ public class CardMigration extends ScryfallObject {
     private MigrationStrategy migrationStrategy;
     private UUID oldScryfallId, newScryfallId;
     private String note;
+    private JSONObject metadata;
 
     public CardMigration(JSONObject data) {
         super(data);
@@ -35,6 +36,7 @@ public class CardMigration extends ScryfallObject {
         oldScryfallId = getUUID("old_scryfall_id");
         newScryfallId = getUUID("new_scryfall_id");
         note = getString("note");
+        metadata = getJSONObject("metadata");
     }
 
     /**
@@ -85,6 +87,13 @@ public class CardMigration extends ScryfallObject {
      */
     public String getNote() {
         return note;
+    }
+
+    /**
+     * @return Additional context Scryfall has provided for this migration, designed to be human-read only.
+     */
+    public JSONObject getMetadata() {
+        return metadata;
     }
 
     /**

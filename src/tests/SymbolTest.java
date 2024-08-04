@@ -14,7 +14,7 @@ public class SymbolTest {
     @Test
     public void symbols() {
         Symbol[] symbols = Symbol.getSymbols();
-        final double totalCost = 1000353.5; // subtract 1 because Infinity's cmc = -1
+        final double totalCost = 1000358.5; // subtract 1 because Infinity's cmc = -1
         double sumCost = 0;
         for (Symbol s : symbols) {
             assertEquals(s.isFunny(), isFunny(s));
