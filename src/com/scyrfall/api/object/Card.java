@@ -1165,7 +1165,7 @@ public class Card extends ScryfallObject {
      * The different possible effects applied to the frame of a card:
      * <li><code>LEGENDARY</code> - The legendary crown introduced in Dominaria
      * <li><code>MIRACLE</code> - The miracle frame effect
-     * <li><code>NYXTOUCHED</code> - The Nyx-touched frame effect (from Theros block)
+     * <li><code>ENCHANTMENT</code> - The enchantment frame effect
      * <li><code>DRAFT</code> - The DRAFT-matters frame effect (from Conspiracy sets)
      * <li><code>DEVOID</code> - The Devoid frame effect (from Battle for Zendikar block)
      * <li><code>TOMBSTONE</code> - The Odyssey tombstone mark
@@ -1175,7 +1175,7 @@ public class Card extends ScryfallObject {
      * <li><code>ORIGIN_PW_DFC</code> - The Origins and planeswalker transform marks (from Magic Origins)
      * <li><code>MOON_ELDRAZI_DFC</code> - The moon and Eldrazi transform marks (from Eldritch Moon)
      * <li><code>WAXING_AND_WANING_MOON_DFC</code> - The waxing and waning crescent moon transform marks (From My Little Ponies promotion)
-     * <li><code>INVERTED</code> - The FNM-style inverted frame
+     * <li><code>INVERTED</code> - Predominantly inverted text
      * <li><code>SHOWCASE</code> - A custom Showcase frame (from Eldraine)
      * <li><code>EXTENDED_ART</code> - An extended art frame
      * <li><code>COMPANION</code> - The cards have a companion frame
@@ -1190,7 +1190,7 @@ public class Card extends ScryfallObject {
      */
     @SuppressWarnings("unused")
     public enum FrameEffect {
-        LEGENDARY, MIRACLE, NYXTOUCHED, DRAFT, DEVOID, TOMBSTONE, COLORSHIFTED, SUN_MOON_DFC, COMPASS_LAND_DFC, ORIGIN_PW_DFC,
+        LEGENDARY, MIRACLE, ENCHANTMENT, DRAFT, DEVOID, TOMBSTONE, COLORSHIFTED, SUN_MOON_DFC, COMPASS_LAND_DFC, ORIGIN_PW_DFC,
         MOON_ELDRAZI_DFC, WAXING_AND_WANING_MOON_DFC, INVERTED, SHOWCASE, EXTENDED_ART, COMPANION, ETCHED, SNOW, FULLART, LESSON,
         SPREE, FANDFC, SHATTEREDGLASS, CONVERTDFC, UPSIDEDOWNDFC, NONE;
 

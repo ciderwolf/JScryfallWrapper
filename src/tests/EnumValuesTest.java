@@ -42,7 +42,7 @@ public class EnumValuesTest {
 
     @Test
     public void frameEffect() {
-        String[] frameEffects = {"legendary", "miracle", "nyxtouched", "draft", "devoid", "tombstone", "colorshifted",
+        String[] frameEffects = {"legendary", "miracle", "enchantment", "draft", "devoid", "tombstone", "colorshifted",
                 "sunmoondfc", "compasslanddfc", "originpwdfc", "mooneldrazidfc", "waxingandwaningmoondfc", "inverted",
                 "showcase", "extendedart", "companion", "etched", "snow", "fullart", "lesson", "shatteredglass", "convertdfc",
                 "fandfc", "upsidedowndfc", "spree", "none"};
