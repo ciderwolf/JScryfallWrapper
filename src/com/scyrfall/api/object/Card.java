@@ -314,6 +314,13 @@ public class Card extends ScryfallObject {
     }
 
     /**
+     * @return This face&rsquo;s defense, if any.
+     */
+    public String getDefense() {
+        return defense;
+    }
+
+    /**
      * @return The mana cost for this card. This value will be any empty string "" if the cost is absent. Remember that
      * per the game rules, a missing mana cost and a mana cost of <code>{0}</code> are different values. Multi-faced cards will
      * report this value in card faces.
@@ -1115,7 +1122,7 @@ public class Card extends ScryfallObject {
      */
     @SuppressWarnings("unused")
     public enum BorderColor {
-        BLACK, BORDERLESS, GOLD, SILVER, WHITE;
+        BLACK, BORDERLESS, GOLD, SILVER, WHITE, YELLOW;
 
         private static BorderColor fromString(String value) {
             try {
