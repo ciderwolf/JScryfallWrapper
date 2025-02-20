@@ -1,4 +1,4 @@
-package tests;
+package com.scryfall.api;
 
 import com.scyrfall.api.ScryfallObject.Color;
 import com.scyrfall.api.field.ManaCost;
@@ -6,8 +6,8 @@ import com.scyrfall.api.object.Symbol;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static tests.ScryfallTest.arrayOf;
-import static tests.ScryfallTest.assertArrayEqualsIgnoreOrder;
+import static com.scryfall.api.ScryfallTest.arrayOf;
+import static com.scryfall.api.ScryfallTest.assertArrayEqualsIgnoreOrder;
 
 public class SymbolTest {
 
@@ -19,9 +19,9 @@ public class SymbolTest {
         for (Symbol s : symbols) {
             assertEquals(s.isFunny(), isFunny(s));
             assertEquals(representsMana(s), s.representsMana());
-            sumCost += s.getCmc();
+            sumCost += s.getManaValue();
         }
-        assertEquals(sumCost, totalCost, ScryfallTest.DELTA);
+        assertEquals(totalCost, sumCost, ScryfallTest.DELTA);
     }
 
     private boolean isFunny(Symbol symbol) {

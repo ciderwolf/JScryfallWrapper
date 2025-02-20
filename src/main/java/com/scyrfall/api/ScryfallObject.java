@@ -11,6 +11,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -148,7 +150,7 @@ public abstract class ScryfallObject {
      * @param key The key of the date to be returned
      * @return A Date object representing the date at the specified key,
      * formatted from the yyyy-MM-dd date format. If the provided key
-     * isn't in the correct format or doesn't exist, this moethod will
+     * isn't in the correct format or doesn't exist, this method will
      * return <code>null</code>.
      */
     protected Date getDate(String key) {
@@ -222,8 +224,8 @@ public abstract class ScryfallObject {
      */
     protected URL getURL(String key) {
         try {
-            return new URL(data.getString(key));
-        } catch (JSONException | MalformedURLException e) {
+            return new URI(data.getString(key)).toURL();
+        } catch (JSONException | URISyntaxException | MalformedURLException e) {
             return null;
         }
     }

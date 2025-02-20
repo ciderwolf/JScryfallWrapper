@@ -1,4 +1,4 @@
-package tests;
+package com.scryfall.api;
 
 import com.scyrfall.api.ScryfallObject;
 import com.scyrfall.api.field.Legalities;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
-import static tests.ScryfallTest.assertListArrayEqualsIgnoreOrder;
+import static com.scryfall.api.ScryfallTest.assertListArrayEqualsIgnoreOrder;
 
 public class EnumValuesTest {
 

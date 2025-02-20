@@ -1,4 +1,4 @@
-package tests;
+package com.scryfall.api;
 
 import java.util.List;
 

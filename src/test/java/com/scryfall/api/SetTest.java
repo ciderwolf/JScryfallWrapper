@@ -1,4 +1,4 @@
-package tests;
+package com.scryfall.api;
 
 import com.scyrfall.api.object.Set;
 import com.scyrfall.api.object.Set.SetType;

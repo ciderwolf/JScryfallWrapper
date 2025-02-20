@@ -1,4 +1,4 @@
-package tests;
+package com.scryfall.api;
 
 import com.scyrfall.api.ScryfallObject.Color;
 import com.scyrfall.api.field.Images;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
-import static tests.ScryfallTest.*;
+import static com.scryfall.api.ScryfallTest.*;
 
 public class CardTest {
 
