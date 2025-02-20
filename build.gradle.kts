@@ -5,6 +5,9 @@
  * For more details on building Java & JVM projects, please refer to https://docs.gradle.org/8.12.1/userguide/building_java_projects.html in the Gradle documentation.
  */
 
+group = "com.scryfall.api"
+version = "1.0.0"
+
 plugins {
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
