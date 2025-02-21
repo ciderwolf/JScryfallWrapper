@@ -261,7 +261,7 @@ public class Set extends ScryfallObject {
         CORE, EXPANSION, MASTERS, ALCHEMY, MASTERPIECE, FROM_THE_VAULT, ARSENAL, SPELLBOOK, PREMIUM_DECK, DUEL_DECK, DRAFT_INNOVATION,
         TREASURE_CHEST, COMMANDER, PLANECHASE, ARCHENEMY, VANGUARD, FUNNY, STARTER, BOX, PROMO, TOKEN, MEMORABILIA, MINIGAME;
 
-        private static SetType fromString(String value) {
+        static SetType fromString(String value) {
             switch (value) {
                 case "from_the_vault":
                     return FROM_THE_VAULT;

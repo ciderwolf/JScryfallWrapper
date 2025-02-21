@@ -64,6 +64,7 @@ public class Card extends ScryfallObject {
     private Preview preview;
     private ImageStatus imageStatus;
     private SecurityStamp securityStamp;
+    private Set.SetType setType;
 
     public Card(JSONObject data) {
         super(data);
@@ -102,6 +103,7 @@ public class Card extends ScryfallObject {
         usdPrice = getString("usd");
         set = getString("set");
         setName = getString("set_name");
+        setType = Set.SetType.fromString(getString("set_type"));
 
         cmc = getDouble("cmc");
 
@@ -851,6 +853,14 @@ public class Card extends ScryfallObject {
      */
     public String getSetName() {
         return setName;
+    }
+
+    /**
+     * @return The type of set this printing is in.
+     * @see Set.SetType
+     */
+    public Set.SetType getSetType() {
+        return setType;
     }
 
     /**
