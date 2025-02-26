@@ -2,19 +2,20 @@ package com.scryfall.api;
 
 import com.scyrfall.api.ScryfallObject.Color;
 import com.scyrfall.api.field.ManaCost;
+import com.scyrfall.api.object.ScryfallList;
 import com.scyrfall.api.object.Symbol;
+import org.json.JSONObject;
 import org.junit.Test;
 
+import static com.scryfall.api.ScryfallTest.*;
 import static org.junit.Assert.assertEquals;
-import static com.scryfall.api.ScryfallTest.arrayOf;
-import static com.scryfall.api.ScryfallTest.assertArrayEqualsIgnoreOrder;
 
 public class SymbolTest {
 
     @Test
     public void symbols() {
-        Symbol[] symbols = Symbol.getSymbols();
-        final double totalCost = 1000358.5; // subtract 1 because Infinity's cmc = -1
+        Symbol[] symbols = loadTestSymbols();
+        final double totalCost = 1000360.5; // subtract 1 because Infinity's cmc = -1
         double sumCost = 0;
         for (Symbol s : symbols) {
             assertEquals(s.isFunny(), isFunny(s));
@@ -25,9 +26,10 @@ public class SymbolTest {
     }
 
     private boolean isFunny(Symbol symbol) {
-        return symbol.getCmc() == 0.5 || symbol.getCmc() > 99 || symbol.getLooseVariant().equals("Y") ||
-                symbol.getLooseVariant().equals("Z") || symbol.getCmc() == -1 || symbol.getSymbol().equals("{A}") ||
-                symbol.getSymbol().equals("{TIX}");
+        return symbol.getManaValue() == 0.5 || symbol.getManaValue() > 99 || symbol.getLooseVariant().equals("Y") ||
+                symbol.getLooseVariant().equals("Z") || symbol.getManaValue() == -1 || symbol.getSymbol().equals("{A}") ||
+                symbol.getSymbol().equals("{TIX}") || symbol.getSymbol().equals("{C/P}") || symbol.getSymbol().equals("{L}") ||
+                symbol.getSymbol().equals("{D}");
     }
 
     private boolean representsMana(Symbol symbol) {
@@ -36,11 +38,11 @@ public class SymbolTest {
 
     @Test
     public void costs() {
-        baseCost(ManaCost.parseManaCost("{2}{g}{2}"), "{4}{G}", 5.0, arrayOf(Color.GREEN), false,
+        baseCost(loadTestManaCost("2g2"), "{4}{G}", 5.0, arrayOf(Color.GREEN), false,
                 true, false);
-        baseCost(ManaCost.parseManaCost("XURW"), "{X}{U}{R}{W}", 3.0, arrayOf(Color.WHITE, Color.BLUE, Color.RED),
+        baseCost(loadTestManaCost("XURW"), "{X}{U}{R}{W}", 3.0, arrayOf(Color.WHITE, Color.BLUE, Color.RED),
                 false, false, true);
-        baseCost(ManaCost.parseManaCost("½CC"), "{½}{C}{C}", 2.5, arrayOf(), true, false, false);
+        baseCost(loadTestManaCost("halfcc"), "{½}{C}{C}", 2.5, arrayOf(), true, false, false);
     }
 
     private void baseCost(ManaCost symbol, String cost, double cmc, Color[] colors, boolean colorless,
@@ -52,5 +54,16 @@ public class SymbolTest {
         assertEquals(symbol.isColorless(), colorless);
         assertEquals(symbol.isMonoColored(), monoColored);
         assertEquals(symbol.isMultiColored(), multiColored);
+    }
+
+    private Symbol[] loadTestSymbols() {
+        JSONObject json = loadTestJson("symbology");
+        ScryfallList list = new ScryfallList(json);
+        return list.getContents(new Symbol[0]);
+    }
+
+    private ManaCost loadTestManaCost(String cost) {
+        JSONObject json = loadTestJson("symbology-" + cost);
+        return new ManaCost(json);
     }
 }

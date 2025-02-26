@@ -77,7 +77,7 @@ public class EnumValuesTest {
 
     @Test
     public void borderColor() {
-        String[] borderColors = {"black", "borderless", "gold", "silver", "white"};
+        String[] borderColors = {"black", "borderless", "gold", "silver", "white", "yellow"};
         assertValues(borderColors, Card.BorderColor.values(), "border_color", Card.class, Card::getBorderColor);
     }
 

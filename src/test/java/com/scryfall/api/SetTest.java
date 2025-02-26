@@ -2,6 +2,7 @@ package com.scryfall.api;
 
 import com.scyrfall.api.object.Set;
 import com.scyrfall.api.object.Set.SetType;
+import org.json.JSONObject;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -14,9 +15,9 @@ public class SetTest {
     @Test
     public void expansion() {
         System.out.print("Test Expansion (Aether Revolt): ");
-        Set set = Set.fromID(UUID.fromString("a4a0db50-8826-4e73-833c-3fd934375f96"));
-        assertEquals(set.getBlock(), "Kaladesh");
-        assertEquals(set.getBlockCode(), "kld");
+        Set set = loadTestSet("aer");
+        assertEquals("Kaladesh", set.getBlock());
+        assertEquals("kld", set.getBlockCode());
         baseSet(set, 1857, "aer", "Aether Revolt", SetType.EXPANSION, 194, false, false);
         System.out.println("success");
     }
@@ -24,10 +25,10 @@ public class SetTest {
     @Test
     public void token() {
         System.out.print("Test Token (Hour of Devastation Tokens): ");
-        Set set = Set.fromID(UUID.fromString("cb890bc8-ec73-449e-9be0-46891f39eea1"));
-        assertEquals(set.getParentSetCode(), "hou");
-        assertEquals(set.getBlockCode(), "akh");
-        assertEquals(set.getBlock(), "Amonkhet");
+        Set set = loadTestSet("thou");
+        assertEquals("hou", set.getParentSetCode());
+        assertEquals("akh", set.getBlockCode());
+        assertEquals("Amonkhet", set.getBlock());
         baseSet(set, -1,"thou", "Hour of Devastation Tokens", SetType.TOKEN, 14, false, false);
         System.out.println("success");
     }
@@ -35,7 +36,7 @@ public class SetTest {
     @Test
     public void fromTheVault() {
         System.out.print("Test From the Vault (FTV Transform): ");
-        Set set = Set.fromID(UUID.fromString("63c89a12-d115-4084-a4af-fceef40ca02f"));
+        Set set = loadTestSet("v17");
         baseSet(set, 2078,"v17", "From the Vault: Transform", SetType.FROM_THE_VAULT, 16, false, true);
         System.out.println("success");
     }
@@ -44,8 +45,8 @@ public class SetTest {
     @Test
     public void digital() {
         System.out.print("Test Digital (Vintage Masters): ");
-        Set set = Set.fromID(UUID.fromString("a944551a-73fa-41cd-9159-e8d0e4674403"));
-        assertEquals(set.getMtgoCode(), "vma");
+        Set set = loadTestSet("vma");
+        assertEquals("vma", set.getMtgoCode());
         baseSet(set, -1, "vma", "Vintage Masters", SetType.MASTERS, 325, true, false);
         System.out.println("success");
     }
@@ -65,5 +66,10 @@ public class SetTest {
         assertNotNull(set.getScryfallURL());
 
         assertEquals(set, Set.fromCode(set.getCode()));
+    }
+
+    private Set loadTestSet(String name) {
+        JSONObject json = ScryfallTest.loadTestJson(name);
+        return new Set(json);
     }
 }
