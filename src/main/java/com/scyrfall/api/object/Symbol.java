@@ -12,11 +12,22 @@ import java.util.Objects;
 
 public class Symbol extends ScryfallObject {
 
-    private String symbol, looseVariant, english, gathererAlternates;
-    private boolean transposeable, representsMana, appearsInManaCosts, funny, colorless, monoColored, multiColored, hybrid, phyrexian;
-    private double manaValue;
-    private URL svgURL;
-    private List<Color> colors;
+    private final String symbol;
+    private final String looseVariant;
+    private final String english;
+    private final String gathererAlternates;
+    private final boolean transposeable;
+    private final boolean representsMana;
+    private final boolean appearsInManaCosts;
+    private final boolean funny;
+    private final boolean colorless;
+    private final boolean monoColored;
+    private final boolean multiColored;
+    private final boolean hybrid;
+    private final boolean phyrexian;
+    private final double manaValue;
+    private final URL svgURL;
+    private final List<Color> colors;
 
     public Symbol(JSONObject data) {
         super(data);

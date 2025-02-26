@@ -7,9 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.awt.image.BufferedImage;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Function;
@@ -30,41 +28,93 @@ public class Card extends ScryfallObject {
             "Planeswalker", "Tribal"};
     private static final String EM_DASH = "—";
 
-    private int arenaID, mtgoID, mtgoFoilID, tcgplayerID, tcgplayerEtchedID, cardmarketID, edhrecRank, pennyRank;
-    private List<Integer> multiverseIDs;
-    private Layout layout;
-    private String lang, handModifier, lifeModifier, loyalty, defense, manaCost, name,
-            flavorName, oracleText, power, toughness, typeLine;
-    private UUID id, oracleID, illustrationID, variationID, cardBackID, setID;
-    private URL printsSearchURL, rulingsURL, scryfallURL, url;
-    private List<RelatedCard> allParts;
-    private List<CardFace> faces;
-    private List<String> promoTypes, keywords, artistIds;
-    private List<Integer> attractionLights;
-    private double cmc;
-    private List<Color> colors, colorIdentity, colorIndicator, producedMana;
-    private boolean oversized, digital, reserved, inBoosters, contentWarning;
-    private Legalities legalities;
-    private String artist, collectorNumber, flavorText, printedName, printedText, printedTypeLine, watermark;
-    private BorderColor borderColor;
-    private Frame frame;
-    private FrameEffect frameEffect;
-    private List<FrameEffect> frameEffects;
-    private boolean fullArt, highResImage, promo, reprint, storySpotlight, textless, variation;
-    private List<Finish> finishes;
-    private List<Game> games;
-    private HashMap<String, URL> purchaseURLs, relatedURLs;
-    private Rarity rarity;
-    private Date releaseDate;
-    private URL scryfallSetURL, setSearchURL, setURL;
-    private String set, setName;
-    private Images images;
-    private String euroPrice, tixPrice, usdPrice;
-    private Prices prices;
-    private Preview preview;
-    private ImageStatus imageStatus;
-    private SecurityStamp securityStamp;
-    private Set.SetType setType;
+    private final int arenaID;
+    private final int mtgoID;
+    private final int mtgoFoilID;
+    private final int tcgplayerID;
+    private final int tcgplayerEtchedID;
+    private final int cardmarketID;
+    private final int edhrecRank;
+    private final int pennyRank;
+    private final List<Integer> multiverseIDs;
+    private final Layout layout;
+    private final String lang;
+    private final String handModifier;
+    private final String lifeModifier;
+    private final String loyalty;
+    private final String defense;
+    private final String manaCost;
+    private final String name;
+    private final String flavorName;
+    private final String oracleText;
+    private final String power;
+    private final String toughness;
+    private final String typeLine;
+    private final UUID id;
+    private final UUID oracleID;
+    private final UUID illustrationID;
+    private final UUID variationID;
+    private final UUID cardBackID;
+    private final UUID setID;
+    private final URL printsSearchURL;
+    private final URL rulingsURL;
+    private final URL scryfallURL;
+    private final URL url;
+    private final List<RelatedCard> allParts;
+    private final List<CardFace> faces;
+    private final List<String> promoTypes;
+    private final List<String> keywords;
+    private final List<String> artistIds;
+    private final List<Integer> attractionLights;
+    private final double cmc;
+    private final List<Color> colors;
+    private final List<Color> colorIdentity;
+    private final List<Color> colorIndicator;
+    private final List<Color> producedMana;
+    private final boolean oversized;
+    private final boolean digital;
+    private final boolean reserved;
+    private final boolean inBoosters;
+    private final boolean contentWarning;
+    private final Legalities legalities;
+    private final String artist;
+    private final String collectorNumber;
+    private final String flavorText;
+    private final String printedName;
+    private final String printedText;
+    private final String printedTypeLine;
+    private final String watermark;
+    private final BorderColor borderColor;
+    private final Frame frame;
+    private final FrameEffect frameEffect;
+    private final List<FrameEffect> frameEffects;
+    private final boolean fullArt;
+    private final boolean highResImage;
+    private final boolean promo;
+    private final boolean reprint;
+    private final boolean storySpotlight;
+    private final boolean textless;
+    private final boolean variation;
+    private final List<Finish> finishes;
+    private final List<Game> games;
+    private final HashMap<String, URL> purchaseURLs;
+    private final HashMap<String, URL> relatedURLs;
+    private final Rarity rarity;
+    private final Date releaseDate;
+    private final URL scryfallSetURL;
+    private final URL setSearchURL;
+    private final URL setURL;
+    private final String set;
+    private final String setName;
+    private final Images images;
+    private final String euroPrice;
+    private final String tixPrice;
+    private final String usdPrice;
+    private final Prices prices;
+    private final Preview preview;
+    private final ImageStatus imageStatus;
+    private final SecurityStamp securityStamp;
+    private final Set.SetType setType;
 
     public Card(JSONObject data) {
         super(data);
@@ -170,8 +220,8 @@ public class Card extends ScryfallObject {
 
     private URL makeURL(String url) {
         try {
-            return new URL(url);
-        } catch (MalformedURLException e) {
+            return new URI(url).toURL();
+        } catch (MalformedURLException | URISyntaxException e) {
             return null;
         }
     }
@@ -375,7 +425,7 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @return an array of this card's types (eg. Creature, Instant, etc)
+     * @return an array of this card's types (e.g. Creature, Instant, etc.)
      */
     public String[] getTypes() {
         ArrayList<String> types = new ArrayList<>();
@@ -388,7 +438,7 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @return an array of this card's supertypes (eg. Legendary, Basic, Snow)
+     * @return an array of this card's supertypes (e.g. Legendary, Basic, Snow)
      */
     public String[] getSupertypes() {
         ArrayList<String> types = new ArrayList<>();
@@ -401,7 +451,7 @@ public class Card extends ScryfallObject {
     }
 
     /**
-     * @return an array of this card's subtypes (eg. Human, Trap, Aura, etc)
+     * @return an array of this card's subtypes (eg. Human, Trap, Aura, etc.)
      */
     public String[] getSubtypes() {
         if (typeLine.contains(EM_DASH)) {
@@ -420,7 +470,7 @@ public class Card extends ScryfallObject {
     /**
      * @return A unique ID for this card&rsquo;s oracle identity. This value is consistent
      * across reprinted card editions, and unique among different cards with the same name
-     * (tokens, Unstable variants, etc). Always present except for the <code>reversible_card</code>
+     * (tokens, Unstable variants, etc.). Always present except for the <code>reversible_card</code>
      * layout where it will be absent; <code>oracle_id</code> will be found on each face instead.
      */
     public UUID getOracleID() {
@@ -892,7 +942,7 @@ public class Card extends ScryfallObject {
      */
     public BufferedImage getImage(Images.Size size) {
         if (hasMultipleFaces()) {
-            return faces.get(0).getImages().getImage(size);
+            return faces.getFirst().getImages().getImage(size);
         } else {
             return images.getImage(size);
         }
@@ -900,7 +950,7 @@ public class Card extends ScryfallObject {
 
     public String getImageURI(Images.Size size) {
         if (hasMultipleFaces()) {
-            return faces.get(0).getImages().getURL(size).toString();
+            return faces.getFirst().getImages().getURL(size).toString();
         } else {
             return images.getURL(size).toString();
         }

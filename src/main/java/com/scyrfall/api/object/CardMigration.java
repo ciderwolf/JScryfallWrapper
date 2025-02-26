@@ -18,13 +18,14 @@ import java.util.UUID;
  */
 public class CardMigration extends ScryfallObject {
 
-    private URL url;
-    private UUID id;
-    private Date createdAt;
-    private MigrationStrategy migrationStrategy;
-    private UUID oldScryfallId, newScryfallId;
-    private String note;
-    private JSONObject metadata;
+    private final URL url;
+    private final UUID id;
+    private final Date createdAt;
+    private final MigrationStrategy migrationStrategy;
+    private final UUID oldScryfallId;
+    private final UUID newScryfallId;
+    private final String note;
+    private final JSONObject metadata;
 
     public CardMigration(JSONObject data) {
         super(data);

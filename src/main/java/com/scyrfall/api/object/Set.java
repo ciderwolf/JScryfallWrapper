@@ -20,13 +20,26 @@ import java.util.UUID;
  */
 public class Set extends ScryfallObject {
 
-    private String code, mtgoCode, arenaCode, name, blockCode, block, parentSetCode;
-    private SetType setType;
-    private Date released;
-    private int cardCount, tcgPlayerID, printedSize;
-    private boolean digital, foilOnly, nonfoilOnly;
-    private URL iconSvgURL, searchURL, scryfallURL, url;
-    private UUID id;
+    private final String code;
+    private final String mtgoCode;
+    private final String arenaCode;
+    private final String name;
+    private final String blockCode;
+    private final String block;
+    private final String parentSetCode;
+    private final SetType setType;
+    private final Date released;
+    private final int cardCount;
+    private final int tcgPlayerID;
+    private final int printedSize;
+    private final boolean digital;
+    private final boolean foilOnly;
+    private final boolean nonfoilOnly;
+    private final URL iconSvgURL;
+    private final URL searchURL;
+    private final URL scryfallURL;
+    private final URL url;
+    private final UUID id;
 
 
     public Set(JSONObject data) {

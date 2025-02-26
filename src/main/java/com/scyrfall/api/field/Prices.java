@@ -11,7 +11,11 @@ import java.util.Objects;
  */
 public class Prices extends ScryfallObject {
 
-    private String usdFoil, usdEtched, usd, eur, tix;
+    private final String usdFoil;
+    private final String usdEtched;
+    private final String usd;
+    private final String eur;
+    private final String tix;
 
     public Prices(JSONObject data) {
         super(data);

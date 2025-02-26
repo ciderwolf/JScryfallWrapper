@@ -16,10 +16,10 @@ import java.util.Objects;
  */
 public class ScryfallList extends ScryfallObject {
 
-    private JSONArray data;
-    private boolean hasMore;
-    private URL nextPageURL;
-    private int totalCards;
+    private final JSONArray data;
+    private final boolean hasMore;
+    private final URL nextPageURL;
+    private final int totalCards;
     private String[] warnings;
 
     public ScryfallList(JSONObject data) {

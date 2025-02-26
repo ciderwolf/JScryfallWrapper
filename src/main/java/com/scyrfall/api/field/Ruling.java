@@ -11,10 +11,10 @@ import java.util.UUID;
 
 public class Ruling extends ScryfallObject {
 
-    private Date publishedDate;
-    private RulingSource source;
-    private String comment;
-    private UUID oracleID;
+    private final Date publishedDate;
+    private final RulingSource source;
+    private final String comment;
+    private final UUID oracleID;
 
     public Ruling(JSONObject data) {
         super(data);

@@ -9,9 +9,9 @@ import java.util.Objects;
 
 public class Preview extends ScryfallObject {
 
-    private Date previewedAt;
-    private String source;
-    private URL sourceURL;
+    private final Date previewedAt;
+    private final String source;
+    private final URL sourceURL;
 
     public Preview(JSONObject data) {
         super(data);

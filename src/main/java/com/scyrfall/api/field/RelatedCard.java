@@ -15,10 +15,11 @@ import java.util.UUID;
  * @see Card#getAllParts()
  */
 public class RelatedCard extends ScryfallObject {
-    private UUID id;
-    private String name, typeLine;
-    private URL url;
-    private Component component;
+    private final UUID id;
+    private final String name;
+    private final String typeLine;
+    private final URL url;
+    private final Component component;
 
     public RelatedCard(JSONObject data) {
         super(data);

@@ -14,7 +14,12 @@ import java.util.Objects;
  */
 public class Images extends ScryfallObject {
 
-    private URL artCropURL, borderCropURL, pngURL, largeURL, normalURL, smallURL;
+    private final URL artCropURL;
+    private final URL borderCropURL;
+    private final URL pngURL;
+    private final URL largeURL;
+    private final URL normalURL;
+    private final URL smallURL;
 
     public Images(JSONObject data) {
         super(data);

@@ -11,7 +11,7 @@ import java.util.Objects;
  * card across all supported formats.
  */
 public class Legalities extends ScryfallObject {
-    private HashMap<Format, Legality> legalityHashMap;
+    private final HashMap<Format, Legality> legalityHashMap;
 
     public Legalities(JSONObject data) {
         super(data);

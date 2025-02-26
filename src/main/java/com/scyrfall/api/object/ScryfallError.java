@@ -13,8 +13,10 @@ import java.util.Objects;
  */
 public class ScryfallError extends ScryfallObject {
 
-    private int status;
-    private String code, details, type;
+    private final int status;
+    private final String code;
+    private final String details;
+    private final String type;
     private String[] warnings;
 
     public ScryfallError(JSONObject data) {

@@ -10,10 +10,12 @@ import java.util.Objects;
 
 public class ManaCost extends ScryfallObject {
 
-    private String cost;
-    private double cmc;
-    private Color[] colors;
-    private boolean colorless, monoColored, multiColored;
+    private final String cost;
+    private final double cmc;
+    private final Color[] colors;
+    private final boolean colorless;
+    private final boolean monoColored;
+    private final boolean multiColored;
 
     public ManaCost(JSONObject data) {
         super(data);

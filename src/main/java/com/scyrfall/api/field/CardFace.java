@@ -17,12 +17,26 @@ import java.util.UUID;
  */
 public class CardFace extends ScryfallObject {
 
-    private String artist, flavorText, manaCost, name, oracleText, power, toughness, loyalty, defense, printedName, printedTypeLine, typeLine;
-    private Color[] colors, colorIndicator;
-    private UUID illustrationID, oracleId, artistId;
-    private Images images;
-    private Card.Layout layout;
-    private double cmc;
+    private final String artist;
+    private final String flavorText;
+    private final String manaCost;
+    private final String name;
+    private final String oracleText;
+    private final String power;
+    private final String toughness;
+    private final String loyalty;
+    private final String defense;
+    private final String printedName;
+    private final String printedTypeLine;
+    private final String typeLine;
+    private final Color[] colors;
+    private final Color[] colorIndicator;
+    private final UUID illustrationID;
+    private final UUID oracleId;
+    private final UUID artistId;
+    private final Images images;
+    private final Card.Layout layout;
+    private final double cmc;
 
 
     public CardFace(JSONObject data) {

@@ -13,11 +13,16 @@ import java.util.UUID;
 
 public class BulkData extends ScryfallObject {
 
-    private UUID id;
-    private String type, name, description, contentMimeType, contentEncoding;
-    private URL downloadURL, url;
-    private ZonedDateTime updated;
-    private int size;
+    private final UUID id;
+    private final String type;
+    private final String name;
+    private final String description;
+    private final String contentMimeType;
+    private final String contentEncoding;
+    private final URL downloadURL;
+    private final URL url;
+    private final ZonedDateTime updated;
+    private final int size;
 
     public BulkData(JSONObject data) {
         super(data);

@@ -15,8 +15,8 @@ import java.util.Objects;
  */
 public class Catalog extends ScryfallObject {
 
-    private URL url;
-    private int totalValues;
+    private final URL url;
+    private final int totalValues;
     private String[] values;
 
     public Catalog(JSONObject data) {
