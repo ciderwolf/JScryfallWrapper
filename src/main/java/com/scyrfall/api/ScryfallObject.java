@@ -16,6 +16,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -157,6 +158,14 @@ public abstract class ScryfallObject {
         try {
             return dateFormat.parse(getString(key));
         } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    protected ZonedDateTime getDateTime(String key) {
+        try {
+            return ZonedDateTime.parse(getString(key));
+        } catch (Exception e) {
             return null;
         }
     }

@@ -34,7 +34,7 @@ public class BulkData extends ScryfallObject {
         contentMimeType = getString("content_type");
         downloadURL = getURL("download_uri");
         url = getURL("uri");
-        updated = ZonedDateTime.parse(getString("released_at"));
+        updated = getDateTime("updated_at");
         size = getInt("size");
     }
 
