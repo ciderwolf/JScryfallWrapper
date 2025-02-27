@@ -234,7 +234,7 @@ public abstract class ScryfallObject {
     protected URL getURL(String key) {
         try {
             return new URI(data.getString(key)).toURL();
-        } catch (JSONException | URISyntaxException | MalformedURLException e) {
+        } catch (JSONException | URISyntaxException | MalformedURLException | IllegalArgumentException | NullPointerException e) {
             return null;
         }
     }
